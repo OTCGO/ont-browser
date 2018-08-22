@@ -27,30 +27,30 @@ m = Mongo(os.environ.get('MONGODB'), os.environ.get('DB'))
 work_count = cpu_count()
 
 
-
 def async_current():
     try:
         r = b.get_block_count()
-        m_block = m.connection()['block'].find_one({},{'index':1},sort = [('index',DESCENDING)]) or { 'index' : -1}
-        print('r - 1 - m_block',r - 1 - m_block['index'])
-        save_block(m_block['index'] + 1 , r - 3 - m_block['index'] )  
+        m_block = m.connection()['block'].find_one(
+            {}, sort=[('Header.Height', DESCENDING)]) or {'Header': {'Height': -1}}
+        print('r', r)
+        print(' m_block',  m_block['Header']['Height'])
+        save_block(m_block['Header']['Height'] + 1, r - 2 -  m_block['Header']['Height'])
 
     except Exception as e:
         logger.exception(e)
-
 
 
 def job():
     print(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
 
+
 if __name__ == "__main__":
     try:
-        # async_current()
+        async_current()
         sched = BlockingScheduler()
-        sched.add_job(async_current, 'interval', seconds=30)
+        sched.add_job(async_current, 'interval', seconds=5)
         sched.start()
     except Exception as e:
         logger.exception(e)
-        time.sleep(30)
+        time.sleep(5)
         sched.start()
-        

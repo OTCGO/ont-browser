@@ -23,6 +23,6 @@ def verify_blocks(height):
 if __name__ == "__main__":
     try:
         print('start')
-        verify_blocks(173732)
+        verify_blocks(14000)
     except Exception as e:
         logger.exception(e)

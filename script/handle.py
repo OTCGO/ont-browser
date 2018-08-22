@@ -28,46 +28,42 @@ print('MONGODB', os.environ.get('MONGODB'))
 print('DB', os.environ.get('DB'))
 print('WORK_COUNT', cpu_count())
 b = RpcClient(os.environ.get('RPC'))
-m = Mongo(os.environ.get('MONGODB'), os.environ.get('DB'))
+
 # obj = RedisHelper(os.environ.get('REDIS'))
 
 
-chan = "nep5"
+m = Mongo(os.environ.get('MONGODB'), os.environ.get('DB'))
+
+# chan = "nep5"
 
 # create index
 def create_index():
-    pass
-    # m.connection()['block'].create_index([('index', DESCENDING)], unique=True)
+    m.connection()['block'].create_index([('Hash', DESCENDING)], unique=True)
+    m.connection()['block'].create_index([('Header.Height', DESCENDING)], unique=True)
+    m.connection()['block'].create_index([('Header.Hash', DESCENDING)], unique=True)
 
-    # m.connection()['transaction'].create_index(
-    #     [('txid', ASCENDING)], unique=True)
-    # m.connection()['transaction'].create_index([('type', ASCENDING)])
-    # m.connection()['transaction'].create_index([('blockIndex', ASCENDING)])
-    # m.connection()['transaction'].create_index(
-    #     [('vin.utxo.address', ASCENDING)])
-    # m.connection()['transaction'].create_index(
-    #     [('vin.utxo.asset', ASCENDING)])    
-    # m.connection()['transaction'].create_index([('vout.address', ASCENDING)])
-    # m.connection()['transaction'].create_index([('vout.asset', ASCENDING)])
+    m.connection()['transaction'].create_index(
+        [('TxHash', DESCENDING)], unique=True)
+    m.connection()['transaction'].create_index(
+        [('Height', DESCENDING)], unique=True)
 
-    # m.connection()['transaction'].create_index([('nep5.to', ASCENDING)])
-    # m.connection()['transaction'].create_index([('nep5.from', ASCENDING)])
-    # m.connection()['transaction'].create_index([('nep5.assetId', ASCENDING)])
+    m.connection()['transaction'].create_index(
+        [('Notify.States', DESCENDING)])
 
-    # m.connection()['address'].create_index(
-    #     [('address', DESCENDING)], unique=True)
-    # m.connection()['address'].create_index([('blockIndex', ASCENDING)])    
+    m.connection()['address'].create_index(
+        [('Address', DESCENDING)], unique=True)
+    m.connection()['address'].create_index([('Height', ASCENDING)])    
 
-    # m.connection()['asset'].create_index(
-    #     [('assetId', DESCENDING)], unique=True)
-    # m.connection()['asset'].create_index([('blockIndex', ASCENDING)])    
+    m.connection()['asset'].create_index(
+        [('ContractAddress', DESCENDING)], unique=True)
+    m.connection()['asset'].create_index([('Height', ASCENDING)])    
 
 
 
-    # m.connection()['state'].create_index([('index', DESCENDING)])
-    # m.connection()['state'].delete_many({})
-    # m.connection()['state'].insert_one(
-    #     {'_id': ObjectId('5a95047efc2a4961941484e6'), 'height': 0})
+    m.connection()['state'].create_index([('index', DESCENDING)])
+    m.connection()['state'].delete_many({})
+    m.connection()['state'].insert_one(
+        {'_id': ObjectId('5a95047efc2a4961941484e6'), 'height': 0})
 
 
 def del_all():
@@ -82,6 +78,7 @@ def save_block(start, length):
     print('start', start)
     print('length', length)
 
+    m = Mongo(os.environ.get('MONGODB'), os.environ.get('DB'))
     try:
         index = start
         while index <= start + length:
@@ -90,16 +87,23 @@ def save_block(start, length):
             m_block = m.connection()['block'].find_one({
                 'Header.Height': index
             })
-            # print('m_block', m_block)
+            print('m_block', m_block)
             if m_block is None:
-                block = b.get_block(index)
-                print('block', block)
+                block = b.get_block(index) 
+                print('block', block)  
+                block['Header']['ConsensusData'] = str(block['Header']['ConsensusData'])          
                 m.connection()['block'].insert_one(block)
 
-            m_contract_event = b.get_smart_contract_event_by_height(index)
+            m_contract_event = b.get_smart_contract_event_by_height(index) or []
+            print('m_contract_event',m_contract_event)
             # m_block =  m_block or b.get_block(index)
             for tx in m_contract_event:
-                print('tx',tx)
+                # print('tx',tx)
+
+                # State = 0 失败
+                if tx['State'] == 0:
+                    continue
+
                 # 判断 m_transaction 是否已经存在
                 m_transaction = m.connection()['transaction'].find_one({
                     'TxHash': tx['TxHash']
@@ -117,54 +121,54 @@ def save_block(start, length):
         logger.exception(e)
         time.sleep(1)
         save_block(start, length)
-        # m.connection()['state'].insert_one({
-        #     'index': index,
-        #     'error': True
-        # })
 
 
 def save_transaction(tx, blockIndex):
-    tx['blockIndex'] = blockIndex
+    tx['Height'] = blockIndex
     #print('tx', tx)
     m.connection()['transaction'].insert_one(tx)
 
 
-def save_address(notifies, blockIndex):
+def save_address(notifies, height):
 
     for notify in notifies:
-        print('notify',notify)
+        # print('notify',notify)
         if notify["States"][0] == "transfer":
-        # from address
-            m_address = m.connection()['address'].find_one({
+            # from address
+            f_address = m.connection()['address'].find_one({
                 'Address': notify["States"][1]
             })
-            if m_address is None:
+            if f_address is None:
                 m.connection()['address'].insert_one({
                     'Address': notify["States"][1],
-                    'BlockIndex': blockIndex
+                    'Height': height
                 })
-
+            
             # to address
-            m_address = m.connection()['address'].find_one({
+            # print('t_address',notify["States"][2])
+            t_address = m.connection()['address'].find_one({
                 'Address': notify["States"][2]
             })
-            if m_address is None:
+            # print('t_address',t_address)
+            if t_address is None:
                 m.connection()['address'].insert_one({
                     'Address': notify["States"][2],
-                    'BlockIndex': blockIndex
+                    'Height': height
                 })
+
+
             # 判断 m_assert 是否已经存在
             m_assert = m.connection()['asset'].find_one({
                 'ContractAddress': notify["ContractAddress"]
             })
             if m_assert is None:
-                save_assert(notify["ContractAddress"],blockIndex)
+                save_assert(notify["ContractAddress"],height)
 
 
-def save_assert(contractAddress,blockIndex):
+def save_assert(contractAddress,height):
     r = {}
     r['ContractAddress'] = contractAddress
-    r['blockIndex'] = blockIndex
+    r['Height'] = height
     m.connection()['asset'].insert_one(r)
 
 

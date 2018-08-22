@@ -28,16 +28,16 @@ work_count = cpu_count()
 
 def verify_blocks(start):
     try:
-        end = b.get_block_count()
-        print('end',end)
-        m_block = m.connection()['block'].find({'index': {'$gte': 0}},{'index':1}).sort('index',ASCENDING)
+        # end = b.get_block_count()
+        # print('end',end)
+        m_block = m.connection()['block'].find({},sort=[('Header.Height', DESCENDING)])
 
         print('m_block',m_block.count())
 
-        point = 0
+        point = 1
         for item in m_block:
-            print('item.index',item['index'])
-            if point != item['index']:
+            print('item.index',item['Header']['Height'])
+            if point != item['Header']['Height']:
                 logger.info('verify_blocks %s',point)
                 m_block = save_block(point, 0)
                 if m_block is None:
@@ -45,7 +45,7 @@ def verify_blocks(start):
 
             m.connection()['state'].update_one({'_id':ObjectId('5a95047efc2a4961941484e6')},{
                     '$set':{
-                        'height': point
+                        'Header.Height': point
                     }
             })  
 

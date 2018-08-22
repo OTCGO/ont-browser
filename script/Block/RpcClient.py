@@ -31,6 +31,7 @@ class RpcClient(object):
     def get_smart_contract_event_by_height(self,height):
         event = sdk.rpc.get_smart_contract_event_by_height(height)
 
+        # print('get_smart_contract_event_by_height',event)
         return event
 
 if __name__ == "__main__":

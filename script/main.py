@@ -33,7 +33,7 @@ def main():
 
         pool = Pool(processes=work_count)
 
-        for x in range( 0 , r - 1, skip):
+        for x in range( 1 , r, skip):
             print('x', x)
             pool.apply_async(save_block, args=(x, skip - 1)) # 非阻塞
 
