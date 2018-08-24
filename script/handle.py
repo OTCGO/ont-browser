@@ -78,7 +78,7 @@ def save_block(start, length):
     print('start', start)
     print('length', length)
 
-    m = Mongo(os.environ.get('MONGODB'), os.environ.get('DB'))
+    # m = Mongo(os.environ.get('MONGODB'), os.environ.get('DB'))
     try:
         index = start
         while index <= start + length:
@@ -95,7 +95,7 @@ def save_block(start, length):
                 m.connection()['block'].insert_one(m_block)
 
             m_contract_event = b.get_smart_contract_event_by_height(index) or []
-            print('m_contract_event',m_contract_event)
+            # print('m_contract_event',m_contract_event)
             # m_block =  m_block or b.get_block(index)
             for tx in m_contract_event:
                 # print('tx',tx)
