@@ -87,12 +87,12 @@ def save_block(start, length):
             m_block = m.connection()['block'].find_one({
                 'Header.Height': index
             })
-            print('m_block', m_block)
+            #print('m_block', m_block)
             if m_block is None:
-                block = b.get_block(index) 
-                print('block', block)  
-                block['Header']['ConsensusData'] = str(block['Header']['ConsensusData'])          
-                m.connection()['block'].insert_one(block)
+                m_block = b.get_block(index) 
+                print('m_block', m_block)  
+                m_block['Header']['ConsensusData'] = str(m_block['Header']['ConsensusData'])          
+                m.connection()['block'].insert_one(m_block)
 
             m_contract_event = b.get_smart_contract_event_by_height(index) or []
             print('m_contract_event',m_contract_event)
@@ -109,7 +109,7 @@ def save_block(start, length):
                     'TxHash': tx['TxHash']
                 })
                 if m_transaction is None:
-                    save_transaction(tx, index)
+                    save_transaction(tx, index,m_block['Header']['Timestamp'])
 
                 # 保存address
                 save_address(tx['Notify'], index)
@@ -123,8 +123,9 @@ def save_block(start, length):
         save_block(start, length)
 
 
-def save_transaction(tx, blockIndex):
+def save_transaction(tx, blockIndex,timestamp):
     tx['Height'] = blockIndex
+    tx['Timestamp'] = timestamp
     #print('tx', tx)
     m.connection()['transaction'].insert_one(tx)
 

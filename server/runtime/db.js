@@ -1,26 +1,29 @@
 const mongoose = require('mongoose')
 const fs = require('fs')
 const config = require('config')
-const logger = require('./log').get('init')
+const log4js = require('./log')
 const path = require('path')
-const bluebird = require('bluebird')
+// const bluebird = require('bluebird')
 
-mongoose.Promise = bluebird
+// mongoose.Promise = bluebird
 
 mongoose.set('debug', config.db.debug)
 
-let connectionStr = `mongodb://${config.db.options.host}/${config.db.database}`
+const logger = log4js.getLogger()
+
+const connectionStr = `mongodb://${config.db.options.host}/${config.db.database}`
 let option = {
   user: config.db.options.user,
   pass: config.db.options.pass,
-  server: {
-    readPreference: 'nearest',
-    strategy: 'ping'
-  },
-  replset: config.db.options.replset
+  // server: {
+  //   readPreference: 'nearest',
+  //   strategy: 'ping'
+  // },
+  // replset: config.db.options.replset,
+  useNewUrlParser: true
 }
 
-let dbConnection = mongoose.createConnection(connectionStr, option)
+const dbConnection = mongoose.createConnection(connectionStr, option)
 mongoose.connection.on('error', (err) => {
   logger.error('mongodb connect error:' + err)
 })

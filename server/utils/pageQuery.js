@@ -1,12 +1,3 @@
-/**
- * Filename: /Users/wei/Desktop/yedian/APAC_Yedian_Campaign/utils/pageQuery.js
- * Path: /Users/wei/Desktop/yedian/APAC_Yedian_Campaign
- * Created Date: Monday, November 27th 2017, 2:50:45 pm
- * Author: qknow
- *
- * Copyright (c) 2017 Your Company
- */
-
 const async = require('async')
 
 module.exports = function (skip = 0, limit = 20, Model, populate = {}, queryParams = {}, sortParams = {createdAt: 'desc'}) {
@@ -17,7 +8,7 @@ module.exports = function (skip = 0, limit = 20, Model, populate = {}, queryPara
     }
     async.parallel({
       count (done) {  // 查询数量
-        Model.count(queryParams).exec(function (err, count) {
+        Model.countDocuments(queryParams).exec(function (err, count) {
           done(err, count)
         })
       },
@@ -30,7 +21,6 @@ module.exports = function (skip = 0, limit = 20, Model, populate = {}, queryPara
       if (err) return reject(err)
       $page.count = results.count
       $page.rows = results.records
-      console.log('$page', $page)
       return resolve($page)
     })
   })

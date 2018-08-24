@@ -1,6 +1,6 @@
 module.exports = {
   app: {
-    port: 3020
+    port: 5000
   },
   log: {
     level: 'TRACE'
