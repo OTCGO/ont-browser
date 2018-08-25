@@ -6,10 +6,10 @@ services:
     build: .
     image: ontapp
     ports:
-      - "5000:5000"
+      - "5888:5000"
   app1:
     container_name: app1
     image: ontapp
     restart: always
     ports:
-      - "5001:5000"
+      - "5889:5000"
