@@ -6,6 +6,7 @@
   "directories": {
     "test": "test"
   },
+  "repository": {},
   "dependencies": {
     "body-parser": "^1.18.3",
     "config": "^2.0.1",
@@ -22,7 +23,8 @@
   },
   "devDependencies": {},
   "scripts": {
-    "start": "nodemon index.js",
+    "dev": "nodemon index.js",
+    "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",

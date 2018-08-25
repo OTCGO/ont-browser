@@ -1,18 +1,17 @@
 module.exports = {
   app: {
-    port: 5000
+    port: process.env.PORT
   },
   log: {
     level: 'TRACE'
   },
   db: {
+    uri: process.env.MONGO_URI,
     options: {
-      host: '127.0.0.1',
-      port: 27017,
-      user: '',
-      pass: ''
+      useNewUrlParser: true,
+      debug: process.env.MONGO_DEBUG
     },
-    database: 'testnet-ont',
-    debug: true
+    database: process.env.MONGO_DATABASE,
+    debug: process.env.MONGO_DEBUG
   }
 }

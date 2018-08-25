@@ -28,7 +28,7 @@ def main():
         start = time.time()
 
         r = b.get_block_count()
-        print('get_block_count',r)
+        # print('get_block_count',r)
         skip = 1000
 
         pool = Pool(processes=work_count)

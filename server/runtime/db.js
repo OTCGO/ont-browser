@@ -11,19 +11,19 @@ mongoose.set('debug', config.db.debug)
 
 const logger = log4js.getLogger()
 
-const connectionStr = `mongodb://${config.db.options.host}/${config.db.database}`
-let option = {
-  user: config.db.options.user,
-  pass: config.db.options.pass,
-  // server: {
-  //   readPreference: 'nearest',
-  //   strategy: 'ping'
-  // },
-  // replset: config.db.options.replset,
-  useNewUrlParser: true
-}
+const connectionStr = `${config.db.uri}`
+// let option = {
+//   user: config.db.options.user,
+//   pass: config.db.options.pass,
+//   // server: {
+//   //   readPreference: 'nearest',
+//   //   strategy: 'ping'
+//   // },
+//   // replset: config.db.options.replset,
+//   useNewUrlParser: true
+// }
 
-const dbConnection = mongoose.createConnection(connectionStr, option)
+const dbConnection = mongoose.createConnection(connectionStr, config.db.options)
 mongoose.connection.on('error', (err) => {
   logger.error('mongodb connect error:' + err)
 })

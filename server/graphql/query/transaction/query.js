@@ -38,7 +38,6 @@ module.exports = {
     }),
     async resolve (root, args) {
       logger.info('graphql search TransactionQuery')
-      console.log('db.transaction', db.transaction)
       if (args.type) {
         args['Notify.States'] = args.type
         delete args.type
