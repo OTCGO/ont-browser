@@ -31,17 +31,15 @@ def async_current():
     try:
         r = b.get_block_count()
         m_block = m.connection()['block'].find_one(
-            {}, sort=[('Header.Height', DESCENDING)]) or {'Header': {'Height': -1}}
+            {}, sort=[('Header.Height', DESCENDING)]) or {'Header': {'Height': 0 }} 
         print('r', r)
-        print(' m_block',  m_block['Header']['Height'])
-        save_block(m_block['Header']['Height'] + 1, r - 2 -  m_block['Header']['Height'])
+        
+        print('m_block',  m_block['Header']['Height'] + 1)
+        print('m_block',  r - 1 -  m_block['Header']['Height'])
+        save_block(m_block['Header']['Height'] + 1, r - 1 -  m_block['Header']['Height'])
 
     except Exception as e:
         logger.exception(e)
-
-
-def job():
-    print(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
 
 
 if __name__ == "__main__":
