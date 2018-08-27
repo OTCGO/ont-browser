@@ -45,7 +45,7 @@ def create_index():
     m.connection()['transaction'].create_index(
         [('TxHash', DESCENDING)], unique=True)
     m.connection()['transaction'].create_index(
-        [('Height', DESCENDING)], unique=True)
+        [('Height', DESCENDING)])
 
     m.connection()['transaction'].create_index(
         [('Notify.States', DESCENDING)])
