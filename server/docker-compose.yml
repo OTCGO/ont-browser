@@ -4,12 +4,12 @@ services:
     container_name: app
     restart: always
     build: .
-    image: ontapp
+    image: ontapp:v1.0
     ports:
       - "5888:5000"
   app1:
     container_name: app1
-    image: ontapp
+    image: ontapp:v1.0
     restart: always
     ports:
       - "5889:5000"

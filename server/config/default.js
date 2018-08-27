@@ -8,8 +8,7 @@ module.exports = {
   db: {
     uri: process.env.MONGO_URI,
     options: {
-      useNewUrlParser: true,
-      debug: process.env.MONGO_DEBUG
+      useNewUrlParser: true
     },
     database: process.env.MONGO_DATABASE,
     debug: process.env.MONGO_DEBUG

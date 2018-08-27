@@ -7,21 +7,10 @@ const path = require('path')
 
 // mongoose.Promise = bluebird
 
-mongoose.set('debug', config.db.debug)
-
 const logger = log4js.getLogger()
 
 const connectionStr = `${config.db.uri}`
-// let option = {
-//   user: config.db.options.user,
-//   pass: config.db.options.pass,
-//   // server: {
-//   //   readPreference: 'nearest',
-//   //   strategy: 'ping'
-//   // },
-//   // replset: config.db.options.replset,
-//   useNewUrlParser: true
-// }
+logger.log('connectionStr', connectionStr)
 
 const dbConnection = mongoose.createConnection(connectionStr, config.db.options)
 mongoose.connection.on('error', (err) => {
