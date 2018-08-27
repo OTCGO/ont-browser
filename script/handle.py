@@ -90,7 +90,7 @@ def save_block(start, length):
             #print('m_block', m_block)
             if m_block is None:
                 m_block = b.get_block(index) 
-                print('m_block', m_block)  
+                # print('m_block', m_block)  
                 m_block['Header']['ConsensusData'] = str(m_block['Header']['ConsensusData'])          
                 m.connection()['block'].insert_one(m_block)
 
