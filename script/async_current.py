@@ -32,11 +32,11 @@ def async_current():
         r = b.get_block_count()
         m_block = m.connection()['block'].find_one(
             {}, sort=[('Header.Height', DESCENDING)]) or {'Header': {'Height': 0 }} 
-        # print('r', r)
+        print('r', r)
         
         # print('m_block',  m_block['Header']['Height'] + 1)
         # print('m_block',  r - 1 -  m_block['Header']['Height'])
-        save_block(m_block['Header']['Height'] + 1, r - 1 -  m_block['Header']['Height'])
+        save_block(m_block['Header']['Height'] + 1, r - 2 -  m_block['Header']['Height'])
 
     except Exception as e:
         logger.exception(e)
@@ -46,7 +46,7 @@ if __name__ == "__main__":
     try:
         async_current()
         sched = BlockingScheduler()
-        sched.add_job(async_current, 'interval', seconds=5)
+        sched.add_job(async_current, 'interval', seconds=10)
         sched.start()
     except Exception as e:
         logger.exception(e)
