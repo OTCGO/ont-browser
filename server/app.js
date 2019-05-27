@@ -18,7 +18,7 @@ app.use(cors({
 }))
 
 app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({extended: false}))
+app.use(bodyParser.urlencoded({ extended: false }))
 app.use(cookieParser())
 // 中间件，记录所有请求
 // app.use(log4js.connectLogger(logger, {level: log4js.levels.INFO}))

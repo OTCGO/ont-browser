@@ -1,0 +1,71 @@
+{
+  "name": "ont-client",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint",
+    "test": "ava"
+  },
+  "dependencies": {
+    "axios": "^0.18.0",
+    "bootstrap-vue": "^2.0.0-rc.20",
+    "core-js": "^2.6.5",
+    "esm": "^3.2.25",
+    "less": "^3.9.0",
+    "less-loader": "^5.0.0",
+    "moment": "^2.24.0",
+    "vue": "^2.6.10",
+    "vue-i18n": "^8.11.2",
+    "vue-router": "^3.0.6"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "^3.7.0",
+    "@vue/cli-plugin-eslint": "^3.7.0",
+    "@vue/cli-service": "^3.7.0",
+    "ava": "^1.4.1",
+    "babel-eslint": "^10.0.1",
+    "eslint": "^5.16.0",
+    "eslint-plugin-vue": "^5.0.0",
+    "module-alias": "^2.2.0",
+    "vue-template-compiler": "^2.5.21"
+  },
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "node": true
+    },
+    "extends": [
+      "plugin:vue/essential",
+      "eslint:recommended"
+    ],
+    "rules": {
+      "no-empty": "off"
+    },
+    "parserOptions": {
+      "parser": "babel-eslint"
+    }
+  },
+  "postcss": {
+    "plugins": {
+      "autoprefixer": {}
+    }
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions"
+  ],
+  "_moduleAliases": {
+    "@root": ".",
+    "@/apis": "./src/apis/",
+    "@/constants": "./src/constants",
+    "@/helpers": "./src/helpers"
+  },
+  "ava": {
+    "require": [
+      "esm",
+      "module-alias/register"
+    ]
+  }
+}

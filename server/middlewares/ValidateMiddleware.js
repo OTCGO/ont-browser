@@ -23,7 +23,7 @@ module.exports = function GetMiddleware (schema) {
       }
     }
     if (schema.header) {
-      result = joi.validate(req.headers, schema.header, {allowUnknown: true})
+      result = joi.validate(req.headers, schema.header, { allowUnknown: true })
       if (result.error) {
         return res.apiError(new Exception(2001, result.error.message))
       }
