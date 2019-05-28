@@ -12,15 +12,17 @@
 <template>
   <div class="blockIndex container">
     <h2 class="text-center ont-page-title">{{$t('slider.block.name')}}</h2>
+    <div class="table-content">
     <b-table class="ont-block-list" :fields="fields" :items="items">
       <template slot="Height" slot-scope="data">
         <router-link class="text-color" :to="'/block-details/'+data.value">{{data.value}}</router-link>
       </template>
       <template slot="Hash" slot-scope="data">
-        <router-link class="text-color" :to="'/block-details/'+data.value">{{data.value}}</router-link>
+        <router-link class="text-color" :to="'/block-details/'+data.value">{{data.value | shortHash}}</router-link>
       </template>
       <template slot="BlockTime" slot-scope="data">{{data.value | formatDate}}</template>
     </b-table>
+    </div>
     <b-row class="justify-content-center">
       <b-col md="8" sm="12">
         <b-pagination align="fill" :total-rows="total" v-model="currentPage" :per-page="perPage"></b-pagination>

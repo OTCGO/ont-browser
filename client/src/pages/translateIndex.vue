@@ -12,15 +12,17 @@
 <template>
   <div class="blockIndex container">
     <h2 class="text-center neo-page-title">{{$t('slider.transaction.name')}}</h2>
-    <b-table class="neo-block-list" :fields="fields" :items="items">
-      <template slot="TxnHash" slot-scope="data">
-        <router-link
-          :to="'/translate-details/'+data.value"
-          class="text-hidden text-color"
-        >{{data.value.substr(0,8) + '...' + data.value.substr(56)}}</router-link>
-      </template>
-      <template slot="TxnTime" slot-scope="data">{{data.value | formatDate}}</template>
-    </b-table>
+    <div class="table-content">
+      <b-table class="neo-block-list" :fields="fields" :items="items">
+        <template slot="TxnHash" slot-scope="data">
+          <router-link
+                  :to="'/translate-details/'+data.value"
+                  class="text-hidden text-color"
+          >{{data.value | shortHash}}</router-link>
+        </template>
+        <template slot="TxnTime" slot-scope="data">{{data.value | formatDate}}</template>
+      </b-table>
+    </div>
     <b-row class="justify-content-center">
       <b-col md="8" sm="12">
     <b-pagination align="fill" :total-rows="total" v-model="currentPage" :per-page="perPage"></b-pagination>

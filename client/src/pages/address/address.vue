@@ -22,17 +22,18 @@
         </b-col>
       </b-row>
     </b-container>
-
-    <div>
+    <div class="row">
+      <div class="table-content">
       <b-table class="tran-list" :fields="fields" :items="txnList">
         <template slot="Height" slot-scope="data">
           <router-link class="text-color" :to="'/block-details/'+data.value">{{data.value}}</router-link>
         </template>
         <template slot="TxnHash" slot-scope="data">
-          <router-link class="text-color" :to="'/block-details/'+data.value">{{data.value}}</router-link>
+          <router-link class="text-color" :to="'/block-details/'+data.value">{{data.value |shortHash}}</router-link>
         </template>
         <template slot="TxnTime" slot-scope="data">{{data.value | formatDate}}</template>
       </b-table>
+      </div>
       <b-pagination
         align="center"
         :total-rows="total"

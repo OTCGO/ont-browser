@@ -2,7 +2,7 @@
   <div class="container">
     <b-container>
       <b-row>
-        <b-col>{{ontid}}/</b-col>
+        <b-col class="break-all">{{ontid}}</b-col>
       </b-row>
 
       <b-row class="description">
@@ -14,29 +14,32 @@
           <h2>Curve</h2>
           <span>{{ddo.Owners[0].Curve}}</span>
         </b-col>
-        <b-col class="item">
-          <h2>Value</h2>
-          <span>{{ddo.Owners[0].Value}}</span>
-        </b-col>
+
       </b-row>
       <b-row class="description">
-        <b-col class="item first">
+        <b-col cols="12" class="item first">
+          <h2>Value</h2>
+          <span class="break-all">{{ddo.Owners[0].Value}}</span>
+        </b-col>
+        <b-col cols="12" class="item first">
           <h2>PublicKeyId</h2>
-          <span>{{ddo.Owners[0].PubKeyId}}</span>
+          <span class="break-all">{{ddo.Owners[0].PubKeyId}}</span>
         </b-col>
       </b-row>
     </b-container>
 
-    <div>
-      <b-table class="tran-list" :fields="fields" :items="items">
-        <template slot="TxnHash" slot-scope="data">
-          <router-link class="text-color" :to="'/translate-details/'+data.value">{{data.value}}</router-link>
-        </template>
-        <template slot="Height" slot-scope="data">
-          <router-link class="text-color" :to="'/block-details/'+data.value">{{data.value}}</router-link>
-        </template>
-        <template slot="TxnTime" slot-scope="data">{{data.value | formatDate}}</template>
-      </b-table>
+    <div class="row">
+      <div class="table-content">
+        <b-table class="tran-list" :fields="fields" :items="items">
+          <template slot="TxnHash" slot-scope="data">
+            <router-link class="text-color" :to="'/translate-details/'+data.value">{{data.value | shortHash}}</router-link>
+          </template>
+          <template slot="Height" slot-scope="data">
+            <router-link class="text-color" :to="'/block-details/'+data.value">{{data.value}}</router-link>
+          </template>
+          <template slot="TxnTime" slot-scope="data">{{data.value | formatDate}}</template>
+        </b-table>
+      </div>
       <!-- <b-pagination align="center" :total-rows="100" v-model="currentPage" :per-page="10"></b-pagination> -->
     </div>
   </div>

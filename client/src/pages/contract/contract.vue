@@ -26,7 +26,7 @@
             <b-row class="description">
                 <b-col class="item first">
                     <h2>哈希</h2>
-                    <span class="text-color">{{contracthash}}</span>
+                    <span class="text-color break-all">{{contracthash}}</span>
                 </b-col>
                 <b-col class="item">
                     <h2>创建者</h2>
@@ -69,12 +69,14 @@
         </b-container>
         <b-tabs class="contract-tab" content-class="mt-3">
             <b-tab title="交易" active>
-                <b-table class="tran-list" :fields="fields" :items="translateList">
-                    <template slot="TxnHash" slot-scope="data">
-                        <router-link class="text-color" :to="'/block-details/'+data.value">{{data.value}}</router-link>
-                    </template>
-                    <template slot="TxnTime" slot-scope="data">{{data.value | formatDate}}</template>
-                </b-table>
+                <div class="table-content">
+                    <b-table class="tran-list" :fields="fields" :items="translateList">
+                        <template slot="TxnHash" slot-scope="data">
+                            <router-link class="text-color" :to="'/block-details/'+data.value">{{data.value |shortHash}}</router-link>
+                        </template>
+                        <template slot="TxnTime" slot-scope="data">{{data.value | formatDate}}</template>
+                    </b-table>
+                </div>
                 <b-row class="justify-content-center">
                     <b-col md="8" sm="12">
                         <b-pagination align="fill" :total-rows="total" v-model="currentPage" :per-page="perPage"></b-pagination>

@@ -171,20 +171,22 @@
         <div class="col-sm-12 col-md-6 col-lg-4">
           <div class="ont-block-list">
             <div class="ont-bg"></div>
-            <router-link to="/block" class="row title-color">
-              <div class="col-sm-8">{{$t('slider.block.name')}}</div>
-              <div class="col-sm-4">
-                <div class="title-more text-right">>></div>
-              </div>
+            <router-link to="/block" class=" title-color">
+              <b-row>
+                <b-col cols="8" >{{$t('slider.block.name')}}</b-col>
+                <b-col cols="4">
+                  <div class="title-more text-right">>></div>
+                </b-col>
+              </b-row>
             </router-link>
             <div class="row ont-block-item" v-for="item in block" :key="item.Height">
               <div class="col-sm-12 ont-block-content">
                 <div class="row" style="align-items: center">
                   <router-link
                     :to="'/block-details/'+item.Height"
-                    class="col-sm-6 text-left pointer text-color ont-item-title"
+                    class="col-6 text-left pointer text-color ont-item-title"
                   >{{item.Height}}</router-link>
-                  <div class="col-sm-6 text-right">{{item.TxnNum}} Transaction</div>
+                  <div class="col-6 text-right">{{item.TxnNum}} Transaction</div>
                 </div>
                 <div class="row block-item-sub-wrapper">
                   <span class="block-item col-6 text-left">{{item.BlockSize}} byte</span>
@@ -198,8 +200,8 @@
           <div class="ont-block-list">
             <div class="ont-bg"></div>
             <router-link to="/translate" class="row title-color">
-              <div class="col-sm-8">{{$t('slider.transaction.name')}}</div>
-              <div class="col-sm-4">
+              <div class="col-8">{{$t('slider.transaction.name')}}</div>
+              <div class="col-4">
                 <div class="title-more text-right">>></div>
               </div>
             </router-link>
@@ -208,9 +210,9 @@
                 <div class="row" style="align-items: center">
                   <router-link
                     :to="/translate-details/+item.TxnHash"
-                    class="text-hidden text-color col-sm-6 text-left"
+                    class="text-hidden text-color col-6 text-left"
                   >{{item.TxnHash}}</router-link>
-                  <div class="col-sm-6 text-right">{{item.TxnTime | formatDate}}</div>
+                  <div class="col-6 text-right">{{item.TxnTime | formatDate}}</div>
                 </div>
                 <div class>{{ item.TxnType | formatTxType }}</div>
               </div>
@@ -221,8 +223,8 @@
           <div class="ont-block-list">
             <div class="ont-bg"></div>
             <router-link to="/ontid" class="row title-color">
-              <div class="col-sm-8">最新ID事件</div>
-              <div class="col-sm-4">
+              <div class="col-8">最新ID事件</div>
+              <div class="col-4">
                 <div class="title-more text-right">>></div>
               </div>
             </router-link>
@@ -230,10 +232,10 @@
               <div class="col-sm-12 ont-block-content">
                 <div class="row" style="align-items: center">
                   <router-link
-                    to="/"
-                    class="text-hidden text-color col-sm-6 text-left"
+                    :to="'/ontid-details/'+item.OntId"
+                    class="text-hidden text-color col-6 text-left"
                   >{{item.OntId}}</router-link>
-                  <div class="col-sm-6 text-right">{{item.TxnTime | formatDate}}</div>
+                  <div class="col-6 text-right">{{item.TxnTime | formatDate}}</div>
                 </div>
                 <div class>{{item.Description}}</div>
               </div>
@@ -360,7 +362,6 @@ export default {
         this.notFound();
       }
     },
-    // fixme  合约详情页面还没有
     async searchContract(searchKey) {
       const result = await getContractInfo(searchKey, 1, 1);
       if (result) {

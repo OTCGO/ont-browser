@@ -21,7 +21,8 @@ import '@/style/common.less';
 
 import {
   formatDate,
-  formatTxType
+  formatTxType,
+    shortHash
 } from "@/filters"
 
 Vue.config.productionTip = false;
@@ -31,6 +32,7 @@ Vue.use(Bootstrap);
 
 Vue.filter('formatDate', formatDate)
 Vue.filter('formatTxType', formatTxType)
+Vue.filter('shortHash', shortHash)
 
 var i18n = new VueI18n({
   locale: localStorage.getItem('locale') || 'zh-CN',

@@ -24,15 +24,15 @@
       <b-row class="description">
         <b-col class="item first">
           <h2>Merkle根</h2>
-          <span>{{blockDetails.TxnsRoot}}</span>
+          <span class="break-all">{{blockDetails.TxnsRoot}}</span>
         </b-col>
       </b-row>
     </b-container>
 
-    <div class="list">
+    <div class="list table-content">
       <b-table class="tran-list" :fields="fields" :items="blockDetails.TxnList">
         <template slot="TxnHash" slot-scope="data">
-          <router-link class="text-color" :to="'/translate-details/'+data.value">{{data.value}}</router-link>
+          <router-link class="text-color" :to="'/translate-details/'+data.value">{{data.value |shortHash}}</router-link>
         </template>
         <template slot="TxnTime" slot-scope="data">{{data.value | formatDate}}</template>
       </b-table>

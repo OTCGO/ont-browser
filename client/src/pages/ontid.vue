@@ -12,18 +12,20 @@
 <template>
   <div class="blockIndex container">
     <h2 class="text-center neo-page-title">最新 ONT ID</h2>
+    <div class="table-content">
     <b-table class="neo-block-list" :fields="fields" :items="items">
       <template slot="TxnHash" slot-scope="data">
-        <router-link class="text-color" :to="'/translate-details/'+data.value">{{data.value}}</router-link>
+        <router-link class="text-color" :to="'/translate-details/'+data.value">{{data.value | shortHash}}</router-link>
       </template>
       <template slot="OntId" slot-scope="data">
-        <router-link class="text-color" :to="'/ontid-details/'+data.value">{{data.value}}</router-link>
+        <router-link class="text-color" :to="'/ontid-details/'+data.value">{{data.value | shortHash}}</router-link>
       </template>
       <template slot="TxnTime" slot-scope="data">{{data.value | formatDate}}</template>
       <template slot="Height" slot-scope="data">
         <router-link class="text-color" :to="'/block-details/'+data.value">{{data.value}}</router-link>
       </template>
     </b-table>
+    </div>
     <b-pagination align="center" :total-rows="100" v-model="currentPage" :per-page="10"></b-pagination>
   </div>
 </template>

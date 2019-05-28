@@ -8,20 +8,23 @@
         <option value="oep8">oep8</option>
       </b-form-select>
     </div>
-    <b-table class="token-list" :fields="fields" :items="contractList">
-      <template slot="ContractHash" slot-scope="data">
-        <router-link
-          :to="'token-details/'+tokenType+'/'+data.value"
-          class="text-color"
-        >{{data.value}}</router-link>
-      </template>
-      <template slot="Name" slot-scope="data">
-        <router-link
-          :to="'token-details/'+tokenType+'/'+data.value"
-          class="text-color"
-        >{{data.value}}</router-link>
-      </template>
-    </b-table>
+    <div class="table-content">
+      <b-table class="token-list" :fields="fields" :items="contractList">
+        <template slot="ContractHash" slot-scope="data">
+          <router-link
+                  :to="'token-details/'+tokenType+'/'+data.value"
+                  class="text-color"
+          >{{data.value | shortHash}}</router-link>
+        </template>
+        <template slot="Name" slot-scope="data">
+          <router-link
+                  :to="'token-details/'+tokenType+'/'+data.value"
+                  class="text-color"
+          >{{data.value}}</router-link>
+        </template>
+      </b-table>
+    </div>
+
     <b-row class="justify-content-center">
       <b-col md="8" sm="12">
         <b-pagination align="fill" :total-rows="total" v-model="currentPage" :per-page="perPage"></b-pagination>

@@ -12,7 +12,7 @@
       <b-row class="description">
         <b-col class="item first">
           <h2>哈希</h2>
-          <span class="text-color">6c80f3a5c183edee7693a038ca8c476fb0d6ac91</span>
+          <span class="text-color break-all">{{$route.params.hash}}</span>
         </b-col>
         <b-col class="item">
           <h2>交易数</h2>
@@ -20,7 +20,7 @@
         </b-col>
         <b-col class="item">
           <h2>地址数</h2>
-          <span>{{tokenDetails.AddressCount}}</span>
+          <span class="break-all">{{tokenDetails.AddressCount}}</span>
         </b-col>
       </b-row>
       <b-row class="description">
@@ -40,15 +40,17 @@
     </b-container>
 
     <div>
-      <b-table class="tran-list" :fields="fields" :items="tokenDetails.TxnList">
-        <template slot="TxnHash" slot-scope="data">
-          <router-link class="text-color" :to="'/translate-details/'+data.value">{{data.value}}</router-link>
-        </template>
-        <template slot="Height" slot-scope="data">
-          <router-link class="text-color" :to="'/block-details/'+data.value">{{data.value}}</router-link>
-        </template>
-      </b-table>
-      <b-row class="justify-content-center">
+      <div class="table-content">
+        <b-table class="tran-list" :fields="fields" :items="tokenDetails.TxnList">
+          <template slot="TxnHash" slot-scope="data">
+            <router-link class="text-color" :to="'/translate-details/'+data.value">{{data.value | shortHash}}</router-link>
+          </template>
+          <template slot="Height" slot-scope="data">
+            <router-link class="text-color" :to="'/block-details/'+data.value">{{data.value}}</router-link>
+          </template>
+        </b-table>
+      </div>
+     <b-row class="justify-content-center">
         <b-col md="8" sm="12">
           <b-pagination align="fill" :total-rows="total" v-model="currentPage" :per-page="perPage"></b-pagination>
         </b-col>
