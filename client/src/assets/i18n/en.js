@@ -6,6 +6,7 @@ module.exports= {
   menu: {
     home: 'Home',
     assets: 'Assets',
+      contracts: 'Contracts',
     api: 'API',
     language: 'Language',
     wallet: 'SEA Wallet'
@@ -91,6 +92,12 @@ module.exports= {
     total: 'total',
     next: 'Next',
     prev: 'Prev'
+  },
+  contract:{
+    name:'Name',
+      hash:'Hash',
+      transactions:'Transactions',
+      createTime:'Create Time'
   },
   footer: {
     version: 'cli version',

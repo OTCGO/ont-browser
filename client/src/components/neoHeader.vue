@@ -71,8 +71,9 @@ export default {
       menuItem: [
         { id: 1, name: "menu.home", href: "/", active: true },
         { id: 2, name: "menu.assets", href: "/token", active: false },
-        { id: 3, name: "menu.api", href: "/" },
-        { id: 4, name: "menu.wallet", href: "https://otcgo.cn/download/" }
+        { id: 3, name: "menu.contracts", href: "/contract", active: false },
+        { id: 4, name: "menu.api", href: "/" },
+        { id: 5, name: "menu.wallet", href: "https://otcgo.cn/download/" }
       ]
     };
   },
@@ -81,7 +82,7 @@ export default {
   },
   methods: {
     changeMenuItem(idx) {
-      if (idx > 1) {
+      if (idx > 2) {
         window.open(this.menuItem[idx].href);
       } else {
         localStorage.setItem("menuItemIdx", idx);

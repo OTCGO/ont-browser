@@ -1,181 +1,119 @@
 <style scoped lang="less">
-@import "contract.less";
+    .contract-logo{
+        width:32px;
+        height:32px;
+    }
+    .contract-name{
+        font-size: 1.2rem;
+        font-weight: 600;
+    }
+    .ont-page-title {
+        font-size: 2.5rem;
+        color: #fff;
+        margin: 1.5rem 0;
+    }
+    .ont-contract-list {
+        color: #fff;
+        border-bottom: 1px solid #fff;
+    }
 </style>
-<style lang="less">
-.contract-tab .nav-link{
-    color:#fff
-}
+<style>
+    .ont-contract-list.table-hover tbody tr:hover{
+        color:#fff
+    }
 </style>
 <template>
-    <div class="container">
-        <b-container>
-            <b-row>
-                <b-col>
-                    <h4 class="title">合约详情</h4>
-                </b-col>
-            </b-row>
-            <b-row class="description">
-                <b-col class="item first contract-base-info">
-                    <img class="avatar" :src="info.avatar" alt="">
-                    <div class="info">
-                        <h4 class="title">{{info.name}}</h4>
-                        <p class="des">{{info.description}}</p>
-                    </div>
-                </b-col>
-            </b-row>
-            <b-row class="description">
-                <b-col class="item first">
-                    <h2>哈希</h2>
-                    <span class="text-color break-all">{{contracthash}}</span>
-                </b-col>
-                <b-col class="item">
-                    <h2>创建者</h2>
-                    <span>{{info.creator}}</span>
-                </b-col>
-                <b-col class="item">
-                    <h2>创建时间</h2>
-                    <span>{{info.time | formatDate}}</span>
-                </b-col>
-            </b-row>
-            <b-row class="description">
-                <b-col class="item first">
-                    <h2>Official Website</h2>
-                    <span class="text-color">{{info.webSite}}</span>
-                </b-col>
-                <b-col class="item">
-                    <h2>Github</h2>
-                    <span>{{info.github}}</span>
-                </b-col>
-            </b-row>
-            <b-row class="description">
-                <b-col class="item first">
-                    <h2>持币地址</h2>
-                    <span class="">{{info.addressNum}}</span>
-                </b-col>
-                <b-col class="item">
-                    <h2>交易数</h2>
-                    <span>{{info.total}}</span>
-                </b-col>
-                <b-col class="item">
-                    <h2>流水总量</h2>
-                    <div>
-                        {{+info.ont}} ONT
-                    </div>
-                    <div>
-                        {{+info.ong}} ONG
-                    </div>
-                </b-col>
-            </b-row>
-        </b-container>
-        <b-tabs class="contract-tab" content-class="mt-3">
-            <b-tab title="交易" active>
-                <div class="table-content">
-                    <b-table class="tran-list" :fields="fields" :items="translateList">
-                        <template slot="TxnHash" slot-scope="data">
-                            <router-link class="text-color" :to="'/block-details/'+data.value">{{data.value |shortHash}}</router-link>
-                        </template>
-                        <template slot="TxnTime" slot-scope="data">{{data.value | formatDate}}</template>
-                    </b-table>
-                </div>
-                <b-row class="justify-content-center">
-                    <b-col md="8" sm="12">
-                        <b-pagination align="fill" :total-rows="total" v-model="currentPage" :per-page="perPage"></b-pagination>
-                    </b-col></b-row>
-            </b-tab>
-            <b-tab title="字节代码">
-                <textarea name="" cols="30" style="width:100%;" readonly></textarea>
-            </b-tab>
-            <b-tab title="ABI">
-                <textarea name="" cols="30" style="width:100%;" readonly></textarea>
-            </b-tab>
-            <!--<b-tab title="数据统计">-->
-
-            <!--</b-tab>-->
-        </b-tabs>
+    <div class="blockIndex container">
+        <h2 class="text-center ont-page-title">{{$t('contract.name')}}</h2>
+        <div class="table-content">
+            <b-table class="ont-contract-list" hover @row-clicked="contractClick" :fields="fields" :items="items">
+                <template slot="Logo" slot-scope="data">
+                    <img class="contract-logo" :src="data.value" alt="">
+                </template>
+                <template slot="Name" slot-scope="data">
+                    <h3 class="contract-name">{{data.value.Name}}</h3>
+                    <div class="contract-desc">{{data.value.desc}}</div>
+                </template>
+                <template slot="ContractHash" slot-scope="data">
+                    <span class="text-color">{{data.value | shortHash}}</span>
+                </template>
+                <template slot="CreateTime" slot-scope="data">{{data.value | formatDate}}</template>
+            </b-table>
+        </div>
+        <b-row class="justify-content-center">
+            <b-col md="8" sm="12">
+                <b-pagination align="fill" :total-rows="total" v-model="currentPage" :per-page="perPage"></b-pagination>
+            </b-col>
+        </b-row>
     </div>
 </template>
 <script>
-    import {
-        getContractInfo
-    }  from "@/apis/server/index";
+    import { getContracts } from "@/apis/server/index";
     export default {
-        data(){
+        data() {
             return {
-                perPage:20,
-                currentPage:1,
-                info:{
-                    avatar:'',
-                    time:'',
-                    name:'',
-                    description:'',
-                    webSite:'',
-                    github:'',
-                    addressNum:'',
-                    total:'',
-                    ont:'',
-                    ong:''
-                },
-                translateList:[],
-                total:0
-            }
+                items: [],
+                total: 0,
+                currentPage: 1,
+                perPage: 15
+            };
         },
         computed: {
             fields() {
                 return [
                     {
-                        key: "TxnHash",
-                        label: `哈希`
-                    },
-                    {
-                        key: "Fee",
-                        label: "费用"
-                    },
-                    {
-                        key: "ConfirmFlag",
-                        label: "状态"
+                        key: "Logo",
+                        label: ""
                     },{
-                        key: "Height",
-                        label: "区块"
+                        key: "Name",
+                        label: "合约名称",
+                        formatter:(value,key,item)=>{
+                            return {Name:value,desc:item.Description}
+                        }
                     },
                     {
-                        key: "TxnTime",
+                        key: "ContractHash",
+                        label: "合约哈希"
+                    },
+                    {
+                        key: "TxCount",
+                        label: "交易数"
+                    },
+                    {
+                        key: "CreateTime",
                         label: "时间"
                     }
                 ];
-            },
-            contracthash() {
-                return this.$route.params.hash;
             }
         },
-        mounted(){
-            this.getContract()
+        mounted() {
+            this.getContractList();
         },
-        watch:{
-            currentPage(){
-                this.getContract()
+        watch: {
+            currentPage: {
+                handler: function(value) {
+                    this.getContractList(this.perPage, value);
+                }
             }
         },
-        methods:{
-            async getContract(){
-                let result = await getContractInfo(this.contracthash,this.perPage,this.currentPage)
-                if(result){
-                    this.info=Object.assign({
-                        avatar:result.Logo,
-                        time:result.UpdateTime,
-                        name:result.Name,
-                        description:result.Description,
-                        webSite:JSON.parse(result.ContactInfo)['Official Website'],
-                        github:JSON.parse(result.ContactInfo)['Github'],
-                        addressNum:result.AddressCount,
-                        total:result.Total,
-                        ont:result.OntCount,
-                        ong:result.OngCount,
-                        creator:result.Creator
-                    })
-                    this.total=result.Total
-                    this.translateList=result.TxnList
+        methods: {
+            async getContractList(pagesize, pagenumber) {
+                try {
+                    const result = await getContracts(
+                        pagesize || this.perPage,
+                        pagenumber || this.currentPage
+                    );
+                    this.items = result.ContractList;
+                    if (!pagenumber) {
+                        this.total = result.Total;
+                    }
+                } catch (error) {
+                    console.log(error);
                 }
             },
+            contractClick(item){
+                this.$router.push(`/contract-details/${item.ContractHash}`)
+            }
         }
     };
 </script>

@@ -55,7 +55,11 @@ export default new Router({
       component: () => import('@/pages/tokenDetails/tokenDetails.vue')
     },{
       path: '/contract-details/:hash',
-      name: 'contract-details', // // token 详情
+      name: 'contract-details', // 合约 详情
+      component: () => import('@/pages/contract/contractDetails.vue')
+    },{
+      path: '/contract',
+      name: 'contract', // 合约 详情
       component: () => import('@/pages/contract/contract.vue')
     }
   ]

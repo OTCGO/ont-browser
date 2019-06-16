@@ -158,6 +158,16 @@ const getAddressInfo = function (address, pagesize, pagenumber) {
 const getContractInfo=function (contracthash,pagesize,pagenumber) {
     return httpRequests.get(`${getContractUrl}/${contracthash}/${pagesize}/${pagenumber}`);
 }
+/**
+ * 获取合约列表
+ *
+ * @param {*} pagesize
+ * @param {*} pagenumber
+ * @returns
+ */
+const getContracts=function (pagesize,pagenumber) {
+    return httpRequests.get(`${getContractUrl}/${pagesize}/${pagenumber}`);
+}
 
 
 export {
@@ -171,5 +181,6 @@ export {
     getTokenList,
     getToken,
     getAddressInfo,
-    getContractInfo
+    getContractInfo,
+    getContracts
 }
