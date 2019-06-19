@@ -65,7 +65,7 @@ export default {
     return {
       text: "menu.language",
       languages: [
-        // { code: "zh-US", name: "English" },
+         { code: "zh-US", name: "English" },
         { code: "zh-CN", name: "中文" }
       ],
       menuItem: [

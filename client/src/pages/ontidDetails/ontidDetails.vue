@@ -1,10 +1,10 @@
 <template>
   <div class="container">
+    <h3 >ONT ID {{$t('ontId.detail')}}</h3>
     <b-container>
-      <b-row>
-        <b-col class="break-all">{{ontid}}</b-col>
+     <b-row>
+        <b-col class="break-all">ONT ID:{{ontid}}</b-col>
       </b-row>
-
       <b-row class="description">
         <b-col class="item first">
           <h2>Type</h2>
@@ -29,6 +29,7 @@
     </b-container>
 
     <div class="row">
+      <h3 >{{$t('ontId.event')}}</h3>
       <div class="table-content">
         <b-table class="tran-list" :fields="fields" :items="items">
           <template slot="TxnHash" slot-scope="data">
@@ -68,23 +69,23 @@ export default {
       return [
         {
           key: "TxnHash",
-          label: "哈希"
+          label: this.$t('hash')
         },
         {
           key: "OntId",
-          label: "ont id"
+          label: "ONT ID"
         },
         {
           key: "Height",
-          label: "高度"
+          label: this.$t('height')
         },
         {
           key: "Description",
-          label: "描述"
+          label: this.$t('ontId.desc')
         },
         {
           key: "TxnTime",
-          label: "时间"
+          label: this.$t('time')
         }
       ];
     },

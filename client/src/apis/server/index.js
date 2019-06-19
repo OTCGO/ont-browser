@@ -1,8 +1,8 @@
 import {
     httpRequests
-} from "@/helpers";
-
-const host = "https://explorer.ont.io";
+} from '@/helpers';
+import axios from "axios";
+const host = 'https://explorer.ont.io';
 
 // Block
 const getBlockListUrl = `${host}/api/v1/explorer/blocklist`;
@@ -25,12 +25,13 @@ const getSummaryInfoUrl = `${host}/api/v1/explorer/summary`;
 const getTokenListUrl = `${host}/api/v1/explorer/oepcontract`;
 const getTokenUrl = `${host}/api/v1/explorer/oepcontract`;
 
-
+// address list
+const getAddressListUrl = `${host}/getAssetHolder`;
 // account
 const getAddressInfoUrl = `${host}/api/v1/explorer/address`;
 
 // contract
-const getContractUrl=`${host}/api/v1/explorer/contract`
+const getContractUrl = `${host}/api/v1/explorer/contract`;
 /**
  * 分页获取区块列表
  *
@@ -72,8 +73,6 @@ const getTransactionList = function (pagesize, pagenumber) {
 const getTransactionByHash = function (hash) {
     return httpRequests.get(`${getTransactionByHashUrl}/${hash}`);
 };
-
-
 
 
 /**
@@ -147,6 +146,25 @@ const getToken = function (type, contracthash, pagesize, pagenumber) {
 const getAddressInfo = function (address, pagesize, pagenumber) {
     return httpRequests.get(`${getAddressInfoUrl}/${address}/${pagesize}/${pagenumber}`);
 };
+/*
+*
+* 分页查询地址列表
+*
+* */
+const getAddressList = function (pagenumber, pageSize, token = 'ont') {
+    return axios(`${getAddressListUrl}`, {
+        cache: "no-cache",
+        method:'GET',
+        params: {
+            qid: 1,
+            contract: token === 'ont' ? '0100000000000000000000000000000000000000' : '0200000000000000000000000000000000000000',
+            from: (pagenumber - 1) * pageSize,
+            count: pageSize
+        }
+    }).then(response => {
+        if (response.data.error_code === 0) return response.data.result;
+    });
+};
 /**
  * 获取合约详情
  *
@@ -155,9 +173,9 @@ const getAddressInfo = function (address, pagesize, pagenumber) {
  * @param {*} pagenumber
  * @returns
  */
-const getContractInfo=function (contracthash,pagesize,pagenumber) {
+const getContractInfo = function (contracthash, pagesize, pagenumber) {
     return httpRequests.get(`${getContractUrl}/${contracthash}/${pagesize}/${pagenumber}`);
-}
+};
 /**
  * 获取合约列表
  *
@@ -165,9 +183,9 @@ const getContractInfo=function (contracthash,pagesize,pagenumber) {
  * @param {*} pagenumber
  * @returns
  */
-const getContracts=function (pagesize,pagenumber) {
+const getContracts = function (pagesize, pagenumber) {
     return httpRequests.get(`${getContractUrl}/${pagesize}/${pagenumber}`);
-}
+};
 
 
 export {
@@ -182,5 +200,6 @@ export {
     getToken,
     getAddressInfo,
     getContractInfo,
-    getContracts
-}
+    getContracts,
+    getAddressList
+};

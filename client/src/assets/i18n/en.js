@@ -1,116 +1,149 @@
 // 英文
-module.exports= {
-  logo: require('@/assets/images/logo_en.svg'),
-  language: 'en',
-  title:'support all assets',
-  menu: {
-    home: 'Home',
-    assets: 'Assets',
-      contracts: 'Contracts',
-    api: 'API',
-    language: 'Language',
-    wallet: 'SEA Wallet'
-  },
-  slider: {
+module.exports = {
+    logo: require('@/assets/images/logo_en.svg'),
+    language: 'en',
+    title: 'ONT Blockchain Explorer',
+    search: 'Search',
+    hash: 'Hash',
+    time: 'Time',
+    size: 'Size',
+    height:'Height',
+    status:'Status',
+    menu: {
+        home: 'Home',
+        assets: 'Assets',
+        contracts: 'Contracts',
+        api: 'API',
+        language: 'Language',
+        wallet: 'SEA Wallet'
+    },
+    slider: {
+        dynamic: {
+            name: 'Dynamic',
+            search: 'Block Height, Hash, Address or Transaction id'
+        },
+        market: {
+            name: 'Market'
+        },
+        transaction: {
+            name: 'Transactions'
+        },
+        block: {
+            name: 'Blocks'
+        },
+        address: {
+            name: 'Addresses'
+        }
+    },
     dynamic: {
-      name: 'Dynamic',
-      search: 'Block Height, Hash, Address or Transaction id'
-    },
-    market: {
-      name: 'Market',
-    },
-    transaction: {
-      name: 'Transactions',
+        blockHeight: 'Block Height',
+        nodes: 'Consensus Nodes',
+        transactionNum: 'Total Transactions',
+        addressNum: 'Total addresses',
+        ontIdNum: 'Total ONT ID',
+        startTime: 'start time',
+        runTime: 'run time',
+        blockNum: 'total blocks',
+        assetNum: 'total assets',
+        day: 'days',
+        second: 'seconds',
+        newBlock: 'new block'
     },
     block: {
-      name: 'Blocks',
+        name: 'block info',
+        index: 'index',
+        hash: 'Hash',
+        byte: 'Bytes',
+        version: 'version',
+        merkleroot: 'Merkle Root',
+        invocationScript: 'invocationScript',
+        verificationScript: 'verificationScript',
+        height: 'Height',
+        size: 'size',
+        transactions: 'Txns',
+        time: 'time',
+        DetailTitle:'Block Detail'
+    },
+    transaction: {
+        name: 'Transaction Info',
+        type: 'Type',
+        fee: 'Fee',
+        networkFee: 'NetworkFee',
+        systemFee: 'SystemFee',
+        transactionId: 'Transaction ID',
+        invocationScript: 'InvocationScript',
+        verificationScript: 'VerificationScript',
+        sentFrom: 'SentFrom',
+        sentTo: 'SentTo',
+        desc: 'Description',
+        assets: 'Assets',
+        amount: 'Amount',
+        description: 'Description'
     },
     address: {
-      name: 'Addresses'
+        title: 'Address - Position Ranking',
+        value: 'Address',
+        blockIndex: 'BlockIndex',
+        time: 'Time',
+        newWallet: 'NEW WALLET',
+        openWallet: 'OPEN WALLET',
+        balance: 'Balance',
+        rank: 'Rank',
+        zero: 'The Address Balance Is 0',
+        update: 'Weekly Updates',
+        percent: 'Percent',
+        detailTitle:'Address Detail',
+        unbound:'Unbound',
+        claimable:'Claimable'
+    },
+    asset: {
+        name: 'Name',
+        type: 'Type',
+        symbol: 'Symbol',
+        assetId: 'AssetId',
+        amount: 'Amount',
+        info: 'Asset Info'
+    },
+    pagination: {
+        current: 'current',
+        to: 'to',
+        total: 'total',
+        next: 'Next',
+        prev: 'Prev'
+    },
+    contract: {
+        name: 'Name',
+        title:'Contracts',
+        transactions: 'Transactions',
+        transaction: 'Transactions',
+        createTime: 'Create Time',
+        detailTitle:'Contract Detail',
+        creator:'Creator',
+        address:'Addresses',
+        volume:'Volume',
+        block:'Block',
+        fee:'Fee'
+    },
+    ontId: {
+        title: 'ONT ID',
+        desc: 'Description',
+        fee: 'Fee',
+        event: 'Event on This ONT ID',
+        detail: 'Details',
+        owner: 'Owner'
+    },
+    footer: {
+        version: 'cli version',
+        link: 'link',
+        SEA: 'SEA',
+        NEO: 'NEO',
+        ont: 'ONT',
+        cryptogladiator: 'CryptoGladiator',
+        alchemint: 'Alchemint',
+        loopring: 'Loopring',
+        binance: 'Binance',
+        byb: 'BiYongbao',
+        nns: 'NNS',
+        zdpvt: 'zdpvt'
     }
-  },
-  dynamic: {
-    startTime: 'start time',
-    runTime: 'run time',
-    blockNum: 'total blocks',
-    assetNum: 'total assets',
-    addressNum: 'total addresses',
-    transactionNum: 'total transactions',
-    day: 'days',
-    second: 'seconds',
-    newBlock: 'new block'
-  },
-  block: {
-    name: 'block info',
-    index: 'index',
-    hash: 'hash',
-    byte: 'bytes',
-    version: 'version',
-    merkleroot: 'merkleroot',
-    invocationScript: 'invocationScript',
-    verificationScript: 'verificationScript',
-    height: 'height',
-    size: 'size',
-    transactions: 'transactions',
-    time: 'time'
-  },
-  transaction: {
-    name: 'transaction info',
-    type: 'type',
-    networkFee: 'networkFee',
-    systemFee: 'systemFee',
-    transactionId: "transaction id",
-    time: 'time',
-    size: 'size',
-    invocationScript: 'invocationScript',
-    verificationScript: 'verificationScript',
-    sentFrom: 'sentFrom',
-    sentTo: 'sentTo'
-  },
-  address: {
-    value: 'address',
-    blockIndex: 'blockIndex',
-    time: 'time',
-    newWallet: 'NEW WALLET',
-    openWallet: 'OPEN WALLET',
-    balance: 'balance',
-    rank: 'rank',
-    zero: "the address balance is 0",
-    update: "Weekly Updates"
-  },
-  asset: {
-    name: 'Name',
-    type: 'Type',
-    symbol: 'Symbol',
-    assetId: 'AssetId',
-    amount: 'Amount',
-    info: 'Asset Info'
-  },
-  pagination: {
-    current: 'current',
-    to: 'to',
-    total: 'total',
-    next: 'Next',
-    prev: 'Prev'
-  },
-  contract:{
-    name:'Name',
-      hash:'Hash',
-      transactions:'Transactions',
-      createTime:'Create Time'
-  },
-  footer: {
-    version: 'cli version',
-      link:'link',
-      SEA:'SEA',
-      NEO:'NEO',
-      ont:'ONT',
-      cryptogladiator:'CryptoGladiator',
-      alchemint:'Alchemint',
-      loopring:'Loopring',
-      binance:'Binance',
-      byb:'BiYongbao',
-      nns:'NNS',
-    zdpvt:'zdpvt'
-  }
-}
+};

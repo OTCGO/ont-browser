@@ -11,7 +11,7 @@
 </style>
 <template>
   <div class="blockIndex container">
-    <h2 class="text-center neo-page-title">最新 ONT ID</h2>
+    <h2 class="text-center neo-page-title">{{$t('ontId.title')}}</h2>
     <div class="table-content">
     <b-table class="neo-block-list" :fields="fields" :items="items">
       <template slot="TxnHash" slot-scope="data">
@@ -45,23 +45,23 @@ export default {
       return [
         {
           key: "TxnHash",
-          label: "哈希"
+          label: this.$t('hash')
         },
         {
           key: "OntId",
-          label: "ont id"
+          label: "ONT ID"
         },
         {
           key: "Height",
-          label: "高度"
+          label: this.$t('height')
         },
         {
           key: "Description",
-          label: "描述"
+          label: this.$t('ontId.desc')
         },
         {
           key: "TxnTime",
-          label: "时间"
+          label: this.$t('time')
         }
       ];
     }

@@ -66,22 +66,22 @@
                         label: ""
                     },{
                         key: "Name",
-                        label: "合约名称",
+                        label: this.$t('name'),
                         formatter:(value,key,item)=>{
                             return {Name:value,desc:item.Description}
                         }
                     },
                     {
                         key: "ContractHash",
-                        label: "合约哈希"
+                        label: this.$t('hash')
                     },
                     {
                         key: "TxCount",
-                        label: "交易数"
+                        label: this.$t('transactions')
                     },
                     {
                         key: "CreateTime",
-                        label: "时间"
+                        label: this.$t('createTime')
                     }
                 ];
             }

@@ -4,6 +4,11 @@ module.exports = {
     language: 'zhCHS',
     title: 'ONT区块浏览器',
     search: '查询',
+    hash:'哈希',
+    time:'时间',
+    size:'大小',
+    height:'高度',
+    status:'状态',
     menu: {
         home: '首页',
         assets: '资产',
@@ -31,12 +36,15 @@ module.exports = {
         }
     },
     dynamic: {
+        blockHeight:'当前区块高度',
+        nodes:"知识节点数量",
+        transactionNum: '当前交易笔数',
+        addressNum: '注册地址数量',
+        ontIdNum:'ONT ID 数量',
         startTime: '开始时间',
         runTime: '运行时间',
         blockNum: '区块数量',
         assetNum: '资产数量',
-        addressNum: '地址数量',
-        transactionNum: '交易数量',
         day: '天',
         second: '秒',
         newBlock: '新块时间'
@@ -47,17 +55,19 @@ module.exports = {
         hash: '散列值',
         byte: '字节',
         version: '版本',
-        merkleroot: '列表的根散列',
+        merkleroot: 'Merkle 根',
         invocationScript: '合约脚本',
         verificationScript: '验证脚本',
         height: '高度',
         size: '大小',
         transactions: '交易数',
-        time: '时间'
+        time: '时间',
+        DetailTitle:'区块详情'
     },
     transaction: {
         name: '交易信息',
         type: '类型',
+        fee:'手续费',
         networkFee: '网络费用',
         systemFee: '系统费用',
         transactionId: '交易标识',
@@ -66,9 +76,15 @@ module.exports = {
         invocationScript: '合约脚本',
         verificationScript: '验证脚本',
         sentFrom: '转出',
-        sentTo: '转入'
+        sentTo: '转入',
+        desc:'描述',
+        assets:'资产',
+        description:'操作',
+
     },
     address: {
+        title:'持仓排名',
+        percent:'占比',
         value: '地址',
         blockIndex: '区块高度',
         time: '时间',
@@ -77,7 +93,10 @@ module.exports = {
         balance: '余额',
         rank: '排名',
         zero: '该地址余额为0',
-        update: '每周更新数据'
+        update: '每周更新数据',
+        detailTitle:'地址详情',
+        unbound:'未解绑',
+        claimable:'待提取'
     },
     asset: {
         name: '名称',
@@ -88,10 +107,26 @@ module.exports = {
         info: '资产信息'
     },
     contract: {
-        name: '合约',
+        title:'合约',
+        name: '合约名称',
         hash: '哈希',
         transactions: '交易数量',
-        createTime: '创建时间'
+        transaction: '交易',
+        createTime: '创建时间',
+        detailTitle:'合约详情',
+        creator:'创建者',
+        address:'持币地址',
+        volume:'流水总量',
+        block:'区块',
+        fee:'费用'
+    },
+    ontId:{
+        title:'最新 ONT ID',
+        desc:'描述',
+        fee:'费用',
+        event:'在这个ONT ID 上的事件',
+        detail:'详情',
+        owner:'所属人',
     },
     pagination: {
         current: '当前',

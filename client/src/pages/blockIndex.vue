@@ -46,23 +46,23 @@ export default {
       return [
         {
           key: "Height",
-          label: "高度"
+          label: this.$t('block.height')
         },
         {
           key: "Hash",
-          label: "哈希"
+          label: this.$t('hash')
         },
         {
           key: "TxnNum",
-          label: "交易数"
+          label: this.$t('block.transactions')
         },
         {
           key: "BlockSize",
-          label: `大小`
+          label:  this.$t('size')
         },
         {
           key: "BlockTime",
-          label: "时间"
+          label:  this.$t('time')
         }
       ];
     }

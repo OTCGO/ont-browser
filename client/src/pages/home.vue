@@ -98,7 +98,7 @@
 <template>
   <div class="el-container">
     <div class="head">
-      <h2>ONT区块浏览器</h2>
+      <h2>{{$t('title')}}</h2>
       <b-form class="search-form row" inline v-on:submit="searchBlock">
         <b-input-group size="lg" class="search-group col-md-6 col-offset-md-3 col-sm-12">
           <b-form-input v-model="searchKey" :placeholder="$t('slider.dynamic.search')"></b-form-input>
@@ -116,41 +116,41 @@
           <p class="ont-dynamic-value">2016-08-15</p>
         </div>
       </div>-->
-      <router-link to="/" class="col-md-3 ont-dynamic-link ont-dynamic-item col-sm-4">
+      <router-link to="/block" class="col-md-3 ont-dynamic-link ont-dynamic-item col-sm-4">
         <div class="ont-bg"></div>
         <div class="ont-dynamic-content">
-          <p class="ont-dynamic-title">当前区块高度</p>
+          <p class="ont-dynamic-title">{{$t('dynamic.blockHeight')}}</p>
           <p class="ont-dynamic-value">{{summary.CurrentHeight}}</p>
         </div>
       </router-link>
-      <router-link to="/" class="col-md-3 ont-dynamic-link ont-dynamic-item col-sm-4">
+      <router-link to="/translate" class="col-md-3 ont-dynamic-link ont-dynamic-item col-sm-4">
         <div class="ont-bg"></div>
         <div class="ont-dynamic-content">
-          <p class="ont-dynamic-title">交易数量</p>
+          <p class="ont-dynamic-title">{{$t('dynamic.transactionNum')}}</p>
           <p class="ont-dynamic-value">{{summary.TxnCount}}</p>
         </div>
       </router-link>
       <router-link to="/" class="col-md-3 ont-dynamic-item ont-dynamic-link col-sm-4">
         <div class="ont-bg"></div>
         <div class="ont-dynamic-content">
-          <p class="ont-dynamic-title">节点数量</p>
+          <p class="ont-dynamic-title">{{$t('dynamic.nodes')}}</p>
           <p class="ont-dynamic-value">{{summary.NodeCount}}</p>
         </div>
       </router-link>
-      <router-link to="/" class="col-md-3 ont-dynamic-item ont-dynamic-link col-sm-4">
+      <router-link to="/ontid" class="col-md-3 ont-dynamic-item ont-dynamic-link col-sm-4">
         <div class="ont-bg"></div>
         <div class="ont-dynamic-content">
-          <p class="ont-dynamic-title">OntId数量</p>
+          <p class="ont-dynamic-title">{{$t('dynamic.ontIdNum')}}</p>
           <p class="ont-dynamic-value">{{summary.OntIdCount}}</p>
         </div>
       </router-link>
-      <div class="col-md-3 ont-dynamic-item col-sm-4">
+      <router-link to="/address/ont" class="col-md-3 ont-dynamic-item ont-dynamic-link col-sm-4">
         <div class="ont-bg"></div>
         <div class="ont-dynamic-content">
-          <p class="ont-dynamic-title">地址数量</p>
+          <p class="ont-dynamic-title">{{$t('dynamic.addressNum')}}</p>
           <p class="ont-dynamic-value">{{summary.AddressCount}}</p>
         </div>
-      </div>
+      </router-link>
       <!-- <router-link to="/" class="col-md-2 ont-dynamic-item ont-dynamic-link col-sm-4">
         <div class="ont-bg"></div>
         <div class="ont-dynamic-content">

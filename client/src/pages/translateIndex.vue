@@ -45,19 +45,19 @@ export default {
       return [
         {
           key: "TxnHash",
-          label: "哈希"
+          label: this.$t('hash')
         },
         {
           key: "TxnType",
-          label: "交易类型"
+          label: this.$t('transaction.type')
         },
         {
           key: "Height",
-          label: "高度"
+          label: this.$t('height')
         },
         {
           key: "TxnTime",
-          label: "时间"
+          label: this.$t('time')
         }
       ];
     }

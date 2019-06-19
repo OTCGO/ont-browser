@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+    <h3>{{$t('block.DetailTitle')}}</h3>
     <b-container>
       <b-row>
         <b-col>
@@ -9,21 +10,21 @@
 
       <b-row class="description">
         <b-col class="item first">
-          <h2>高度</h2>
+          <h2>{{$t('height')}}</h2>
           <span class="text-color">{{blockDetails.Height}}</span>
         </b-col>
         <b-col class="item">
-          <h2>交易数</h2>
+          <h2>{{$t('block.transactions')}}</h2>
           <span>{{blockDetails.TxnNum}}</span>
         </b-col>
         <b-col class="item">
-          <h2>时间</h2>
+          <h2>{{$t('time')}}</h2>
           <span>{{blockDetails.BlockTime | formatDate}}</span>
         </b-col>
       </b-row>
       <b-row class="description">
         <b-col class="item first">
-          <h2>Merkle根</h2>
+          <h2>{{$t('block.merkleroot')}}</h2>
           <span class="break-all">{{blockDetails.TxnsRoot}}</span>
         </b-col>
       </b-row>
@@ -57,19 +58,19 @@ export default {
       return [
         {
           key: "TxnHash",
-          label: `哈希`
+          label: this.$t('hash')
         },
         {
           key: "Height",
-          label: "高度"
+          label: this.$t('height')
         },
         {
           key: "ConfirmFlag",
-          label: "状态"
+          label: this.$t('status')
         },
         {
           key: "TxnTime",
-          label: "时间"
+          label: this.$t('time')
         }
       ];
     },

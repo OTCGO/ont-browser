@@ -29,6 +29,11 @@ export default new Router({
       name: 'translate-details', // 交易详情
       component: () => import('@/pages/translateDetails/translateDetails.vue')
     },
+      {
+          path: '/address/:token',
+          name: 'address', // 地址详情
+          component: () => import('@/pages/address/addressList.vue')
+      },
     {
       path: '/address-details/:address',
       name: 'address-details', // 地址详情

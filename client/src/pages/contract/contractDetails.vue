@@ -11,7 +11,7 @@
         <b-container>
             <b-row>
                 <b-col>
-                    <h4 class="title">合约详情</h4>
+                    <h3 class="title">{{$t('contract.detailTitle')}}</h3>
                 </b-col>
             </b-row>
             <b-row class="description">
@@ -25,15 +25,15 @@
             </b-row>
             <b-row class="description">
                 <b-col class="item first">
-                    <h2>哈希</h2>
+                    <h2>{{$t('hash')}}</h2>
                     <span class="text-color break-all">{{contracthash}}</span>
                 </b-col>
                 <b-col class="item">
-                    <h2>创建者</h2>
-                    <span>{{info.creator}}</span>
+                    <h2>{{$t('contract.creator')}}</h2>
+                    <router-link class="text-color" :to="'/address-details/'+info.creator">{{info.creator}}</router-link>
                 </b-col>
                 <b-col class="item">
-                    <h2>创建时间</h2>
+                    <h2>{{$t('contract.createTime')}}</h2>
                     <span>{{info.time | formatDate}}</span>
                 </b-col>
             </b-row>
@@ -49,15 +49,15 @@
             </b-row>
             <b-row class="description">
                 <b-col class="item first">
-                    <h2>持币地址</h2>
+                    <h2>{{$t('contract.address')}}</h2>
                     <span class="">{{info.addressNum}}</span>
                 </b-col>
                 <b-col class="item">
-                    <h2>交易数</h2>
+                    <h2>{{$t('contract.transactions')}}</h2>
                     <span>{{info.total}}</span>
                 </b-col>
                 <b-col class="item">
-                    <h2>流水总量</h2>
+                    <h2>{{$t('contract.volume')}}</h2>
                     <div>
                         {{+info.ont}} ONT
                     </div>
@@ -68,7 +68,7 @@
             </b-row>
         </b-container>
         <b-tabs class="contract-tab" content-class="mt-3">
-            <b-tab title="交易" active>
+            <b-tab :title="$t('contract.transaction')" active>
                 <div class="table-content">
                     <b-table class="tran-list" :fields="fields" :items="translateList">
                         <template slot="TxnHash" slot-scope="data">
@@ -82,12 +82,12 @@
                         <b-pagination align="fill" :total-rows="total" v-model="currentPage" :per-page="perPage"></b-pagination>
                     </b-col></b-row>
             </b-tab>
-            <b-tab title="字节代码">
-                <textarea name="" cols="30" style="width:100%;" readonly></textarea>
-            </b-tab>
-            <b-tab title="ABI">
-                <textarea name="" cols="30" style="width:100%;" readonly></textarea>
-            </b-tab>
+            <!--<b-tab title="字节代码">-->
+                <!--<textarea name="" cols="30" style="width:100%;" readonly></textarea>-->
+            <!--</b-tab>-->
+            <!--<b-tab title="ABI">-->
+                <!--<textarea name="" cols="30" style="width:100%;" readonly></textarea>-->
+            <!--</b-tab>-->
             <!--<b-tab title="数据统计">-->
 
             <!--</b-tab>-->
@@ -124,22 +124,25 @@
                 return [
                     {
                         key: "TxnHash",
-                        label: `哈希`
+                        label: this.$t('hash')
                     },
                     {
                         key: "Fee",
-                        label: "费用"
+                        label: this.$t('fee'),
+                        formatter:(value,key,item)=>{
+                            return Number(value).toFixed(2)
+                        }
                     },
                     {
                         key: "ConfirmFlag",
-                        label: "状态"
+                        label: this.$t('status')
                     },{
                         key: "Height",
-                        label: "区块"
+                        label: this.$t('contract.Block')
                     },
                     {
                         key: "TxnTime",
-                        label: "时间"
+                        label: this.$t('time')
                     }
                 ];
             },

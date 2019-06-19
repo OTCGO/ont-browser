@@ -1,18 +1,19 @@
 <template>
   <div class="container">
+    <h3 >{{$t('address.detailTitle')}}</h3>
     <b-container>
       <b-row>
-        <b-col>{{address}}</b-col>
+        <b-col>{{$t('address.value')}}:{{address}}</b-col>
       </b-row>
 
       <b-row class="description">
         <b-col class="item col-3" v-for="item in assetBalance" :key="item.index">
           <div v-if="item.AssetName === 'waitboundong'">
-            <h2>ong-待提取</h2>
+            <h2>ong-{{$t('address.claimable')}}</h2>
             <span class="text-color">{{item.Balance}}</span>
           </div>
           <div v-else-if="item.AssetName === 'unboundong'">
-            <h2>ong-未提取</h2>
+            <h2>ong-{{$t('address.unbound')}}</h2>
             <span class="text-color">{{item.Balance}}</span>
           </div>
           <div v-else>
@@ -65,19 +66,19 @@ export default {
       return [
         {
           key: "TxnHash",
-          label: `哈希`
+          label: this.$t('hash')
         },
         {
           key: "Height",
-          label: "高度"
+          label: this.$t('height')
         },
         {
           key: "ConfirmFlag",
-          label: "状态"
+          label: this.$t('status')
         },
         {
           key: "TxnTime",
-          label: "时间"
+          label: this.$t('time')
         }
       ];
     },

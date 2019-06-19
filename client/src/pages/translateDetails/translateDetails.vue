@@ -1,34 +1,35 @@
 <template>
     <div class="container">
         <b-container>
+            <h3>{{$t('transaction.name')}}</h3>
             <b-row>
-                <b-col class="break-all">hash:{{hash}}</b-col>
+                <b-col class="break-all">Hash:{{hash}}</b-col>
             </b-row>
 
             <b-row class="description">
                 <b-col sm="6" cols="4" style="padding: 0">
-                    <div class="item first" style="padding-left: 15px"><h2>高度</h2>
+                    <div class="item first" style="padding-left: 15px"><h2>{{$t('height')}}</h2>
                         <span class="text-color">{{txDetails.Height}}</span>
                     </div>
                 </b-col>
                 <b-col sm="6" cols="4" style="padding: 0">
-                    <div class="item"  style="padding-left: 15px"><h2>类型</h2>
+                    <div class="item"  style="padding-left: 15px"><h2>{{$t('transaction.type')}}</h2>
                         <span>{{txDetails.TxnType | formatTxType}}</span>
                     </div>
                 </b-col>
                 <b-col sm="12" cols="4" style="padding: 0">
-                    <div class="item"  style="padding-left: 15px"><h2>时间</h2>
+                    <div class="item"  style="padding-left: 15px"><h2>{{$t('time')}}</h2>
                         <span>{{txDetails.TxnTime | formatDate }}</span>
                     </div>
                 </b-col>
             </b-row>
             <b-row class="description">
                 <b-col class="item first">
-                    <h2>手续费</h2>
+                    <h2>{{$t('transaction.fee')}}</h2>
                     <span>{{txDetails.Fee}}</span>
                 </b-col>
                 <b-col class="item">
-                    <h2>状态</h2>
+                    <h2>{{$t('transaction.type')}}</h2>
                     <span>{{txDetails.ConfirmFlag}}</span>
                 </b-col>
             </b-row>
@@ -82,23 +83,23 @@
                 return [
                     {
                         key: 'AssetName',
-                        label: '资产'
+                        label: this.$t('transaction.assets')
                     },
                     {
                         key: 'FromAddress',
-                        label: '转出地址'
+                        label: this.$t('transaction.sentFrom')
                     },
                     {
                         key: 'ToAddress',
-                        label: `转入地址`
+                        label: this.$t('transaction.sentTo')
                     },
                     {
-                        key: 'AssetName',
-                        label: '金额'
+                        key: 'Amount',
+                        label: this.$t('transaction.amount')
                     },
                     {
                         key: 'Description',
-                        label: '操作'
+                        label: this.$t('transaction.description')
                     }
                 ];
             },
@@ -106,11 +107,11 @@
                 return [
                     {
                         key: 'OntId',
-                        label: 'Ont Id'
+                        label: 'ONT ID'
                     },
                     {
                         key: 'Description',
-                        label: '描述'
+                        label: this.$('transaction.desc')
                     }
                 ];
             },
