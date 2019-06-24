@@ -9,6 +9,10 @@ module.exports = {
     size: 'Size',
     height:'Height',
     status:'Status',
+    208:'Deploy Smart Contract',
+    209:'Invoke Smart Contract',
+    searchError:'Sorry, the search string you entered could not be found.',
+    tips:'Tips',
     menu: {
         home: 'Home',
         assets: 'Assets',
@@ -20,7 +24,7 @@ module.exports = {
     slider: {
         dynamic: {
             name: 'Dynamic',
-            search: 'Block Height, Hash, Address or Transaction id'
+            search: 'Block Height, Hash, Address, ONT ID or Transaction id'
         },
         market: {
             name: 'Market'
@@ -33,6 +37,9 @@ module.exports = {
         },
         address: {
             name: 'Addresses'
+        },
+        ontId:{
+            name:'ONT ID EVENTS'
         }
     },
     dynamic: {

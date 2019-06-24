@@ -9,6 +9,10 @@ module.exports = {
     size:'大小',
     height:'高度',
     status:'状态',
+    208:'部署智能合约',
+    209:'调用智能合约',
+    searchError:'对不起，无法找到您输入的搜索内容',
+    tips:'提示',
     menu: {
         home: '首页',
         assets: '资产',
@@ -20,7 +24,7 @@ module.exports = {
     slider: {
         dynamic: {
             name: '最新动态',
-            search: '请输入区块高度、地址或交易标识'
+            search: '请输入区块高度、地址、ONT ID或交易标识'
         },
         market: {
             name: '最新行情'
@@ -33,6 +37,9 @@ module.exports = {
         },
         address: {
             name: '最新地址'
+        },
+        ontId:{
+            name:'最新ID事件'
         }
     },
     dynamic: {
@@ -79,8 +86,7 @@ module.exports = {
         sentTo: '转入',
         desc:'描述',
         assets:'资产',
-        description:'操作',
-
+        description:'操作'
     },
     address: {
         title:'持仓排名',
