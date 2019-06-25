@@ -9,15 +9,15 @@
       <b-row class="description">
         <b-col class="item col-3" v-for="item in assetBalance" :key="item.index">
           <div v-if="item.AssetName === 'waitboundong'">
-            <h2>ong-{{$t('address.claimable')}}</h2>
+            <h2>ONG-{{$t('address.claimable')}}</h2>
             <span class="text-color">{{item.Balance}}</span>
           </div>
           <div v-else-if="item.AssetName === 'unboundong'">
-            <h2>ong-{{$t('address.unbound')}}</h2>
+            <h2>ONG-{{$t('address.unbound')}}</h2>
             <span class="text-color">{{item.Balance}}</span>
           </div>
           <div v-else>
-            <h2>{{item.AssetName}}</h2>
+            <h2>{{item.AssetName.toUpperCase()}}</h2>
             <span class="text-color">{{item.Balance}}</span>
           </div>
         </b-col>

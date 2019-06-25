@@ -59,7 +59,7 @@
                 <b-col class="item">
                     <h2>{{$t('contract.volume')}}</h2>
                     <div>
-                        {{+info.ont}} ONT
+                        {{+info.ont|formatNum(0)}} ONT
                     </div>
                     <div>
                         {{+info.ong}} ONG

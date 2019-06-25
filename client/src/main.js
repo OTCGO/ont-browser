@@ -20,35 +20,37 @@ import '@/style/common.less';
 
 
 import {
-  formatDate,
-  formatTxType,
-    shortHash
-} from "@/filters"
+    formatDate,
+    formatTxType,
+    shortHash,
+    formatNum
+} from '@/filters';
 
 Vue.config.productionTip = false;
 
 Vue.use(VueI18n);
 Vue.use(Bootstrap);
 
-Vue.filter('formatDate', formatDate)
-Vue.filter('formatTxType', formatTxType)
-Vue.filter('shortHash', shortHash)
+Vue.filter('formatDate', formatDate);
+Vue.filter('formatTxType', formatTxType);
+Vue.filter('shortHash', shortHash);
+Vue.filter('formatNum', formatNum);
 
 var i18n = new VueI18n({
-  locale: localStorage.getItem('locale') || 'zh-CN',
-  messages: {
-    'zh-CN': {
-      ...zh_cn
-    },
-    'en-US': {
-      ...zh_en
+    locale: localStorage.getItem('locale') || 'zh-CN',
+    messages: {
+        'zh-CN': {
+            ...zh_cn
+        },
+        'en-US': {
+            ...zh_en
+        }
     }
-  }
 });
 /* eslint-disable no-new */
 new Vue({
-  el: '#app',
-  i18n,
-  router,
-  render: h => h(App),
+    el: '#app',
+    i18n,
+    router,
+    render: h => h(App)
 });

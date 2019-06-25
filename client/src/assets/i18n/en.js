@@ -13,6 +13,8 @@ module.exports = {
     209:'Invoke Smart Contract',
     searchError:'Sorry, the search string you entered could not be found.',
     tips:'Tips',
+    confirmed:'Confirmed',
+    error:'Failed',
     menu: {
         home: 'Home',
         assets: 'Assets',
@@ -138,6 +140,14 @@ module.exports = {
         event: 'Event on This ONT ID',
         detail: 'Details',
         owner: 'Owner'
+    },
+    token:{
+        title:'Assets List',
+        name:'Name',
+        amount:'Amount',
+        txCount:'TxCount',
+        addresses:'Addresses',
+        symbol:'Symbol'
     },
     footer: {
         version: 'cli version',

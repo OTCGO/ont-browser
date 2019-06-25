@@ -18,7 +18,7 @@
         <router-link class="text-color" :to="'/block-details/'+data.value">{{data.value}}</router-link>
       </template>
       <template slot="Hash" slot-scope="data">
-        <router-link class="text-color" :to="'/block-details/'+data.value">{{data.value | shortHash}}</router-link>
+        <div >{{data.value | shortHash}}</div>
       </template>
       <template slot="BlockTime" slot-scope="data">{{data.value | formatDate}}</template>
     </b-table>

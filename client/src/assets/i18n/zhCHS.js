@@ -13,6 +13,8 @@ module.exports = {
     209:'调用智能合约',
     searchError:'对不起，无法找到您输入的搜索内容',
     tips:'提示',
+    confirmed:'已确认',
+    error:'交易失败',
     menu: {
         home: '首页',
         assets: '资产',
@@ -86,7 +88,8 @@ module.exports = {
         sentTo: '转入',
         desc:'描述',
         assets:'资产',
-        description:'操作'
+        description:'操作',
+        amount:'总量'
     },
     address: {
         title:'持仓排名',
@@ -140,6 +143,14 @@ module.exports = {
         total: '共',
         next: '下一页',
         prev: '上一页'
+    },
+    token:{
+        title:'资产列表',
+        name:'名称',
+        amount:'总量',
+        txCount:'交易数',
+        addresses:'地址数量',
+        symbol:'符号',
     },
     footer: {
         link: '相关链接',

@@ -8,17 +8,19 @@
 
             <b-row class="description">
                 <b-col sm="6" cols="4" style="padding: 0">
-                    <div class="item first" style="padding-left: 15px"><h2>{{$t('height')}}</h2>
+                    <div class="item first" style="padding-left: 15px">
+                        <h2>{{$t('height')}}</h2>
                         <span class="text-color">{{txDetails.Height}}</span>
                     </div>
                 </b-col>
                 <b-col sm="6" cols="4" style="padding: 0">
-                    <div class="item"  style="padding-left: 15px"><h2>{{$t('transaction.type')}}</h2>
-                        <span>{{txDetails.TxnType | formatTxType}}</span>
+                    <div class="item" style="padding-left: 15px"><h2>
+                        {{$t('transaction.type')}}</h2>
+                        <span>{{$t(txDetails.TxnType)}}</span>
                     </div>
                 </b-col>
                 <b-col sm="12" cols="4" style="padding: 0">
-                    <div class="item"  style="padding-left: 15px"><h2>{{$t('time')}}</h2>
+                    <div class="item" style="padding-left: 15px"><h2>{{$t('time')}}</h2>
                         <span>{{txDetails.TxnTime | formatDate }}</span>
                     </div>
                 </b-col>
@@ -26,17 +28,22 @@
             <b-row class="description">
                 <b-col class="item first">
                     <h2>{{$t('transaction.fee')}}</h2>
-                    <span>{{txDetails.Fee}}</span>
+                    <span>{{txDetails.Fee | formatNum(2)}}</span>
                 </b-col>
                 <b-col class="item">
                     <h2>{{$t('transaction.type')}}</h2>
-                    <span>{{txDetails.ConfirmFlag}}</span>
+                    <span>{{confirmFlag}}</span>
                 </b-col>
             </b-row>
         </b-container>
         <div v-if="transferList.length">
             <div class="table-content">
                 <b-table class="tran-list" :fields="fields" :items="transferList">
+                    <template slot="AssetName" slot-scope="data">
+                        <div >
+                            {{data.value.toUpperCase()}}
+                        </div>
+                    </template>
                     <template slot="FromAddress" slot-scope="data">
                         <router-link class="text-color" :to="'/address-details/'+data.value">
                             {{data.value | shortHash}}
@@ -46,6 +53,11 @@
                         <router-link class="text-color" :to="'/address-details/'+data.value">
                             {{data.value | shortHash}}
                         </router-link>
+                    </template>
+                    <template slot="Amount" slot-scope="data">
+                        <div >
+                            {{data.value | formatNum(2)}}
+                        </div>
                     </template>
                 </b-table>
             </div>
@@ -65,8 +77,9 @@
     </div>
 </template>
 <script>
-    import {getTransactionByHash} from '@/apis/server/index';
 
+    import {getTransactionByHash} from '@/apis/server/index';
+    import {confirmFlagType} from '@/confirmFlagType/index'
     export default {
         data () {
             return {
@@ -76,6 +89,7 @@
             };
         },
         mounted () {
+            console.log(confirmFlagType)
             this.getTransactionByHash();
         },
         computed: {
@@ -117,6 +131,9 @@
             },
             hash () {
                 return this.$route.params.hash;
+            },
+            confirmFlag(){
+                return this.$t(confirmFlagType[this.txDetails.ConfirmFlag])
             }
         },
         methods: {

@@ -3,7 +3,7 @@
     <b-container>
       <b-row>
         <b-col>
-          {{tokenDetails.Name}}
+          <h3>{{tokenDetails.Name}}</h3>
           <br>
           {{tokenDetails.Description}}
         </b-col>
@@ -11,29 +11,29 @@
 
       <b-row class="description">
         <b-col class="item first">
-          <h2>哈希</h2>
+          <h2>{{$t('hash')}}</h2>
           <span class="text-color break-all">{{$route.params.hash}}</span>
         </b-col>
         <b-col class="item">
-          <h2>交易数</h2>
+          <h2>{{$t('token.txCount')}}</h2>
           <span>{{tokenDetails.Total}}</span>
         </b-col>
         <b-col class="item">
-          <h2>地址数</h2>
+          <h2>{{$t('token.addresses')}}</h2>
           <span class="break-all">{{tokenDetails.AddressCount}}</span>
         </b-col>
       </b-row>
       <b-row class="description">
         <b-col class="item first">
-          <h2>时间</h2>
+          <h2>{{$t('time')}}</h2>
           <span>{{tokenDetails.CreateTime | formatDate }}</span>
         </b-col>
         <b-col class="item">
-          <h2>符号</h2>
+          <h2>{{$t('token.symbol')}}</h2>
           <span>{{tokenDetails.Symbol }}</span>
         </b-col>
         <b-col class="item">
-          <h2>总量</h2>
+          <h2>{{$t('token.amount')}}</h2>
           <span>{{tokenDetails.TotalSupply}}</span>
         </b-col>
       </b-row>
@@ -74,19 +74,19 @@ export default {
       return [
         {
           key: "TxnHash",
-          label: `哈希`
+          label: this.$t('hash')
         },
         {
           key: "Height",
-          label: "高度"
+          label: this.$t('height')
         },
         {
           key: "ConfirmFlag",
-          label: "状态"
+          label: this.$t('status')
         },
         {
           key: "TxnTime",
-          label: "时间"
+          label: this.$t('time')
         }
       ];
     }

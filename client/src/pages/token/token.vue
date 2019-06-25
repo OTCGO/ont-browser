@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h2 class="text-center neo-page-title"></h2>
+    <h2 class="text-center neo-page-title">{{$t('token.title')}}</h2>
     <div>
       <b-form-select v-model="tokenType" class="mb-3">
         <option value="oep4">oep4</option>
@@ -56,20 +56,20 @@ export default {
       return [
         {
           key: "Name",
-          label: "名称"
+          label: this.$t('token.name')
         },
         {
           key: "ContractHash",
-          label: `哈希`
+          label: this.$t('hash')
         },
         {
           key: "TotalSupply",
-          label: "总量"
+          label: this.$t('token.amount')
         },
 
         {
           key: "TxCount",
-          label: "交易数"
+          label: this.$t('token.txCount')
         }
       ];
     }
