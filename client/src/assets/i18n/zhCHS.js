@@ -76,7 +76,7 @@ module.exports = {
     transaction: {
         name: '交易信息',
         type: '类型',
-        fee:'手续费',
+        fee:'费用',
         networkFee: '网络费用',
         systemFee: '系统费用',
         transactionId: '交易标识',
@@ -89,7 +89,7 @@ module.exports = {
         desc:'描述',
         assets:'资产',
         description:'操作',
-        amount:'总量'
+        amount:'总额'
     },
     address: {
         title:'持仓排名',

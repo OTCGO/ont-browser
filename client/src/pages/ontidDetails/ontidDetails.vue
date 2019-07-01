@@ -48,6 +48,7 @@
 <script>
 import { getOntId } from "@/apis/server/index";
 export default {
+    name:'ontidDetails',
   data() {
     return {
       items: [],

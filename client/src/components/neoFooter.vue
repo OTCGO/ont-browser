@@ -112,7 +112,7 @@
 }
 </style>
 <template>
-  <div class="ont-footer row">
+  <div style="cursor:pointer" class="ont-footer row">
     <div class="footer-left col-md-5 col-sm-12">
       <div class="contacts">
         <ul>
@@ -139,7 +139,7 @@
     </div>
     <div class="footer-center col-md-2 col-sm-6">
       <div class="wrapper">
-        <a href="javascript:void(0)" @click="goTop()"></a>
+        <a href="javascript:void(0)" style="cursor:pointer" @click="goTop()"></a>
       </div>
       <div class="version">{{$t("footer.version")}}: v1.7.0</div>
       <div class="network">
@@ -230,7 +230,7 @@ export default {
   },
   methods: {
     goTop() {
-      document.getElementsByTagName("html")[0].scrollTop = 0;
+      scrollTo(0,0)
     },
     selectNetwork() {
       if (this.network === "TestNet") {

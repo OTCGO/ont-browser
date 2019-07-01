@@ -61,6 +61,7 @@
 <script>
 import { getToken } from "@/apis/server/index";
 export default {
+    name:'tokenDetails',
   data() {
     return {
       tokenDetails: {},

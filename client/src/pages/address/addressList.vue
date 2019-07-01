@@ -55,7 +55,7 @@
                             {{item.address | shortHash}}
                         </router-link>
                     </td>
-                    <td>{{item.balance}}</td>
+                    <td>{{parseFloat(item.balance)}}</td>
                     <td>{{(item.percent * 100).toFixed(4)}}%</td>
                 </tr>
                 </tbody>

@@ -1,7 +1,10 @@
 <template>
   <div @click="clickApp" id="app">
     <neo-header ref="neoHeader"></neo-header>
-    <router-view></router-view>
+    <keep-alive :exclude="/.Details/">
+      <router-view></router-view>
+    </keep-alive>
+    <!--<router-view v-if="!$route.meta.keepAlive"></router-view>-->
     <neo-footer></neo-footer>
   </div>
 </template>

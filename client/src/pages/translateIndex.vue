@@ -20,6 +20,9 @@
                   class="text-hidden text-color"
           >{{data.value | shortHash}}</router-link>
         </template>
+        <template slot="TxnType" slot-scope="data">{{$t(data.value)}}</template>
+        <template slot="ConfirmFlag" slot-scope="data">{{data.value}}</template>
+        <template slot="Fee" slot-scope="data">{{parseFloat(data.value)}}</template>
         <template slot="TxnTime" slot-scope="data">{{data.value | formatDate}}</template>
       </b-table>
     </div>
@@ -31,6 +34,7 @@
 </template>
 <script>
 import { getTransactionList } from "@/apis/server/index";
+import {confirmFlagType} from '@/confirmFlagType/index';
 export default {
   data() {
     return {
@@ -50,10 +54,19 @@ export default {
         {
           key: "TxnType",
           label: this.$t('transaction.type')
+        }, {
+          key: "ConfirmFlag",
+          label: this.$t('status'),
+              formatter:(value,key,item)=>{
+              return this.$t(confirmFlagType[value]);
+              }
         },
         {
           key: "Height",
           label: this.$t('height')
+        }, {
+          key: "Fee",
+          label: this.$t('transaction.fee')
         },
         {
           key: "TxnTime",

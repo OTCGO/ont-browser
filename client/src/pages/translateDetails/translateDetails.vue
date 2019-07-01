@@ -28,10 +28,10 @@
             <b-row class="description">
                 <b-col class="item first">
                     <h2>{{$t('transaction.fee')}}</h2>
-                    <span>{{txDetails.Fee | formatNum(2)}}</span>
+                    <span>{{parseFloat(txDetails.Fee)}}</span>
                 </b-col>
                 <b-col class="item">
-                    <h2>{{$t('transaction.type')}}</h2>
+                    <h2>{{$t('status')}}</h2>
                     <span>{{confirmFlag}}</span>
                 </b-col>
             </b-row>
@@ -40,7 +40,7 @@
             <div class="table-content">
                 <b-table class="tran-list" :fields="fields" :items="transferList">
                     <template slot="AssetName" slot-scope="data">
-                        <div >
+                        <div>
                             {{data.value.toUpperCase()}}
                         </div>
                     </template>
@@ -55,8 +55,8 @@
                         </router-link>
                     </template>
                     <template slot="Amount" slot-scope="data">
-                        <div >
-                            {{data.value | formatNum(2)}}
+                        <div>
+                            {{parseFloat(data.value)}}
                         </div>
                     </template>
                 </b-table>
@@ -79,8 +79,10 @@
 <script>
 
     import {getTransactionByHash} from '@/apis/server/index';
-    import {confirmFlagType} from '@/confirmFlagType/index'
+    import {confirmFlagType} from '@/confirmFlagType/index';
+
     export default {
+        name:'translateDetails',
         data () {
             return {
                 txDetails: {},
@@ -89,7 +91,7 @@
             };
         },
         mounted () {
-            console.log(confirmFlagType)
+            console.log(confirmFlagType);
             this.getTransactionByHash();
         },
         computed: {
@@ -132,8 +134,8 @@
             hash () {
                 return this.$route.params.hash;
             },
-            confirmFlag(){
-                return this.$t(confirmFlagType[this.txDetails.ConfirmFlag])
+            confirmFlag () {
+                return this.$t(confirmFlagType[this.txDetails.ConfirmFlag]);
             }
         },
         methods: {
@@ -156,7 +158,7 @@
             }
         },
         watch: {
-            $route () {
+            $route (to, from) {
                 this.getTransactionByHash();
             }
         }

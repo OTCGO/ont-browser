@@ -373,7 +373,7 @@
             },
             async searchONTID (searchKey) {
                 const result = await getOntId(searchKey, 1, 1);
-                if (result.Result) {
+                if (result) {
                     this.$router.push('/ontid-details/' + searchKey);
                 } else {
                     this.notFound();

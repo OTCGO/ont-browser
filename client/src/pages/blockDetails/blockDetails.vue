@@ -45,6 +45,7 @@
 import { getBlockByHeightOrHash } from "@/apis/server/index";
 
 export default {
+    name:'blockDetails',
   data() {
     return {
       blockDetails: {}

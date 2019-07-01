@@ -9,7 +9,6 @@ import enLocale from 'element-ui/lib/locale/lang/en';
 import zhLocale from 'element-ui/lib/locale/lang/zh-CN';
 import locale from 'element-ui/lib/locale';*/
 import Bootstrap from 'bootstrap-vue';
-
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
 import zh_cn from '@/assets/i18n/zhCHS';
@@ -22,19 +21,16 @@ import '@/style/common.less';
 import {
     formatDate,
     formatTxType,
-    shortHash,
-    formatNum
+    shortHash
 } from '@/filters';
 
 Vue.config.productionTip = false;
-
 Vue.use(VueI18n);
 Vue.use(Bootstrap);
 
 Vue.filter('formatDate', formatDate);
 Vue.filter('formatTxType', formatTxType);
 Vue.filter('shortHash', shortHash);
-Vue.filter('formatNum', formatNum);
 
 var i18n = new VueI18n({
     locale: localStorage.getItem('locale') || 'zh-CN',

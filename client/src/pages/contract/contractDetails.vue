@@ -59,7 +59,7 @@
                 <b-col class="item">
                     <h2>{{$t('contract.volume')}}</h2>
                     <div>
-                        {{+info.ont|formatNum(0)}} ONT
+                        {{parseFloat(info.ont)}} ONT
                     </div>
                     <div>
                         {{+info.ong}} ONG
@@ -99,6 +99,7 @@
         getContractInfo
     }  from "@/apis/server/index";
     export default {
+        name:'contractDetails',
         data(){
             return {
                 perPage:20,
