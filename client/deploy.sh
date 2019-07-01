@@ -2,5 +2,7 @@
 
 git reset --hard
 git pull origin master:master
+npm i
 npm run build
-cp dist/ /var/ont-browser/
+rm -rf /var/ont-browser/
+cp -rf dist/ /var/ont-browser/
