@@ -16,6 +16,12 @@
         color: #fff;
         border-bottom: 1px solid #fff;
     }
+    .contract-desc{
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 3;
+        overflow: hidden;
+    }
 </style>
 <style>
     .ont-contract-list.table-hover tbody tr:hover{
@@ -27,17 +33,17 @@
         <h2 class="text-center ont-page-title">{{$t('contract.name')}}</h2>
         <div class="table-content">
             <b-table class="ont-contract-list" hover @row-clicked="contractClick" :fields="fields" :items="items">
-                <template slot="Logo" slot-scope="data">
+                <template slot="logo" slot-scope="data">
                     <img class="contract-logo" :src="data.value" alt="">
                 </template>
-                <template slot="Name" slot-scope="data">
+                <template slot="name" slot-scope="data">
                     <h3 class="contract-name">{{data.value.Name}}</h3>
                     <div class="contract-desc">{{data.value.desc}}</div>
                 </template>
-                <template slot="ContractHash" slot-scope="data">
+                <template slot="contract_hash" slot-scope="data">
                     <span class="text-color">{{data.value | shortHash}}</span>
                 </template>
-                <template slot="CreateTime" slot-scope="data">{{data.value | formatDate}}</template>
+                <template slot="create_time" slot-scope="data">{{data.value | formatDate}}</template>
             </b-table>
         </div>
         <b-row class="justify-content-center">
@@ -62,25 +68,25 @@
             fields() {
                 return [
                     {
-                        key: "Logo",
+                        key: "logo",
                         label: ""
                     },{
-                        key: "Name",
+                        key: "name",
                         label: this.$t('name'),
                         formatter:(value,key,item)=>{
-                            return {Name:value,desc:item.Description}
+                            return {Name:value,desc:item.description}
                         }
                     },
                     {
-                        key: "ContractHash",
+                        key: "contract_hash",
                         label: this.$t('hash')
                     },
                     {
-                        key: "TxCount",
+                        key: "tx_count",
                         label: this.$t('transactions')
                     },
                     {
-                        key: "CreateTime",
+                        key: "create_time",
                         label: this.$t('createTime')
                     }
                 ];
@@ -103,7 +109,7 @@
                         pagesize || this.perPage,
                         pagenumber || this.currentPage
                     );
-                    this.items = result.ContractList;
+                    this.items = result.records;
                     if (!pagenumber) {
                         this.total = result.Total;
                     }
@@ -112,7 +118,7 @@
                 }
             },
             contractClick(item){
-                this.$router.push(`/contract-details/${item.ContractHash}`)
+                this.$router.push(`/contract-details/${item.contract_hash}`)
             }
         }
     };

@@ -3,9 +3,9 @@
     <b-container>
       <b-row>
         <b-col>
-          <h3>{{tokenDetails.Name}}</h3>
+          <h3>{{tokenDetails.name}}</h3>
           <br>
-          {{tokenDetails.Description}}
+          {{tokenDetails.description}}
         </b-col>
       </b-row>
 
@@ -16,50 +16,60 @@
         </b-col>
         <b-col class="item">
           <h2>{{$t('token.txCount')}}</h2>
-          <span>{{tokenDetails.Total}}</span>
+          <span>{{tokenDetails.tx_count}}</span>
         </b-col>
         <b-col class="item">
           <h2>{{$t('token.addresses')}}</h2>
-          <span class="break-all">{{tokenDetails.AddressCount}}</span>
+          <span class="break-all">{{tokenDetails.address_count}}</span>
         </b-col>
       </b-row>
       <b-row class="description">
         <b-col class="item first">
           <h2>{{$t('time')}}</h2>
-          <span>{{tokenDetails.CreateTime | formatDate }}</span>
+          <span>{{tokenDetails.create_time | formatDate }}</span>
         </b-col>
         <b-col class="item">
           <h2>{{$t('token.symbol')}}</h2>
-          <span>{{tokenDetails.Symbol }}</span>
+          <span>{{tokenDetails.symbol }}</span>
         </b-col>
         <b-col class="item">
           <h2>{{$t('token.amount')}}</h2>
-          <span>{{tokenDetails.TotalSupply}}</span>
+          <span>{{tokenDetails.total_supply}}</span>
         </b-col>
       </b-row>
     </b-container>
 
-    <div>
-      <div class="table-content">
-        <b-table class="tran-list" :fields="fields" :items="tokenDetails.TxnList">
-          <template slot="TxnHash" slot-scope="data">
-            <router-link class="text-color" :to="'/translate-details/'+data.value">{{data.value | shortHash}}</router-link>
-          </template>
-          <template slot="Height" slot-scope="data">
-            <router-link class="text-color" :to="'/block-details/'+data.value">{{data.value}}</router-link>
-          </template>
-        </b-table>
-      </div>
-     <b-row class="justify-content-center">
-        <b-col md="8" sm="12">
-          <b-pagination align="fill" :total-rows="total" v-model="currentPage" :per-page="perPage"></b-pagination>
-        </b-col>
-      </b-row>
-    </div>
+    <b-tabs class="contract-tab" content-class="mt-3">
+      <b-tab :title="$t('contract.transaction')" active>
+          <div class="table-content">
+            <b-table class="tran-list" :fields="fields" :items="tx_list">
+              <template slot="tx_hash" slot-scope="data">
+                <router-link class="text-color" :to="'/translate-details/'+data.value">{{data.value | shortHash}}</router-link>
+              </template>
+              <template slot="block_height" slot-scope="data">
+                <router-link class="text-color" :to="'/block-details/'+data.value">{{data.value}}</router-link>
+              </template>
+            </b-table>
+          </div>
+        <b-row class="justify-content-center">
+          <b-col md="8" sm="12">
+            <b-pagination align="fill" :total-rows="total" v-model="currentPage" :per-page="perPage"></b-pagination>
+          </b-col></b-row>
+      </b-tab>
+      <b-tab :title="$t('token.code')">
+      <textarea name="" rows="6" v-model="tokenDetails.code" style="width:100%;" readonly></textarea>
+      </b-tab>
+      <b-tab title="ABI">
+      <textarea name="" rows="6" v-model="tokenDetails.abi" style="width:100%;" readonly></textarea>
+      </b-tab>
+      <!--<b-tab title="数据统计">-->
+
+      <!--</b-tab>-->
+    </b-tabs>
   </div>
 </template>
 <script>
-import { getToken } from "@/apis/server/index";
+import { getTokenTranslate,getTokenDetail } from "@/apis/server/index";
 export default {
     name:'tokenDetails',
   data() {
@@ -67,26 +77,27 @@ export default {
       tokenDetails: {},
       total: 0,
       currentPage: 1,
-      perPage: 15
+      perPage: 15,
+        tx_list:[]
     };
   },
   computed: {
     fields() {
       return [
         {
-          key: "TxnHash",
+          key: "tx_hash",
           label: this.$t('hash')
         },
         {
-          key: "Height",
+          key: "block_height",
           label: this.$t('height')
         },
         {
-          key: "ConfirmFlag",
+          key: "confirm_flag",
           label: this.$t('status')
         },
         {
-          key: "TxnTime",
+          key: "tx_time",
           label: this.$t('time')
         }
       ];
@@ -98,31 +109,47 @@ export default {
   watch: {
     currentPage: {
       handler: function(value) {
-        this.getToken(this.perPage, value);
+          this.getTokenTranslate(this.perPage, value)
       }
     },
     $route() {
+        this.currentPage=1
       this.getTokem(this.perPage, this.currentPage);
+        this.getTokenTranslate(this.perPage, this.currentPage)
     }
   },
   methods: {
-    async getToken(pagesize, pagenumber) {
+    async getToken() {
       let hash = this.$route.params.hash;
       let type = this.$route.params.type;
-      const result = await getToken(
+      const result = await getTokenDetail(
         type,
-        hash,
-        pagesize || this.perPage,
-        pagenumber || this.currentPage
+        hash
       );
       this.tokenDetails = result;
-      if (!pagenumber) {
-        this.total = result.Total;
+    },
+      async getTokenTranslate(pagesize, pagenumber) {
+          let hash = this.$route.params.hash;
+          let type = this.$route.params.type;
+          const result = await getTokenTranslate(
+              type,
+              hash,
+              pagesize,
+              pagenumber
+          );
+          this.tx_list = result.records;
+          if (!pagenumber) {
+              this.total = result.Total;
+          }
       }
-    }
   }
 };
 </script>
 <style lang="less" scoped>
 @import "tokenDetails.less";
+</style>
+<style>
+  .nav-item .nav-link{
+    color: #fff;
+  }
 </style>

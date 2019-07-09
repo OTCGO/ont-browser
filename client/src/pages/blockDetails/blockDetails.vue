@@ -11,31 +11,33 @@
       <b-row class="description">
         <b-col class="item first">
           <h2>{{$t('height')}}</h2>
-          <span class="text-color">{{blockDetails.Height}}</span>
+          <span class="text-color">{{blockDetails.block_height}}</span>
         </b-col>
         <b-col class="item">
           <h2>{{$t('block.transactions')}}</h2>
-          <span>{{blockDetails.TxnNum}}</span>
+          <span>{{blockDetails.tx_count}}</span>
         </b-col>
         <b-col class="item">
           <h2>{{$t('time')}}</h2>
-          <span>{{blockDetails.BlockTime | formatDate}}</span>
+          <span>{{blockDetails.block_time | formatDate}}</span>
         </b-col>
       </b-row>
       <b-row class="description">
         <b-col class="item first">
           <h2>{{$t('block.merkleroot')}}</h2>
-          <span class="break-all">{{blockDetails.TxnsRoot}}</span>
+          <span class="break-all">{{blockDetails.txs_root}}</span>
         </b-col>
       </b-row>
     </b-container>
 
     <div class="list table-content">
-      <b-table class="tran-list" :fields="fields" :items="blockDetails.TxnList">
-        <template slot="TxnHash" slot-scope="data">
+      <b-table class="tran-list" :fields="fields" :items="blockDetails.txs">
+        <template slot="tx_hash" slot-scope="data">
           <router-link class="text-color" :to="'/translate-details/'+data.value">{{data.value |shortHash}}</router-link>
         </template>
-        <template slot="TxnTime" slot-scope="data">{{data.value | formatDate}}</template>
+        <template slot="confirm_flag" slot-scope="data">{{data.value}}</template>
+
+        <template slot="tx_time" slot-scope="data">{{data.value | formatDate}}</template>
       </b-table>
       <!-- <b-pagination align="center" :total-rows="100" v-model="currentPage" :per-page="10"></b-pagination> -->
     </div>
@@ -43,7 +45,7 @@
 </template>
 <script>
 import { getBlockByHeightOrHash } from "@/apis/server/index";
-
+import {confirmFlagType} from '@/confirmFlagType/index';
 export default {
     name:'blockDetails',
   data() {
@@ -58,19 +60,18 @@ export default {
     fields() {
       return [
         {
-          key: "TxnHash",
+          key: "tx_hash",
           label: this.$t('hash')
         },
         {
-          key: "Height",
-          label: this.$t('height')
+          key: "confirm_flag",
+          label: this.$t('status'),
+            formatter:(value,key,item)=>{
+                return this.$t(confirmFlagType[value]);
+            }
         },
         {
-          key: "ConfirmFlag",
-          label: this.$t('status')
-        },
-        {
-          key: "TxnTime",
+          key: "tx_time",
           label: this.$t('time')
         }
       ];

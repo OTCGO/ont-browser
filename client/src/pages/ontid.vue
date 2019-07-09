@@ -14,20 +14,22 @@
     <h2 class="text-center neo-page-title">{{$t('ontId.title')}}</h2>
     <div class="table-content">
     <b-table class="neo-block-list" :fields="fields" :items="items">
-      <template slot="TxnHash" slot-scope="data">
+      <template slot="tx_hash" slot-scope="data">
         <router-link class="text-color" :to="'/translate-details/'+data.value">{{data.value | shortHash}}</router-link>
       </template>
-      <template slot="OntId" slot-scope="data">
+      <template slot="ontid" slot-scope="data">
         <router-link class="text-color" :to="'/ontid-details/'+data.value">{{data.value | shortHash}}</router-link>
       </template>
-      <template slot="TxnTime" slot-scope="data">{{data.value | formatDate}}</template>
-      <template slot="Height" slot-scope="data">
+      <template slot="tx_time" slot-scope="data">{{data.value | formatDate}}</template>
+      <template slot="block_height" slot-scope="data">
         <router-link class="text-color" :to="'/block-details/'+data.value">{{data.value}}</router-link>
       </template>
     </b-table>
     </div>
-    <b-pagination align="center" :total-rows="100" v-model="currentPage" :per-page="10"></b-pagination>
-  </div>
+    <b-row class="justify-content-center">
+      <b-col md="8" sm="12">
+        <b-pagination align="fill" :total-rows="total" v-model="currentPage" :per-page="perPage"></b-pagination>
+      </b-col></b-row> </div>
 </template>
 <script>
 import { getOntIdList } from "@/apis/server/index";
@@ -44,23 +46,23 @@ export default {
     fields() {
       return [
         {
-          key: "TxnHash",
+          key: "tx_hash",
           label: this.$t('hash')
         },
         {
-          key: "OntId",
+          key: "ontid",
           label: "ONT ID"
         },
         {
-          key: "Height",
+          key: "block_height",
           label: this.$t('height')
         },
         {
-          key: "Description",
+          key: "description",
           label: this.$t('ontId.desc')
         },
         {
-          key: "TxnTime",
+          key: "tx_time",
           label: this.$t('time')
         }
       ];
@@ -83,7 +85,7 @@ export default {
           pagesize || this.perPage,
           pagenumber || this.currentPage
         );
-        this.items = result.OntIdList;
+        this.items = result.records;
         if (!pagenumber) {
           this.total = result.Total;
         }

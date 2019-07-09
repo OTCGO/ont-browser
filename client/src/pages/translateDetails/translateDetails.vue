@@ -10,51 +10,51 @@
                 <b-col sm="6" cols="4" style="padding: 0">
                     <div class="item first" style="padding-left: 15px">
                         <h2>{{$t('height')}}</h2>
-                        <span class="text-color">{{txDetails.Height}}</span>
+                        <span class="text-color">{{txDetails.block_height}}</span>
                     </div>
                 </b-col>
                 <b-col sm="6" cols="4" style="padding: 0">
                     <div class="item" style="padding-left: 15px"><h2>
                         {{$t('transaction.type')}}</h2>
-                        <span>{{$t(txDetails.TxnType)}}</span>
+                        <span>{{$t(txDetails.tx_type)}}</span>
                     </div>
                 </b-col>
                 <b-col sm="12" cols="4" style="padding: 0">
                     <div class="item" style="padding-left: 15px"><h2>{{$t('time')}}</h2>
-                        <span>{{txDetails.TxnTime | formatDate }}</span>
+                        <span>{{txDetails.tx_time | formatDate }}</span>
                     </div>
                 </b-col>
             </b-row>
             <b-row class="description">
                 <b-col class="item first">
                     <h2>{{$t('transaction.fee')}}</h2>
-                    <span>{{parseFloat(txDetails.Fee)}}</span>
+                    <span>{{parseFloat(txDetails.fee)}}</span>
                 </b-col>
                 <b-col class="item">
                     <h2>{{$t('status')}}</h2>
-                    <span>{{confirmFlag}}</span>
+                    <span>{{confirm_flag}}</span>
                 </b-col>
             </b-row>
         </b-container>
         <div v-if="transferList.length">
             <div class="table-content">
                 <b-table class="tran-list" :fields="fields" :items="transferList">
-                    <template slot="AssetName" slot-scope="data">
+                    <template slot="asset_name" slot-scope="data">
                         <div>
                             {{data.value.toUpperCase()}}
                         </div>
                     </template>
-                    <template slot="FromAddress" slot-scope="data">
+                    <template slot="from_address" slot-scope="data">
                         <router-link class="text-color" :to="'/address-details/'+data.value">
                             {{data.value | shortHash}}
                         </router-link>
                     </template>
-                    <template slot="ToAddress" slot-scope="data">
+                    <template slot="to_address" slot-scope="data">
                         <router-link class="text-color" :to="'/address-details/'+data.value">
                             {{data.value | shortHash}}
                         </router-link>
                     </template>
-                    <template slot="Amount" slot-scope="data">
+                    <template slot="amount" slot-scope="data">
                         <div>
                             {{parseFloat(data.value)}}
                         </div>
@@ -67,7 +67,7 @@
         <div v-if="ontId.length">
             <div class="table-content">
                 <b-table class="onid-list" :fields="fieldsOntId" :items="ontId">
-                    <template slot="OntId" slot-scope="data">
+                    <template slot="ontid" slot-scope="data">
                         <router-link class="text-color" :to="'/ontid-details/'+data.value">{{data.value | shortHash}}
                         </router-link>
                     </template>
@@ -98,23 +98,23 @@
             fields () {
                 return [
                     {
-                        key: 'AssetName',
+                        key: 'asset_name',
                         label: this.$t('transaction.assets')
                     },
                     {
-                        key: 'FromAddress',
+                        key: 'from_address',
                         label: this.$t('transaction.sentFrom')
                     },
                     {
-                        key: 'ToAddress',
+                        key: 'to_address',
                         label: this.$t('transaction.sentTo')
                     },
                     {
-                        key: 'Amount',
+                        key: 'amount',
                         label: this.$t('transaction.amount')
                     },
                     {
-                        key: 'Description',
+                        key: 'description',
                         label: this.$t('transaction.description')
                     }
                 ];
@@ -122,11 +122,11 @@
             fieldsOntId () {
                 return [
                     {
-                        key: 'OntId',
+                        key: 'ontid',
                         label: 'ONT ID'
                     },
                     {
-                        key: 'Description',
+                        key: 'description',
                         label: this.$('transaction.desc')
                     }
                 ];
@@ -134,20 +134,20 @@
             hash () {
                 return this.$route.params.hash;
             },
-            confirmFlag () {
-                return this.$t(confirmFlagType[this.txDetails.ConfirmFlag]);
+            confirm_flag () {
+                return this.$t(confirmFlagType[this.txDetails.confirm_flag]);
             }
         },
         methods: {
             async getTransactionByHash () {
                 const result = await getTransactionByHash(this.hash);
                 this.txDetails = result;
-                if (result.Description.indexOf('ontId') >= 0) {
-                    return (this.OntId = result.Detail.OntId ? [result.Detail] : []);
+                if (result.description.indexOf('ontId') >= 0) {
+                    return (this.OntId = result.detail.OntId ? [result.detail] : []);
                 }
 
-                if (result.Description === 'transfer') {
-                    return (this.transferList = result.Detail.TransferList);
+                if (result.description === 'transfer') {
+                    return (this.transferList = result.detail.transfers);
                 }
                 // switch(result.Description){
                 //   case :

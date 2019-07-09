@@ -14,13 +14,13 @@
     <h2 class="text-center ont-page-title">{{$t('slider.block.name')}}</h2>
     <div class="table-content">
     <b-table class="ont-block-list" :fields="fields" :items="items">
-      <template slot="Height" slot-scope="data">
+      <template slot="block_height" slot-scope="data">
         <router-link class="text-color" :to="'/block-details/'+data.value">{{data.value}}</router-link>
       </template>
-      <template slot="Hash" slot-scope="data">
+      <template slot="block_hash" slot-scope="data">
         <div >{{data.value | shortHash}}</div>
       </template>
-      <template slot="BlockTime" slot-scope="data">{{data.value | formatDate}}</template>
+      <template slot="block_time" slot-scope="data">{{data.value | formatDate}}</template>
     </b-table>
     </div>
     <b-row class="justify-content-center">
@@ -45,23 +45,23 @@ export default {
     fields() {
       return [
         {
-          key: "Height",
+          key: "block_height",
           label: this.$t('block.height')
         },
         {
-          key: "Hash",
+          key: "block_hash",
           label: this.$t('hash')
         },
         {
-          key: "TxnNum",
+          key: "tx_count",
           label: this.$t('block.transactions')
         },
         {
-          key: "BlockSize",
+          key: "block_size",
           label:  this.$t('size')
         },
         {
-          key: "BlockTime",
+          key: "block_time",
           label:  this.$t('time')
         }
       ];
@@ -84,7 +84,7 @@ export default {
           pagesize || this.perPage,
           pagenumber || this.currentPage
         );
-        this.items = result.BlockList;
+        this.items = result.records;
         if (!pagenumber) {
           this.total = result.Total;
         }

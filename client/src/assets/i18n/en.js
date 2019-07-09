@@ -131,7 +131,8 @@ module.exports = {
         address:'Addresses',
         volume:'Volume',
         block:'Block',
-        fee:'Fee'
+        fee:'Fee',
+        code:'ByteCode'
     },
     ontId: {
         title: 'ONT ID',
@@ -147,7 +148,8 @@ module.exports = {
         amount:'Amount',
         txCount:'TxCount',
         addresses:'Addresses',
-        symbol:'Symbol'
+        symbol:'Symbol',
+        code:'ByteCode'
     },
     footer: {
         version: 'cli version',

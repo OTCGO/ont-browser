@@ -127,7 +127,8 @@ module.exports = {
         address:'持币地址',
         volume:'流水总量',
         block:'区块',
-        fee:'费用'
+        fee:'费用',
+        code:'字节代码'
     },
     ontId:{
         title:'最新 ONT ID',
@@ -151,6 +152,7 @@ module.exports = {
         txCount:'交易数',
         addresses:'地址数量',
         symbol:'符号',
+        code:'字节代码'
     },
     footer: {
         link: '相关链接',

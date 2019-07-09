@@ -1,5 +1,5 @@
 import axios from "axios";
-
+const SUCCESS_CODE=0
 function post(url = ``, data = {}, opts = {}) {
     const defaultOptions = {
         cache: "no-cache",
@@ -14,7 +14,7 @@ function post(url = ``, data = {}, opts = {}) {
         ...{ method: "POST" }
     };
     return axios(url, options).then(response => {
-        if (response.data.Error === 0) return response.data.Result;
+        if (response.data.code === SUCCESS_CODE) return response.data.result;
     });
 }
 
@@ -28,7 +28,7 @@ function get(url = ``, opts = {}) {
         ...{ method: "GET" }
     };
     return axios(url, options).then(response => {
-        if (response.data.Error === 0) return response.data.Result;
+        if (response.data.code === SUCCESS_CODE) return response.data.result;
     });
 }
 

@@ -10,13 +10,13 @@
     </div>
     <div class="table-content">
       <b-table class="token-list" :fields="fields" :items="contractList">
-        <template slot="ContractHash" slot-scope="data">
+        <template slot="contract_hash" slot-scope="data">
           <router-link
                   :to="'token-details/'+tokenType+'/'+data.value"
                   class="text-color"
           >{{data.value | shortHash}}</router-link>
         </template>
-        <template slot="Name" slot-scope="data">
+        <template slot="name" slot-scope="data">
           <router-link
                   :to="'token-details/'+tokenType+'/'+data.value"
                   class="text-color"
@@ -55,20 +55,20 @@ export default {
     fields() {
       return [
         {
-          key: "Name",
+          key: "name",
           label: this.$t('token.name')
         },
         {
-          key: "ContractHash",
+          key: "contract_hash",
           label: this.$t('hash')
         },
         {
-          key: "TotalSupply",
+          key: "total_supply",
           label: this.$t('token.amount')
         },
 
         {
-          key: "TxCount",
+          key: "tx_count",
           label: this.$t('token.txCount')
         }
       ];
@@ -84,7 +84,7 @@ export default {
         this.perPage,
         this.currentPage
       );
-      this.contractList = result.ContractList;
+      this.contractList = result.records;
       this.total = result.Total;
     }
   },

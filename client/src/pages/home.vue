@@ -124,35 +124,35 @@
                 <div class="ont-bg"></div>
                 <div class="ont-dynamic-content">
                     <p class="ont-dynamic-title">{{$t('dynamic.blockHeight')}}</p>
-                    <p class="ont-dynamic-value">{{summary.CurrentHeight}}</p>
+                    <p class="ont-dynamic-value">{{summary.block_height}}</p>
                 </div>
             </router-link>
             <router-link to="/translate" class="col-md-2 ont-dynamic-link ont-dynamic-item col-sm-4">
                 <div class="ont-bg"></div>
                 <div class="ont-dynamic-content">
                     <p class="ont-dynamic-title">{{$t('dynamic.transactionNum')}}</p>
-                    <p class="ont-dynamic-value">{{summary.TxnCount}}</p>
+                    <p class="ont-dynamic-value">{{summary.tx_count}}</p>
                 </div>
             </router-link>
             <router-link to="/" class="col-md-2  ont-dynamic-item ont-dynamic-link col-sm-4">
                 <div class="ont-bg"></div>
                 <div class="ont-dynamic-content">
                     <p class="ont-dynamic-title">{{$t('dynamic.nodes')}}</p>
-                    <p class="ont-dynamic-value">{{summary.NodeCount}}</p>
+                    <p class="ont-dynamic-value">{{summary.node_count}}</p>
                 </div>
             </router-link>
             <router-link to="/ontid" class="col-md-2 ont-dynamic-item ont-dynamic-link col-sm-4">
                 <div class="ont-bg"></div>
                 <div class="ont-dynamic-content">
                     <p class="ont-dynamic-title">{{$t('dynamic.ontIdNum')}}</p>
-                    <p class="ont-dynamic-value">{{summary.OntIdCount}}</p>
+                    <p class="ont-dynamic-value">{{summary.ontid_count}}</p>
                 </div>
             </router-link>
             <router-link to="/address/ont" class="col-md-2 ont-dynamic-item ont-dynamic-link col-sm-4">
                 <div class="ont-bg"></div>
                 <div class="ont-dynamic-content">
                     <p class="ont-dynamic-title">{{$t('dynamic.addressNum')}}</p>
-                    <p class="ont-dynamic-value">{{summary.AddressCount}}</p>
+                    <p class="ont-dynamic-value">{{summary.address_count}}</p>
                 </div>
             </router-link>
             <!-- <router-link to="/" class="col-md-2 ont-dynamic-item ont-dynamic-link col-sm-4">
@@ -187,15 +187,15 @@
                             <div class="col-sm-12 ont-block-content">
                                 <div class="row" style="align-items: center">
                                     <router-link
-                                            :to="'/block-details/'+item.Height"
+                                            :to="'/block-details/'+item.block_height"
                                             class="col-6 text-left pointer text-color "
-                                    >{{item.Height}}
+                                    >{{item.block_height}}
                                     </router-link>
-                                    <div class="col-6 text-right">{{item.TxnNum}} Transaction</div>
+                                    <div class="col-6 text-right">{{item.tx_count}} Transaction</div>
                                 </div>
                                 <div class="row block-item-sub-wrapper">
-                                    <span class="block-item col-6 text-left">{{item.BlockSize}} byte</span>
-                                    <span class="block-item col-6 text-right">{{item.BlockTime | formatDate}}</span>
+                                    <span class="block-item col-6 text-left">{{item.block_size}} byte</span>
+                                    <span class="block-item col-6 text-right">{{item.block_time | formatDate}}</span>
                                 </div>
                             </div>
                         </div>
@@ -214,13 +214,13 @@
                             <div class="col-sm-12 ont-block-content">
                                 <div class="row" style="align-items: center">
                                     <router-link
-                                            :to="/translate-details/+item.TxnHash"
+                                            :to="/translate-details/+item.tx_hash"
                                             class="text-hidden text-color col-6 text-left"
-                                    >{{item.TxnHash}}
+                                    >{{item.tx_hash}}
                                     </router-link>
-                                    <div class="col-6 text-right">{{item.TxnTime | formatDate}}</div>
+                                    <div class="col-6 text-right">{{item.tx_time | formatDate}}</div>
                                 </div>
-                                <div class>{{ $t(item.TxnType) }}</div>
+                                <div class>{{ $t(item.tx_type) }}</div>
                             </div>
                         </div>
                     </div>
@@ -238,13 +238,13 @@
                             <div class="col-sm-12 ont-block-content">
                                 <div class="row" style="align-items: center">
                                     <router-link
-                                            :to="'/ontid-details/'+item.OntId"
+                                            :to="'/ontid-details/'+item.ontid"
                                             class="text-hidden text-color col-6 text-left"
-                                    >{{item.OntId}}
+                                    >{{item.ontid}}
                                     </router-link>
-                                    <div class="col-6 text-right">{{item.TxnTime | formatDate}}</div>
+                                    <div class="col-6 text-right">{{item.tx_time | formatDate}}</div>
                                 </div>
-                                <div class>{{item.Description}}</div>
+                                <div class>{{item.description}}</div>
                             </div>
                         </div>
                     </div>
@@ -256,9 +256,9 @@
 <script>
     import {
         getSummaryInfo,
-        getBlockList,
-        getTransactionList,
-        getOntIdList,
+        getLatestBlock,
+        getLatestTransaction,
+        getLatestOntId,
         getOntId,
         getBlockByHeightOrHash,
         getTransactionByHash,
@@ -304,23 +304,21 @@
             },
             async getLastBlock () {
                 try {
-                    const result = await getBlockList(8, 1);
-                    this.block = result.BlockList;
+                    this.block = await getLatestBlock(8);
+
                 } catch (error) {
                     //console.log('')
                 }
             },
             async getLastTransaction () {
                 try {
-                    const result = await getTransactionList(8, 1);
-                    this.transaction = result.TxnList;
+                    this.transaction = await getLatestTransaction(8);
                 } catch (error) {
                 }
             },
             async getLastOntId () {
                 try {
-                    const result = await getOntIdList(8, 1);
-                    this.ontid = result.OntIdList;
+                    this.ontid = await getLatestOntId(8);
                 } catch (error) {
                 }
             },

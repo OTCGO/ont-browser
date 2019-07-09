@@ -14,16 +14,16 @@
     <h2 class="text-center neo-page-title">{{$t('slider.transaction.name')}}</h2>
     <div class="table-content">
       <b-table class="neo-block-list" :fields="fields" :items="items">
-        <template slot="TxnHash" slot-scope="data">
+        <template slot="tx_hash" slot-scope="data">
           <router-link
                   :to="'/translate-details/'+data.value"
                   class="text-hidden text-color"
           >{{data.value | shortHash}}</router-link>
         </template>
-        <template slot="TxnType" slot-scope="data">{{$t(data.value)}}</template>
-        <template slot="ConfirmFlag" slot-scope="data">{{data.value}}</template>
-        <template slot="Fee" slot-scope="data">{{parseFloat(data.value)}}</template>
-        <template slot="TxnTime" slot-scope="data">{{data.value | formatDate}}</template>
+        <template slot="tx_type" slot-scope="data">{{$t(data.value)}}</template>
+        <template slot="confirm_flag" slot-scope="data">{{data.value}}</template>
+        <template slot="fee" slot-scope="data">{{parseFloat(data.value)}}</template>
+        <template slot="tx_time" slot-scope="data">{{data.value | formatDate}}</template>
       </b-table>
     </div>
     <b-row class="justify-content-center">
@@ -48,28 +48,28 @@ export default {
     fields() {
       return [
         {
-          key: "TxnHash",
+          key: "tx_hash",
           label: this.$t('hash')
         },
         {
-          key: "TxnType",
+          key: "tx_type",
           label: this.$t('transaction.type')
         }, {
-          key: "ConfirmFlag",
+          key: "confirm_flag",
           label: this.$t('status'),
               formatter:(value,key,item)=>{
               return this.$t(confirmFlagType[value]);
               }
         },
         {
-          key: "Height",
+          key: "block_height",
           label: this.$t('height')
         }, {
-          key: "Fee",
+          key: "fee",
           label: this.$t('transaction.fee')
         },
         {
-          key: "TxnTime",
+          key: "tx_time",
           label: this.$t('time')
         }
       ];
@@ -92,7 +92,7 @@ export default {
           pagesize || this.perPage,
           pagenumber || this.currentPage
         );
-        this.items = result.TxnList;
+        this.items = result.records;
         if (!pagenumber) {
           this.total = result.Total;
         }

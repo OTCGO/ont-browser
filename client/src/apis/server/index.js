@@ -1,46 +1,63 @@
 import {
     httpRequests
 } from '@/helpers';
-import axios from "axios";
+import axios from 'axios';
+
 const host = 'https://explorer.ont.io';
 
 // Block
-const getBlockListUrl = `${host}/api/v1/explorer/blocklist`;
-const getBlockUrl = `${host}/api/v1/explorer/block`;
+// const getBlockListUrl = `${host}/v2/blocks`;
+const getLatestBlockUrl = `${host}/v2/latest-blocks`;
+const getBlockUrl = `${host}/v2/blocks`;
 
 //Transaction
-const getTransactionListUrl = `${host}/api/v1/explorer/transactionlist`;
-const getTransactionByHashUrl = `${host}/api/v1/explorer/transaction`;
+const getLatestTransactionUrl = `${host}/v2/latest-transactions`;
+// const getTransactionListUrl = `${host}/v2/transactionlist`;
+const getTransactionUrl = `${host}/v2/transactions`;
 
 //OntId
-const getOntIdListUrl = `${host}/api/v1/explorer/ontidlist`;
-const getOntIdUrl = `${host}/api/v1/explorer/ontid`;
+const getLatestOntIdUrl = `${host}/v2/latest-ontids`;
+// const getOntIdListUrl = `${host}/v2/ontidlist`;
+const getOntIdUrl = `${host}/v2/ontids`;
 
 
 //SummaryInfo
-const getSummaryInfoUrl = `${host}/api/v1/explorer/summary`;
+const getSummaryInfoUrl = `${host}/v2/summary/blockchain/latest-info`;
 
 
 // token oep4 5 8
-const getTokenListUrl = `${host}/api/v1/explorer/oepcontract`;
-const getTokenUrl = `${host}/api/v1/explorer/oepcontract`;
+const getTokenUrl = `${host}/v2/tokens`;
+// const getTokenUrl = `${host}/v2/oepcontract`;
 
 // address list
 const getAddressListUrl = `${host}/getAssetHolder`;
 // account
-const getAddressInfoUrl = `${host}/api/v1/explorer/address`;
+const getAddressInfoUrl = `${host}/v2/address`;
 
 // contract
-const getContractUrl = `${host}/api/v1/explorer/contract`;
+const getContractUrl = `${host}/v2/contracts`;
+
+/*
+* 获取最新的区块
+* @param {*} count
+* */
+const getLatestBlock = function (count) {
+    return httpRequests.get(`${getLatestBlockUrl}?count=${count}`);
+};
 /**
  * 分页获取区块列表
  *
- * @param {*} pagesize
- * @param {*} pagenumber
+ * @param {*} page_size
+ * @param {*} page_number
  * @returns
  */
-const getBlockList = function (pagesize, pagenumber) {
-    return httpRequests.get(`${getBlockListUrl}/${pagesize}/${pagenumber}`);
+const getBlockList = function (page_size, page_number) {
+    return httpRequests.get(`${getBlockUrl}`, {
+        params: {
+            page_size,
+            page_number
+        }
+    });
 };
 
 /**
@@ -52,16 +69,27 @@ const getBlockList = function (pagesize, pagenumber) {
 const getBlockByHeightOrHash = function (param) {
     return httpRequests.get(`${getBlockUrl}/${param}`);
 };
-
+/*
+* 获取最新的交易列表
+* @param {*} count
+* */
+const getLatestTransaction = function (count) {
+    return httpRequests.get(`${getLatestTransactionUrl}?count=${count}`);
+};
 /**
  * 分页交易基本信息列表
  *
- * @param {*} pagesize
- * @param {*} pagenumber
+ * @param {*} page_size
+ * @param {*} page_number
  * @returns
  */
-const getTransactionList = function (pagesize, pagenumber) {
-    return httpRequests.get(`${getTransactionListUrl}/${pagesize}/${pagenumber}`);
+const getTransactionList = function (page_size, page_number) {
+    return httpRequests.get(`${getTransactionUrl}`, {
+        params: {
+            page_size,
+            page_number
+        }
+    });
 };
 
 /**
@@ -71,33 +99,56 @@ const getTransactionList = function (pagesize, pagenumber) {
  * @returns
  */
 const getTransactionByHash = function (hash) {
-    return httpRequests.get(`${getTransactionByHashUrl}/${hash}`);
+    return httpRequests.get(`${getTransactionUrl}/${hash}`);
 };
 
-
+/*
+* 获取最新的onId列表
+* @param {*} count
+* */
+const getLatestOntId = function (count) {
+    return httpRequests.get(`${getLatestOntIdUrl}?count=${count}`);
+};
 /**
  * 分页查询OntId信息列表
  *
- * @param {*} pagesize
- * @param {*} pagenumber
+ * @param {*} page_size
+ * @param {*} page_number
  * @returns
  */
-const getOntIdList = function (pagesize, pagenumber) {
-    return httpRequests.get(`${getOntIdListUrl}/${pagesize}/${pagenumber}`);
+const getOntIdList = function (page_size, page_number) {
+    return httpRequests.get(`${getOntIdUrl}`, {
+        params: {
+            page_number,
+            page_size
+        }
+    });
 };
 
 
 /**
- * 分页查询某个OntId相关信息
+ * 查询某个OntId相关信息
  * @param {*} ontid
- * @param {*} pagesize
- * @param {*} pagenumber
  * @returns
  */
-const getOntId = function (ontid, pagesize, pagenumber) {
-    return httpRequests.get(`${getOntIdUrl}/${ontid}/${pagesize}/${pagenumber}`);
+const getOntId = function (ontid) {
+    return httpRequests.get(`${getOntIdUrl}/${ontid}/ddo`);
 };
-
+/**
+ * 分页查询某个OntId事件
+ * @param {*} ontid
+ * @param {*} page_size
+ * @param {*} page_number
+ * @returns
+ */
+const getOntIdEvents = function (ontid, page_size, page_number) {
+    return httpRequests.get(`${getOntIdUrl}/${ontid}/transactions`, {
+        params: {
+            page_size,
+            page_number
+        }
+    });
+};
 
 /**
  * 区块链统计信息查询
@@ -113,52 +164,86 @@ const getSummaryInfo = function () {
  * 获取通证列表信息
  *
  * @param {*} type
- * @param {*} pagesize
- * @param {*} pagenumber
+ * @param {*} page_size
+ * @param {*} page_number
  * @returns
  */
-const getTokenList = function (type, pagesize, pagenumber) {
-    return httpRequests.get(`${getTokenListUrl}/${type}/${pagesize}/${pagenumber}`);
+const getTokenList = function (type, page_size, page_number) {
+    return httpRequests.get(`${getTokenUrl}/${type}`, {
+        params: {
+            page_size,
+            page_number
+        }
+    });
 };
-
 
 /**
  * contracthash 获取通证详细信息
  *
  * @param {*} type
  * @param {*} contracthash
- * @param {*} pagesize
- * @param {*} pagenumber
  * @returns
  */
-const getToken = function (type, contracthash, pagesize, pagenumber) {
-    return httpRequests.get(`${getTokenUrl}/${type}/${contracthash}/${pagesize}/${pagenumber}`);
+const getTokenDetail = function (type, contracthash) {
+    return httpRequests.get(`${getTokenUrl}/${type}/${contracthash}`);
+};
+/**j
+ * contracthash 获取通证详细交易列表
+ *
+ * @param {*} type
+ * @param {*} contracthash
+ * @param {*} page_size
+ * @param {*} page_number
+ * @returns
+ */
+const getTokenTranslate = function (type, contracthash, page_size, page_number) {
+    return httpRequests.get(`${getContractUrl}/${type}/${contracthash}/transactions`, {
+       params:{
+           page_size,
+           page_number
+       }
+    });
 };
 
 /**
  * 分页查询某个地址的所有转账交易信息
  *
  * @param {*} address
- * @param {*} pagesize
- * @param {*} pagenumber
+ * @param {*} page_size
+ * @param {*} page_number
  * @returns
  */
-const getAddressInfo = function (address, pagesize, pagenumber) {
-    return httpRequests.get(`${getAddressInfoUrl}/${address}/${pagesize}/${pagenumber}`);
+const getAddressInfo = function (address, page_size, page_number) {
+    return httpRequests.get(`${getAddressInfoUrl}/${address}/transactions`, {
+        params: {
+            page_number,
+            page_size
+        }
+    });
+};
+/**
+ * 查询某个地址的所有资产信息
+ *
+ * @param {*} address
+ * @param {*} type
+ * @returns
+ */
+const getAddressBalances = function (address, type) {
+    return httpRequests.get(`${getAddressInfoUrl}/${address}/${type}/balances`);
 };
 /*
 *
 * 分页查询地址列表
 *
 * */
-const getAddressList = function (pagenumber, pageSize, token = 'ont') {
+const getAddressList = function (page_number, pageSize, token = 'ont') {
     return axios(`${getAddressListUrl}`, {
-        cache: "no-cache",
-        method:'GET',
+        cache: 'no-cache',
+        method: 'GET',
         params: {
             qid: 1,
             contract: token === 'ont' ? '0100000000000000000000000000000000000000' : '0200000000000000000000000000000000000000',
-            from: (pagenumber - 1) * pageSize,
+            from: (page_number - 1) * pageSize,
             count: pageSize
         }
     }).then(response => {
@@ -169,37 +254,81 @@ const getAddressList = function (pagenumber, pageSize, token = 'ont') {
  * 获取合约详情
  *
  * @param {*} contracthash
- * @param {*} pagesize
- * @param {*} pagenumber
  * @returns
  */
-const getContractInfo = function (contracthash, pagesize, pagenumber) {
-    return httpRequests.get(`${getContractUrl}/${contracthash}/${pagesize}/${pagenumber}`);
+const getContractInfo = function (contracthash) {
+    return httpRequests.get(`${getContractUrl}/${contracthash}`);
 };
+/**
+ * 获取合约详情交易列表
+ *
+ * @param {*} contracthash
+ * @param {*} page_size
+ * @param {*} page_number
+ * @returns
+ */
+const getContractTransactions = function (contracthash, page_size, page_number) {
+    return httpRequests.get(`${getContractUrl}/${contracthash}/transactions`, {
+        params: {
+            page_size,
+            page_number
+        }
+    });
+};
+/**
+ * 获取合约详情数据统计
+ *
+ * @param {*} contracthash
+ * @param {*} start_time
+ * @param {*} end_time
+ * @returns
+ */
+const getContractDaily = function (contracthash, start_time, end_time) {
+    return httpRequests.get(`${getContractUrl}/${contracthash}/daily`, {
+        params: {
+            start_time,
+            end_time
+        }
+    });
+};
+
 /**
  * 获取合约列表
  *
- * @param {*} pagesize
- * @param {*} pagenumber
+ * @param {*} page_size
+ * @param {*} page_number
  * @returns
  */
-const getContracts = function (pagesize, pagenumber) {
-    return httpRequests.get(`${getContractUrl}/${pagesize}/${pagenumber}`);
+const getContracts = function (page_size, page_number) {
+    return httpRequests.get(`${getContractUrl}`, {
+        params: {
+            page_number,
+            page_size
+        }
+    });
 };
 
 
 export {
+    getLatestBlock,
     getBlockList,
     getBlockByHeightOrHash,
+    getLatestTransaction,
     getTransactionList,
     getTransactionByHash,
+    getLatestOntId,
     getOntIdList,
     getOntId,
+    getOntIdEvents,
     getSummaryInfo,
     getTokenList,
-    getToken,
-    getAddressInfo,
+    getTokenTranslate,
+    getTokenDetail,
     getContractInfo,
     getContracts,
-    getAddressList
+    getContractTransactions,
+    getContractDaily,
+    getAddressList,
+    getAddressInfo,
+    getAddressBalances
 };
