@@ -134,7 +134,7 @@ module.exports = {
         title:'最新 ONT ID',
         desc:'描述',
         fee:'费用',
-        event:'在这个ONT ID 上的事件',
+        event:'ONT ID事件',
         detail:'详情',
         owner:'所属人',
     },

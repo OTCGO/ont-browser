@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.github.ontio.explorersummary.mapper.AddressDailySummaryMapper">
+    <resultMap id="BaseResultMap" type="com.github.ontio.explorersummary.model.AddressDailySummary">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="time" jdbcType="INTEGER" property="time"/>
+        <result column="contract_hash" jdbcType="VARCHAR" property="contractHash"/>
+        <result column="address" jdbcType="VARCHAR" property="address"/>
+    </resultMap>
+    <!--
+    self-defined SQL
+    -->
+    <select id="selectDistinctAddress" resultType="String" useCache="false">
+        SELECT DISTINCT(address)
+        from tbl_address_daily_summary
+        where contract_hash = '0100000000000000000000000000000000000000'
+           OR contract_hash = '0200000000000000000000000000000000000000'
+    </select>
+    <select id="selectDistinctAddressByContract" resultType="String" parameterType="String" useCache="false">
+        SELECT DISTINCT(address)
+        from tbl_address_daily_summary
+        where contract_hash = #{contractHash}
+    </select>
+
+    <select id="selectAllAddressCount" resultType="Integer" parameterType="String" useCache="false">
+        SELECT count(DISTINCT (address))
+        from tbl_address_daily_summary
+        where contract_hash = '0100000000000000000000000000000000000000'
+           OR contract_hash = '0200000000000000000000000000000000000000'
+    </select>
+
+    <insert id="batchInsertSelective" parameterType="java.util.List">
+        insert into tbl_address_daily_summary (time, contract_hash, address)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.time,jdbcType=INTEGER}, #{item.contractHash,jdbcType=VARCHAR},
+            #{item.address,jdbcType=VARCHAR})
+        </foreach>
+    </insert>
+</mapper>

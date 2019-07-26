@@ -172,14 +172,15 @@
         methods: {
             async getContract () {
                 let result = await getContractInfo(this.contracthash);
+                console.log('result',result)
                 if (result) {
                     this.info = Object.assign({
                         avatar: result.logo,
                         time: result.update_time,
                         name: result.name,
                         description: result.description,
-                        webSite: JSON.parse(result.contact_info)['Official Website'],
-                        github: JSON.parse(result.contact_info)['Github'],
+                        webSite: result.contact_info ? JSON.parse(result.contact_info)['Official Website'] : '',
+                        github: result.contact_info ? JSON.parse(result.contact_info)['Github'] : '',
                         address_count: result.address_count,
                         ont: result.ont_sum,
                         ong: result.ong_sum,

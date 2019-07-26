@@ -34,7 +34,6 @@
                 <b-table class="tran-list" :fields="fields" :items="items">
                     <template slot="tx_hash" slot-scope="data">
                         <router-link class="text-color" :to="'/translate-details/'+data.value">{{data.value | shortHash}}</router-link>
-                        <router-link class="text-color" :to="'/translate-details/'+data.value">{{data.value | shortHash}}</router-link>
                     </template>
                     <template slot="block_height" slot-scope="data">
                         <router-link class="text-color" :to="'/block-details/'+data.value">{{data.value}}</router-link>

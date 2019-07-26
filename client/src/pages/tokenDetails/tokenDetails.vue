@@ -139,7 +139,7 @@ export default {
           );
           this.tx_list = result.records;
           if (!pagenumber) {
-              this.total = result.Total;
+              this.total = result.total;
           }
       }
   }

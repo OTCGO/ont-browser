@@ -10,7 +10,9 @@
                 <b-col sm="6" cols="4" style="padding: 0">
                     <div class="item first" style="padding-left: 15px">
                         <h2>{{$t('height')}}</h2>
-                        <span class="text-color">{{txDetails.block_height}}</span>
+                         <router-link class="text-color" :to="'/block-details/'+txDetails.block_height">
+                            <span class="text-color">{{txDetails.block_height}}</span>
+                         </router-link>
                     </div>
                 </b-col>
                 <b-col sm="6" cols="4" style="padding: 0">
@@ -158,7 +160,7 @@
             }
         },
         watch: {
-            $route (to, from) {
+            $route () {
                 this.getTransactionByHash();
             }
         }

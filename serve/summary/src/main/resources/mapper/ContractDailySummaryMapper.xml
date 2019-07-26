@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.github.ontio.explorersummary.mapper.ContractDailySummaryMapper">
+  <resultMap id="BaseResultMap" type="com.github.ontio.explorersummary.model.ContractDailySummary">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="time" jdbcType="INTEGER" property="time" />
+    <result column="contract_hash" jdbcType="VARCHAR" property="contractHash" />
+    <result column="tx_count" jdbcType="INTEGER" property="txCount" />
+    <result column="ont_sum" jdbcType="DECIMAL" property="ontSum" />
+    <result column="ong_sum" jdbcType="DECIMAL" property="ongSum" />
+    <result column="active_address_count" jdbcType="INTEGER" property="activeAddressCount" />
+    <result column="new_address_count" jdbcType="INTEGER" property="newAddressCount" />
+    <result column="dapp_name" jdbcType="VARCHAR" property="dappName" />
+  </resultMap>
+  <!--
+    self-defined SQL
+  -->
+  <select id="selectMaxTime" resultType="java.lang.Integer" useCache="false">
+    select MAX(time) from tbl_contract_daily_summary
+  </select>
+  <select id="selectAllContract" resultType="com.github.ontio.explorersummary.model.Contract" useCache="false">
+    select * from tbl_contract_daily_summary
+    order by time DESC
+  </select>
+  <select id="selectContractSummary" parameterType="java.lang.String" resultType="com.github.ontio.explorersummary.model.ContractDailySummary" useCache="false">
+    select contract_hash, SUM(tx_count) as txCount, SUM(ont_sum) as ontSum , SUM(ong_sum) as ongSum ,SUM(new_address_count) as newAddressCount
+    from tbl_contract_daily_summary
+    where contract_hash = #{contractHash}
+    GROUP BY contract_hash
+  </select>
+
+
+  <insert id="batchInsertSelective" parameterType="java.util.List">
+    insert into tbl_contract_daily_summary (time, contract_hash, tx_count,
+    ont_sum, ong_sum, active_address_count, new_address_count, dapp_name)
+    values
+    <foreach collection="list" index="index" item="item" separator=",">
+      (#{item.time,jdbcType=INTEGER}, #{item.contractHash,jdbcType=VARCHAR}, #{item.txCount,jdbcType=INTEGER},
+      #{item.ontSum,jdbcType=DECIMAL}, #{item.ongSum,jdbcType=DECIMAL}, #{item.activeAddressCount,jdbcType=INTEGER},
+      #{item.newAddressCount,jdbcType=INTEGER},#{item.dappName,jdbcType=VARCHAR})
+    </foreach>
+  </insert>
+
+</mapper>

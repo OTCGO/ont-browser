@@ -3,44 +3,48 @@ import {
 } from '@/helpers';
 import axios from 'axios';
 
-const host = 'https://explorer.ont.io';
+//const host = 'https://explorer.ont.io';
+
+const host = 'http://114.215.30.71:8585';
+const otcHost = 'https://api.otcgo.cn';
+const version = 'v2'
 
 // Block
 // const getBlockListUrl = `${host}/v2/blocks`;
-const getLatestBlockUrl = `${host}/v2/latest-blocks`;
-const getBlockUrl = `${host}/v2/blocks`;
+const getLatestBlockUrl = `${host}/${version}/latest-blocks`;
+const getBlockUrl = `${host}/${version}/blocks`;
 
 //Transaction
-const getLatestTransactionUrl = `${host}/v2/latest-transactions`;
+const getLatestTransactionUrl = `${host}/${version}/latest-transactions`;
 // const getTransactionListUrl = `${host}/v2/transactionlist`;
-const getTransactionUrl = `${host}/v2/transactions`;
+const getTransactionUrl = `${host}/${version}/transactions`;
 
 //OntId
-const getLatestOntIdUrl = `${host}/v2/latest-ontids`;
+const getLatestOntIdUrl = `${host}/${version}/latest-ontids`;
 // const getOntIdListUrl = `${host}/v2/ontidlist`;
-const getOntIdUrl = `${host}/v2/ontids`;
+const getOntIdUrl = `${host}/${version}/ontids`;
 
 
 //SummaryInfo
-const getSummaryInfoUrl = `${host}/v2/summary/blockchain/latest-info`;
+const getSummaryInfoUrl = `${host}/${version}/summary/blockchain/latest-info`;
 
 
 // token oep4 5 8
-const getTokenUrl = `${host}/v2/tokens`;
+const getTokenUrl = `${host}/${version}/tokens`;
 // const getTokenUrl = `${host}/v2/oepcontract`;
 
 // address list
-const getAddressListUrl = `${host}/getAssetHolder`;
+const getAddressListUrl = `${otcHost}/v2/mainnet/rankings`;
 // account
-const getAddressInfoUrl = `${host}/v2/address`;
+const getAddressInfoUrl = `${host}/${version}/address`;
 
 // contract
-const getContractUrl = `${host}/v2/contracts`;
+const getContractUrl = `${host}/${version}/contracts`;
 
 /*
-* 获取最新的区块
-* @param {*} count
-* */
+ * 获取最新的区块
+ * @param {*} count
+ * */
 const getLatestBlock = function (count) {
     return httpRequests.get(`${getLatestBlockUrl}?count=${count}`);
 };
@@ -70,9 +74,9 @@ const getBlockByHeightOrHash = function (param) {
     return httpRequests.get(`${getBlockUrl}/${param}`);
 };
 /*
-* 获取最新的交易列表
-* @param {*} count
-* */
+ * 获取最新的交易列表
+ * @param {*} count
+ * */
 const getLatestTransaction = function (count) {
     return httpRequests.get(`${getLatestTransactionUrl}?count=${count}`);
 };
@@ -103,9 +107,9 @@ const getTransactionByHash = function (hash) {
 };
 
 /*
-* 获取最新的onId列表
-* @param {*} count
-* */
+ * 获取最新的onId列表
+ * @param {*} count
+ * */
 const getLatestOntId = function (count) {
     return httpRequests.get(`${getLatestOntIdUrl}?count=${count}`);
 };
@@ -198,10 +202,10 @@ const getTokenDetail = function (type, contracthash) {
  */
 const getTokenTranslate = function (type, contracthash, page_size, page_number) {
     return httpRequests.get(`${getContractUrl}/${type}/${contracthash}/transactions`, {
-       params:{
-           page_size,
-           page_number
-       }
+        params: {
+            page_size,
+            page_number
+        }
     });
 };
 
@@ -232,22 +236,20 @@ const getAddressBalances = function (address, type) {
     return httpRequests.get(`${getAddressInfoUrl}/${address}/${type}/balances`);
 };
 /*
-*
-* 分页查询地址列表
-*
-* */
+ *
+ * 分页查询地址列表
+ *
+ * */
 const getAddressList = function (page_number, pageSize, token = 'ont') {
-    return axios(`${getAddressListUrl}`, {
+    return axios(`${getAddressListUrl}/${token === 'ont' ? '0000000000000000000000000000000000000002' : '0000000000000000000000000000000000000001'}`, {
         cache: 'no-cache',
         method: 'GET',
         params: {
-            qid: 1,
-            contract: token === 'ont' ? '0100000000000000000000000000000000000000' : '0200000000000000000000000000000000000000',
-            from: (page_number - 1) * pageSize,
-            count: pageSize
+            index: (page_number - 1) * pageSize,
+            length: pageSize
         }
     }).then(response => {
-        if (response.data.error_code === 0) return response.data.result;
+        if (response.data.code === 200) return response.data;
     });
 };
 /**

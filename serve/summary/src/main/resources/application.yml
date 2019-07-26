@@ -1,0 +1,46 @@
+spring:
+  jpa:
+    database: MYSQL
+  messages:
+    encoding: UTF-8
+  http:
+    encoding:
+      charset: UTF-8
+  profiles:
+    active: dev
+
+mybatis:
+  check-config-location: true
+  type-aliases-package: com.github.ontio.explorersummary.model
+  mapper-locations: classpath*:/mapper/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+
+server:
+  port: 8090
+  tomcat:
+    uri-encoding: UTF-8
+
+config:
+  local:
+    host: http://localhost
+    port: 20334
+  main:
+    node: http://dappnode${random.int[1,5]}.ont.io:20334
+    host: http://dappnode
+    abs_path: .ont.io:20334
+    node_index: 1
+    node_count: 4
+  polaris:
+    node: http://polaris${random.int[1,6]}.ont.io:20334
+    host: http://polaris
+    abs_path: .ont.io:20334
+    node_index: 1
+    node_count: 5
+  candidate:
+    info: https://ont.io/api/v1/candidate/info/All
+  detail_url: https://explorer.ont.io/nodes/detail/
+
+
+is:
+  testnet: true

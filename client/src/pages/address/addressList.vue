@@ -48,15 +48,15 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr v-for="(item,index) in items">
+                <tr v-for="(item,index) in items" v-bind:key="index">
                     <td>{{index  + (perPage * (currentPage - 1))+1}}</td>
                     <td>
                         <router-link class="text-color" :to="'/address-details/'+item.address">
-                            {{item.address | shortHash}}
+                            {{item.address}}
                         </router-link>
                     </td>
                     <td>{{parseFloat(item.balance)}}</td>
-                    <td>{{(item.percent * 100).toFixed(4)}}%</td>
+                    <td>{{ (item.balance / 1000000000 * 100 ).toFixed(2) + "%"}}</td>
                 </tr>
                 </tbody>
             </table>
@@ -76,7 +76,7 @@
             return {
                 token: 'ont',
                 items: [],
-                total: 1000,
+                total: 0,
                 currentPage: 1,
                 perPage: 20
             };
@@ -138,14 +138,16 @@
                         this.perPage,
                         this.token
                     );
-                    if(this.token==='ong'){
-                        result.map(item=>{
-                            let balance=item.balance+''
-                            item.balance = balance.substring(0, balance.length - 9) + '.' + balance.substring(balance.length - 9)
-                        })
+                    // if(this.token==='ong'){
+                    //     result.map(item=>{
+                    //         let balance=item.balance+''
+                    //         item.balance = balance.substring(0, balance.length - 9) + '.' + balance.substring(balance.length - 9)
+                    //     })
 
-                    }
-                    this.items = result;
+                    // }
+                    console.log('result',result);
+                    this.items = result.data;
+                    this.total = result.total;
                 } catch (error) {
                     console.log(error);
                 }

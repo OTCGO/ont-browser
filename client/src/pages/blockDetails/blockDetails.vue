@@ -10,7 +10,7 @@
 
       <b-row class="description">
         <b-col class="item first">
-          <h2>{{$t('height')}}</h2>
+          <h2>{{$t('height')}}</h2> 
           <span class="text-color">{{blockDetails.block_height}}</span>
         </b-col>
         <b-col class="item">

@@ -85,7 +85,7 @@ export default {
         this.currentPage
       );
       this.contractList = result.records;
-      this.total = result.Total;
+      this.total = result.total;
     }
   },
   watch: {

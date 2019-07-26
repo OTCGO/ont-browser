@@ -86,7 +86,7 @@ export default {
         );
         this.items = result.records;
         if (!pagenumber) {
-          this.total = result.Total;
+          this.total = result.total;
         }
       } catch (error) {
         console.log(error);

@@ -60,19 +60,19 @@ test('server getSummaryInfo', async t => {
 
 test('server getTokenList nep4', async t => {
     const result = await getTokenList('oep4', 20, 1)
-    console.log('getTokenList nep4', result.Total)
+    console.log('getTokenList nep4', result.total)
     t.pass()
 });
 
 test('server getTokenList nep5', async t => {
     const result = await getTokenList('oep5', 20, 1)
-    console.log('getTokenList oep5', result.Total)
+    console.log('getTokenList oep5', result.total)
     t.pass()
 });
 
 test('server getTokenList oep8', async t => {
     const result = await getTokenList('oep8', 20, 1)
-    console.log('getTokenList oep8', result.Total)
+    console.log('getTokenList oep8', result.total)
     t.pass()
 });
 
