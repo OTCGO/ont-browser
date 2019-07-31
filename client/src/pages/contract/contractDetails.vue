@@ -101,7 +101,6 @@
     import {
         getContractInfo,
         getContractTransactions,
-        getContractDaily
     } from '@/apis/server/index';
 
     export default {
@@ -138,7 +137,7 @@
                     {
                         key: 'fee',
                         label: this.$t('fee'),
-                        formatter: (value, key, item) => {
+                        formatter: (value) => {
                             return parseFloat(value);
                         }
                     },

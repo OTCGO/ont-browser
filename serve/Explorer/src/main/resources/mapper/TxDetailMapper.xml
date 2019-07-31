@@ -118,6 +118,29 @@
         LIMIT #{startIndex}, #{pageSize}
     </select>
 
+
+    <select id="selectTransferTxsCount" resultType="java.lang.Integer">
+        select count(1)
+        FROM
+        (
+        SELECT <include refid="transferTxDetailColumns" />
+        FROM tbl_tx_detail
+        WHERE from_address = #{address}
+        <if test="assetName != '' and assetName != null">
+            and asset_name = #{assetName}
+        </if>
+        AND event_type IN (2, 3)
+        UNION ALL
+        SELECT <include refid="transferTxDetailColumns" />
+        FROM tbl_tx_detail
+        WHERE to_address = #{address}
+        <if test="assetName != '' and assetName != null">
+            and asset_name = #{assetName}
+        </if>
+        AND event_type IN (2, 3)
+        ) a
+  </select>
+
     <select id="selectTransferTxsByTime" resultType="com.github.ontio.model.dto.TransferTxDto">
         SELECT *
         FROM

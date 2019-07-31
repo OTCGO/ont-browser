@@ -131,7 +131,7 @@
       <div class="links">
         <span class="text-type2">{{$t("footer.link")}}</span>
         <ul class="link-list">
-          <li v-for="item in links">
+          <li v-for="item in links" v-bind:key="item.index">
             <!-- <a class="text-color2" target="_blank" :href="item.href">{{$t(item.text)}}</a> -->
           </li>
         </ul>

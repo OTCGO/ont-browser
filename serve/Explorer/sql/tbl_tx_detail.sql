@@ -39,6 +39,7 @@ CREATE TABLE `tbl_tx_detail`
     KEY `idx_to_address` (`to_address`),
     KEY `idx_block_height` (`block_height`) USING BTREE,
     KEY `idx_called_contract_hash` (`called_contract_hash`),
-    KEY `idx_tx_time` (`tx_time`)
+    KEY `idx_tx_time` (`tx_time`),
+    KEY `event_type` (`event_type`)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8;

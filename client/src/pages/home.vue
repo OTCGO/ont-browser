@@ -262,7 +262,6 @@
         getOntId,
         getBlockByHeightOrHash,
         getTransactionByHash,
-        getAddressInfo,
         getContractInfo
     } from '@/apis/server/index';
 

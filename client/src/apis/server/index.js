@@ -36,10 +36,18 @@ const getTokenUrl = `${host}/${version}/tokens`;
 // address list
 const getAddressListUrl = `${otcHost}/v2/mainnet/rankings`;
 // account
-const getAddressInfoUrl = `${host}/${version}/address`;
+const getAddressInfoUrl = `${host}/${version}/addresses`;
 
 // contract
 const getContractUrl = `${host}/${version}/contracts`;
+
+
+// balance 
+const getAddressBalancesUrl  = `${host}/${version}/addresses`;
+// const getAddressOep4Balances
+// const getAddressOep5Balances
+// const getAddressOep8Balances
+
 
 /*
  * 获取最新的区块
@@ -217,7 +225,7 @@ const getTokenTranslate = function (type, contracthash, page_size, page_number) 
  * @param {*} page_number
  * @returns
  */
-const getAddressInfo = function (address, page_size, page_number) {
+const getTransactions= function (address, page_size, page_number) {
     return httpRequests.get(`${getAddressInfoUrl}/${address}/transactions`, {
         params: {
             page_number,
@@ -233,7 +241,7 @@ const getAddressInfo = function (address, page_size, page_number) {
  * @returns
  */
 const getAddressBalances = function (address, type) {
-    return httpRequests.get(`${getAddressInfoUrl}/${address}/${type}/balances`);
+    return httpRequests.get(`${getAddressBalancesUrl}/${address}/${type}/balances`);
 };
 /*
  *
@@ -241,7 +249,7 @@ const getAddressBalances = function (address, type) {
  *
  * */
 const getAddressList = function (page_number, pageSize, token = 'ont') {
-    return axios(`${getAddressListUrl}/${token === 'ont' ? '0000000000000000000000000000000000000002' : '0000000000000000000000000000000000000001'}`, {
+    return axios(`${getAddressListUrl}/${token === 'ont' ? '0000000000000000000000000000000000000001' : '0000000000000000000000000000000000000002'}`, {
         cache: 'no-cache',
         method: 'GET',
         params: {
@@ -331,6 +339,6 @@ export {
     getContractTransactions,
     getContractDaily,
     getAddressList,
-    getAddressInfo,
+    getTransactions,
     getAddressBalances
 };

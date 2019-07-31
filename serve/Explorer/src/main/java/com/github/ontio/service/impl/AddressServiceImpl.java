@@ -6,6 +6,7 @@ import com.github.ontio.mapper.Oep4Mapper;
 import com.github.ontio.mapper.Oep5Mapper;
 import com.github.ontio.mapper.Oep8Mapper;
 import com.github.ontio.mapper.TxDetailMapper;
+import com.github.ontio.model.common.PageResponseBean;
 import com.github.ontio.model.common.ResponseBean;
 import com.github.ontio.model.dao.Oep4;
 import com.github.ontio.model.dao.Oep5;
@@ -378,6 +379,10 @@ public class AddressServiceImpl implements IAddressService {
         List<TransferTxDto> returnList = new ArrayList<>();
         //查询前（pageNumber * pageSize * 3）条记录
         List<TransferTxDto> transferTxDtos = txDetailMapper.selectTransferTxsByPage(address, assetName, 0, pageNumber * pageSize * 3);
+
+        Integer count = txDetailMapper.selectTransferTxsCount(address, assetName);
+
+
         //合并和格式化转账交易记录
         List<TransferTxDto> formattedTransferTxDtos = formatTransferTxDtos(transferTxDtos);
 
@@ -400,7 +405,9 @@ public class AddressServiceImpl implements IAddressService {
             returnList = getTransferTxDtosByPage(pageNumber, pageSize, formattedTransferTxDtos);
         }
 
-        return new ResponseBean(ErrorInfo.SUCCESS.code(), ErrorInfo.SUCCESS.desc(), returnList);
+        PageResponseBean pageResponseBean = new PageResponseBean(returnList, count);
+
+        return new ResponseBean(ErrorInfo.SUCCESS.code(), ErrorInfo.SUCCESS.desc(), pageResponseBean);
     }
 
 
