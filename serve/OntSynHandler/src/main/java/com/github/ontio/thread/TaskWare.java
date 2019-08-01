@@ -20,6 +20,7 @@
 package com.github.ontio.thread;
 
 import com.github.ontio.ApplicationContextProvider;
+import com.github.ontio.Observer.Listener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -39,8 +40,33 @@ public class TaskWare {
     @PostConstruct
     public void init() {
 
+      //  BlockHandlerThread blockHandlerThread = applicationContextProvider.getBean("BlockHandlerThread", BlockHandlerThread.class);
+
+//        try{
+//            blockHandlerThread.start();
+//        }
+//        catch (Exception e){
+//            blockHandlerThread.start();
+//        }
+
+//        blockHandlerThread.setUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
+//            @Override
+//            public void uncaughtException(Thread t, Throwable e) {
+//                // System.out.println(t.getName()+"发生异常："+e);
+//                blockHandlerThread.start();
+//            }
+//        });
+
+    //    blockHandlerThread.start();
+
+       // PushServie ps = new PushServie();
+
         BlockHandlerThread blockHandlerThread = applicationContextProvider.getBean("BlockHandlerThread", BlockHandlerThread.class);
-        blockHandlerThread.start();
+
+        Listener listener = new Listener();
+        blockHandlerThread.addObserver(listener);
+        new Thread(blockHandlerThread).start();
+
 
     }
 

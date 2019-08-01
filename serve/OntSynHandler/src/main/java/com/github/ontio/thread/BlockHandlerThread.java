@@ -35,11 +35,12 @@ import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.Observable;
 
 @Slf4j
 @Component("BlockHandlerThread")
 @Scope("prototype")
-public class BlockHandlerThread extends Thread {
+public class BlockHandlerThread extends Observable implements Runnable {
 
     private final String CLASS_NAME = this.getClass().getSimpleName();
 
@@ -59,13 +60,45 @@ public class BlockHandlerThread extends Thread {
         this.commonService = commonService;
     }
 
+    // 此方法一经调用，立马可以通知观察者，在本例中是监听线程
+    public void doBusiness() {
+        if (true) {
+            super.setChanged();
+        }
+        notifyObservers();
+    }
+
+
     /**
      * main thread
      */
     @Override
     public void run() {
+
+//        // 测试代码
+//        while (true) {
+//
+//            System.out.println("线程运行了");
+//            try {
+//                Thread.sleep(1000);
+//                if (1 == 1) {
+//                    throw new RuntimeException("线程挂了");
+//                }
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//                doBusiness();
+//                break;
+//            }
+//
+//        }
+
+
+
         log.info("========{}.run=======", CLASS_NAME);
         try {
+            Thread.sleep(1000);
+
+
             ConstantParam.MASTERNODE_RESTFULURL = paramsConfig.MASTERNODE_RESTFUL_URL;
             //初始化node列表
             initNodeRestfulList();
@@ -118,8 +151,19 @@ public class BlockHandlerThread extends Thread {
             }
 
         } catch (Exception e) {
+
+
             log.error("Exception occured，Synchronization thread can't work,error ...", e);
+
+
+            doBusiness();
+
         }
+
+
+
+
+
     }
 
     /**
