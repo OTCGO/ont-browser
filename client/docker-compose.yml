@@ -1,0 +1,19 @@
+
+version: '3'
+
+services:
+
+  nginx_01:
+      build: .
+      ports:
+          - "81:80"
+
+  nginx_02:
+      build: .
+      ports:
+          - "82:80"          
+ 
+  nginx_03:
+      build: .
+      ports:
+          - "83:80" 

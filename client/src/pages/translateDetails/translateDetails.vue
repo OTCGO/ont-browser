@@ -48,12 +48,12 @@
                     </template>
                     <template slot="from_address" slot-scope="data">
                         <router-link class="text-color" :to="'/address-details/'+data.value">
-                            {{data.value | shortHash}}
+                            {{data.value}}
                         </router-link>
                     </template>
                     <template slot="to_address" slot-scope="data">
                         <router-link class="text-color" :to="'/address-details/'+data.value">
-                            {{data.value | shortHash}}
+                            {{data.value}}
                         </router-link>
                     </template>
                     <template slot="amount" slot-scope="data">
