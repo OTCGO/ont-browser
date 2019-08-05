@@ -5,15 +5,11 @@ services:
     build:
       context: .
       dockerfile: client.Dockerfile
-    ports:
-      - "81:80"
 
   client2:
     build:
       context: .
       dockerfile: client.Dockerfile
-    ports:
-      - "82:80"
 
   loadbalancer:
     build:
@@ -23,7 +19,7 @@ services:
       - client1
       - client2
     ports:
-      - "80:80"
+      - "83:80"
   # nginx_03:
   #     build: .
   #     ports:
