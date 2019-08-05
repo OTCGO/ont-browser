@@ -1,19 +1,30 @@
-
-version: '3'
+version: "3"
 
 services:
+  client1:
+    build:
+      context: .
+      dockerfile: client.Dockerfile
+    ports:
+      - "81:80"
 
-  nginx_01:
-      build: .
-      ports:
-          - "81:80"
+  client2:
+    build:
+      context: .
+      dockerfile: client.Dockerfile
+    ports:
+      - "82:80"
 
-  nginx_02:
-      build: .
-      ports:
-          - "82:80"          
- 
-  nginx_03:
-      build: .
-      ports:
-          - "83:80" 
+  loadbalancer:
+    build:
+      context: .
+      dockerfile: nginx.Dockerfile
+    links:
+      - client1
+      - client2
+    ports:
+      - "80:80"
+  # nginx_03:
+  #     build: .
+  #     ports:
+  #         - "83:80"
