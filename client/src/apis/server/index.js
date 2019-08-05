@@ -5,7 +5,7 @@ import axios from 'axios';
 
 //const host = 'https://explorer.ont.io';
 
-const host = 'http://114.215.30.71:8585';
+const host = 'http://ont.sea.one';
 const otcHost = 'https://api.otcgo.cn';
 const version = 'v2'
 
