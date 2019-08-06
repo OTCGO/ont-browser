@@ -3,9 +3,33 @@ version: '3'
 
 services:
 
-  api:
+  api01:
       build: .
+      environment:
+        ACTIVE:
       volumes:
         - /data/api
-      ports:
-          - "8585:8585"
+#      ports:
+#          - "8585:8585"
+
+  api02:
+    build: .
+    environment:
+      ACTIVE:
+    volumes:
+      - /data/api
+
+  redis:
+    image: redis
+    restart: always
+
+  loadbalancer-api:
+    build:
+      context: .
+      dockerfile: nginx.Dockerfile
+    links:
+      - api01
+      - api02
+      - redis
+    ports:
+      - "8585:80"

@@ -1,3 +1,9 @@
 #!/bin/bash
 
-scp target/explorer-1.1.0.RELEASE.jar root@114.215.30.71:/srv/ont/api
+git reset --hard
+git pull origin master:master
+mvn clean
+mvn package
+docker-compose up --build -d
+
+
