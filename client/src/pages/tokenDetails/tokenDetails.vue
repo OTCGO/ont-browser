@@ -78,7 +78,7 @@ export default {
       total: 0,
       currentPage: 1,
       perPage: 15,
-        tx_list:[]
+      tx_list:[]
     };
   },
   computed: {
@@ -105,6 +105,7 @@ export default {
   },
   mounted() {
     this.getToken();
+    this.getTokenTranslate()
   },
   watch: {
     currentPage: {
@@ -114,7 +115,7 @@ export default {
     },
     $route() {
         this.currentPage=1
-      this.getTokem(this.perPage, this.currentPage);
+        this.getTokem(this.perPage, this.currentPage);
         this.getTokenTranslate(this.perPage, this.currentPage)
     }
   },
@@ -134,8 +135,8 @@ export default {
           const result = await getTokenTranslate(
               type,
               hash,
-              pagesize,
-              pagenumber
+              pagesize || this.perPage,
+              pagenumber || this.currentPage
           );
           this.tx_list = result.records;
           if (!pagenumber) {
