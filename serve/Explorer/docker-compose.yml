@@ -6,21 +6,20 @@ services:
   api01:
       build: .
       environment:
-        ACTIVE:
+        - spring_profiles_active=${ACTIVE}
       volumes:
         - /data/api
-#      ports:
-#          - "8585:8585"
 
   api02:
     build: .
     environment:
-      ACTIVE:
+      - spring_profiles_active=${ACTIVE}
     volumes:
       - /data/api
 
   redis:
     image: redis
+    hostname: redis
     restart: always
 
   loadbalancer-api:
