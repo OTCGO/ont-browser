@@ -18,9 +18,9 @@
         </template>
         <template slot="name" slot-scope="data">
           <router-link
-                  :to="'token-details/'+tokenType+'/'+data.value"
+                  :to="'token-details/'+tokenType+'/'+data.value.hash"
                   class="text-color"
-          >{{data.value}}</router-link>
+          >{{data.value.name}}</router-link>
         </template>
       </b-table>
     </div>
@@ -56,7 +56,10 @@ export default {
       return [
         {
           key: "name",
-          label: this.$t('token.name')
+          label: this.$t('token.name'),
+            formatter:(value,key,item)=>{
+                return {name:value,hash:item.contract_hash}
+            }
         },
         {
           key: "contract_hash",
