@@ -4,7 +4,9 @@ version: '3'
 services:
 
   api01:
-      build: .
+      build:
+        context: .
+        dockerfile: Dockerfile
       environment:
         - spring_profiles_active=${ACTIVE}
         - spring.datasource.username=${MYSQL_USERNAME}
@@ -13,7 +15,9 @@ services:
         - /data/api
 
   api02:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
     environment:
       - spring_profiles_active=${ACTIVE}
       - spring.datasource.username=${MYSQL_USERNAME}
