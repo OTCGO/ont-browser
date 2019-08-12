@@ -46,7 +46,7 @@ module.exports = {
     },
     dynamic: {
         blockHeight:'当前区块高度',
-        nodes:"知识节点数量",
+        nodes:"共识节点数量",
         transactionNum: '当前交易笔数',
         addressNum: '注册地址数量',
         ontIdNum:'ONT ID 数量',

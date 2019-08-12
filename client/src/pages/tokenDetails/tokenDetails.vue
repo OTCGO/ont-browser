@@ -49,6 +49,8 @@
               <template slot="block_height" slot-scope="data">
                 <router-link class="text-color" :to="'/block-details/'+data.value">{{data.value}}</router-link>
               </template>
+              <!-- <template slot="confirm_flag" slot-scope="data">{{ data.value | formatFlayType | t }}</template> -->
+              <template slot="tx_time" slot-scope="data">{{data.value | formatDate}}</template>
             </b-table>
           </div>
         <b-row class="justify-content-center">
@@ -70,6 +72,8 @@
 </template>
 <script>
 import { getTokenTranslate,getTokenDetail } from "@/apis/server/index";
+import { confirmFlagType } from '@/confirmFlagType/index';
+
 export default {
     name:'tokenDetails',
   data() {
@@ -94,7 +98,11 @@ export default {
         },
         {
           key: "confirm_flag",
-          label: this.$t('status')
+          label: this.$t('status'),
+          formatter:(value) =>{
+            // console.log('confirm_flag',value)
+            return this.$t(confirmFlagType[value]);
+          }
         },
         {
           key: "tx_time",
@@ -117,7 +125,13 @@ export default {
         this.currentPage=1
         this.getTokem(this.perPage, this.currentPage);
         this.getTokenTranslate(this.perPage, this.currentPage)
-    }
+    },
+    // confirm_flag:  {
+    //   handler:function(value){
+    //       return this.$t(confirmFlagType[value]);
+    //   }
+   
+
   },
   methods: {
     async getToken() {
