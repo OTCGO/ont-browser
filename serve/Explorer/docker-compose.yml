@@ -11,6 +11,7 @@ services:
         - spring_profiles_active=${ACTIVE}
         - spring.datasource.username=${MYSQL_USERNAME}
         - spring.datasource.password=${MYSQL_PWD}
+        - spring.datasource.url=${MYSQL_URL}
       volumes:
         - /data/api
 
@@ -23,6 +24,7 @@ services:
       - spring_profiles_active=${ACTIVE}
       - spring.datasource.username=${MYSQL_USERNAME}
       - spring.datasource.password=${MYSQL_PWD}
+      - spring.datasource.url=${MYSQL_URL}
     volumes:
       - /data/api
 
