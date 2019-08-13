@@ -117,9 +117,10 @@
 		<!-- https://mvnrepository.com/artifact/tk.mybatis/mapper -->
 		<dependency>
 			<groupId>tk.mybatis</groupId>
-			<artifactId>mapper-spring-boot-starter</artifactId>
-			<version>2.1.5</version>
+			<artifactId>mapper</artifactId>
+			<version>4.1.0</version>
 		</dependency>
+
 		<!-- lombok -->
 		<dependency>
 			<groupId>org.projectlombok</groupId>

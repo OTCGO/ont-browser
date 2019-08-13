@@ -12,9 +12,9 @@ services:
         - spring.datasource.username=${MYSQL_USERNAME}
         - spring.datasource.password=${MYSQL_PWD}
         - spring.datasource.url=${MYSQL_URL}
+        - server.port=${APP_PORT}
       volumes:
         - /data/api
-
 
   api02:
     build:
@@ -25,8 +25,24 @@ services:
       - spring.datasource.username=${MYSQL_USERNAME}
       - spring.datasource.password=${MYSQL_PWD}
       - spring.datasource.url=${MYSQL_URL}
+      - server.port=${APP_PORT}
     volumes:
       - /data/api
+
+  api03:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - spring_profiles_active=${ACTIVE}
+      - spring.datasource.username=${MYSQL_USERNAME}
+      - spring.datasource.password=${MYSQL_PWD}
+      - spring.datasource.url=${MYSQL_URL}
+      - server.port=${APP_PORT}
+    volumes:
+      - /data/api
+
+
 
   redis:
     image: redis
@@ -40,6 +56,7 @@ services:
     links:
       - api01
       - api02
+      - api03
       - redis
     ports:
       - "8585:80"
