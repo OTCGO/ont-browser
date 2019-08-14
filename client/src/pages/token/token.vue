@@ -16,6 +16,7 @@
                   class="text-color"
           >{{data.value | shortHash}}</router-link>
         </template>
+        <template slot="total_supply" slot-scope="data">{{data.value | formatNum}}</template>
         <template slot="name" slot-scope="data">
           <router-link
                   :to="'token-details/'+tokenType+'/'+data.value.hash"

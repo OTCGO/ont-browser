@@ -58,6 +58,7 @@
         <div
           @click="selectLang(idx)"
           v-for="(item,idx) in languages"
+          v-bind:key="idx"
           class="lang-select-item"
           :class="{last:idx===languages.length-1}"
         >

@@ -1,9 +1,13 @@
-const formatNum = function (value,num) {
+const formatNum = function (value) {
     if (value) {
-        if(num==='ong'){
-            return parseFloat(value)
+        const arr = value.toString().split(".")
+        if(arr.length === 1){
+            return value.toString().replace(/(?=((?!\b)\d{3})+$)/g, ',')
         }
-        return Number(value).toFixed(num)
+        if(arr.length === 2){
+            return arr[0].toString().replace(/(?=((?!\b)\d{3})+$)/g, ',') +'.'+ arr[1]
+        }
+      // return value.toString().replace(/(?=((?!\b)\d{3})+$)/g, ',')
     }
 };
 

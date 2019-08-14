@@ -293,6 +293,11 @@
                 this.getLastTransaction();
                 this.getLastOntId();
             }, 6000);
+
+
+            this.$once('hook:beforeDestroy', () => {            
+                clearInterval(this.interval);                                    
+            })
         },
         methods: {
             async getSummary () {
@@ -412,7 +417,8 @@
             }
         },
         beforeDestroy () {
-            clearInterval(this.interval);
+            console.log("beforeDestroy")
+           // clearInterval(this.interval);
         }
     };
 </script>

@@ -3,7 +3,10 @@
     <h3>{{$t('address.detailTitle')}}</h3>
     <b-container>
       <b-row>
-        <b-col class="break-all">{{$t('address.value')}}:{{address}}</b-col>
+        <b-col class="break-all">
+          {{$t('address.value')}}:{{address}}
+          <copy :val="address"></copy>
+        </b-col>
       </b-row>
 
       <b-row class="description">
@@ -61,10 +64,16 @@
 import { getTransactions, getAddressBalances } from "@/apis/server/index";
 import { utils } from "@/helpers";
 import { confirmFlagType } from "@/confirmFlagType/index";
-import { Promise } from "q";
+import Copy from "@/components/copy/copy";
+import {
+    formatNum
+} from '@/filters';
 
 export default {
   name: "addressDetails",
+  components: {
+    copy: Copy
+  },
   data() {
     return {
       txnList: [],
@@ -87,8 +96,26 @@ export default {
           label: this.$t("hash")
         },
         {
-          key: "block_height",
-          label: this.$t("height")
+          key: "amount",
+          label: this.$t("transaction.amount"),
+          formatter:(_,key,item)=>{
+              // console.log('item',item)
+              const result = item.transfers.map(value =>{
+                if(value.from_address === this.address){
+                      return '- ' + formatNum(value.amount) + ' ' +value.asset_name.toUpperCase()
+                }
+
+                 return formatNum(value.amount) + ' ' +value.asset_name.toUpperCase()
+              })
+
+              console.log('result',result)
+              return result.join(" | ")
+              // return item.transfers[0].amount || 0
+              // item.forEach(element => {
+              //   return
+              // });
+          }
+
         },
         {
           key: "confirm_flag",
@@ -132,13 +159,13 @@ export default {
       try {
         const result = await Promise.all([
           getAddressBalances(this.address, "native"),
-          getAddressBalances(this.address, "oep4"),
-          getAddressBalances(this.address, "oep5"),
-          getAddressBalances(this.address, "oep8")
+          getAddressBalances(this.address, "oep4")
+          // getAddressBalances(this.address, "oep5"),
+          // getAddressBalances(this.address, "oep8")
         ]);
         // console.log('getAddressBalances',result)
 
-        this.nativeBalance = result[0].concat(result[1], result[2], result[3]);
+        this.nativeBalance = result[0].concat(result[1]);
       } catch (error) {
         console.log("getAddressBalances,error", error);
       }

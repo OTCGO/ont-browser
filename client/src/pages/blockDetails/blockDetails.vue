@@ -4,18 +4,25 @@
     <b-container>
       <b-row>
         <b-col>
-          <h4 class="title">block:{{idx}}</h4>
+          <h4 class="title">
+            block:{{idx}}
+            <copy :val="idx"></copy>
+          </h4>
         </b-col>
       </b-row>
 
       <b-row class="description">
         <b-col class="item first">
-          <h2>{{$t('height')}}</h2> 
-          <span class="text-color">{{blockDetails.block_height}}</span>
+          <h2>{{$t('height')}}</h2>
+          <span class="text-color">{{blockDetails.block_height || 0}}</span>
         </b-col>
         <b-col class="item">
           <h2>{{$t('block.transactions')}}</h2>
           <span>{{blockDetails.tx_count}}</span>
+        </b-col>
+        <b-col class="item">
+          <h2>{{$t('block.size')}}</h2>
+          <span>{{blockDetails.block_size}} kb</span>
         </b-col>
         <b-col class="item">
           <h2>{{$t('time')}}</h2>
@@ -33,7 +40,10 @@
     <div class="list table-content">
       <b-table class="tran-list" :fields="fields" :items="blockDetails.txs">
         <template slot="tx_hash" slot-scope="data">
-          <router-link class="text-color" :to="'/translate-details/'+data.value">{{data.value |shortHash}}</router-link>
+          <router-link
+            class="text-color"
+            :to="'/translate-details/'+data.value"
+          >{{data.value |shortHash}}</router-link>
         </template>
         <template slot="confirm_flag" slot-scope="data">{{data.value}}</template>
 
@@ -45,9 +55,15 @@
 </template>
 <script>
 import { getBlockByHeightOrHash } from "@/apis/server/index";
-import {confirmFlagType} from '@/confirmFlagType/index';
+import { confirmFlagType } from "@/confirmFlagType/index";
+
+import Copy from "@/components/copy/copy";
+
 export default {
-    name:'blockDetails',
+  name: "blockDetails",
+  components: {
+    copy: Copy
+  },
   data() {
     return {
       blockDetails: {}
@@ -61,18 +77,18 @@ export default {
       return [
         {
           key: "tx_hash",
-          label: this.$t('hash')
+          label: this.$t("hash")
         },
         {
           key: "confirm_flag",
-          label: this.$t('status'),
-            formatter:(value,key,item)=>{
-                return this.$t(confirmFlagType[value]);
-            }
+          label: this.$t("status"),
+          formatter: (value, key, item) => {
+            return this.$t(confirmFlagType[value]);
+          }
         },
         {
           key: "tx_time",
-          label: this.$t('time')
+          label: this.$t("time")
         }
       ];
     },

@@ -55,7 +55,7 @@
                             {{item.address}}
                         </router-link>
                     </td>
-                    <td>{{parseFloat(item.balance)}}</td>
+                    <td>{{item.balance | formatNum}}</td>
                     <td>{{ (item.balance / 1000000000 * 100 ).toFixed(2) + "%"}}</td>
                 </tr>
                 </tbody>

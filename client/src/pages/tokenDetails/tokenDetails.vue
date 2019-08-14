@@ -34,7 +34,7 @@
         </b-col>
         <b-col class="item">
           <h2>{{$t('token.amount')}}</h2>
-          <span>{{tokenDetails.total_supply}}</span>
+          <span>{{tokenDetails.total_supply | formatNum}}</span>
         </b-col>
       </b-row>
     </b-container>
@@ -123,7 +123,7 @@ export default {
     },
     $route() {
         this.currentPage=1
-        this.getTokem(this.perPage, this.currentPage);
+        this.getToken(this.perPage, this.currentPage);
         this.getTokenTranslate(this.perPage, this.currentPage)
     },
     // confirm_flag:  {
