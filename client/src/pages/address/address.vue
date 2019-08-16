@@ -108,7 +108,7 @@ export default {
                  return formatNum(value.amount) + ' ' +value.asset_name.toUpperCase()
               })
 
-              // console.log('result',result)
+
               return result.join(" | ")
           }
 
