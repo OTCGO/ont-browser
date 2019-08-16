@@ -108,12 +108,8 @@ export default {
                  return formatNum(value.amount) + ' ' +value.asset_name.toUpperCase()
               })
 
-              console.log('result',result)
+              // console.log('result',result)
               return result.join(" | ")
-              // return item.transfers[0].amount || 0
-              // item.forEach(element => {
-              //   return
-              // });
           }
 
         },
