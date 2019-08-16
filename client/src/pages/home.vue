@@ -283,23 +283,18 @@
             };
         },
         mounted () {
-            this.getSummary();
-            this.getLastBlock();
-            this.getLastTransaction();
-            this.getLastOntId();
-            this.interval = setInterval(() => {
+            this.$once('hook:beforeDestroy', () => {
+                clearInterval(this.interval);
+                this.interval = null;
+            });
+        },
+        methods: {
+            init () {
                 this.getSummary();
                 this.getLastBlock();
                 this.getLastTransaction();
                 this.getLastOntId();
-            }, 6000);
-
-
-            this.$once('hook:beforeDestroy', () => {            
-                clearInterval(this.interval);                                    
-            })
-        },
-        methods: {
+            },
             async getSummary () {
                 try {
                     this.summary = await getSummaryInfo();
@@ -416,9 +411,17 @@
                 });
             }
         },
+        activated () {
+            this.init();
+            this.interval = setInterval(this.init, 6000);
+        },
+        deactivated () {
+            clearInterval(this.interval);
+            this.interval = null;
+        },
         beforeDestroy () {
-            console.log("beforeDestroy")
-           // clearInterval(this.interval);
+            console.log('beforeDestroy');
+            // clearInterval(this.interval);
         }
     };
 </script>
