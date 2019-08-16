@@ -122,9 +122,9 @@ export default {
       }
     },
     $route() {
-        this.currentPage=1
-        this.getToken(this.perPage, this.currentPage);
-        this.getTokenTranslate(this.perPage, this.currentPage)
+//        this.currentPage=1
+//        this.getToken(this.perPage, this.currentPage);
+//        this.getTokenTranslate(this.perPage, this.currentPage)
     },
     // confirm_flag:  {
     //   handler:function(value){
