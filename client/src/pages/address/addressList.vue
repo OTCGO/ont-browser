@@ -28,7 +28,11 @@
 </style>
 <template>
     <div class="blockIndex container">
-        <h2 class="text-center ont-page-title">{{$t('slider.address.name')}}</h2>
+        <page-header :title="$t('slider.address.name')">
+            <span slot>
+                {{token.toUpperCase()}}地址总数:{{total}}
+            </span>
+        </page-header>
         <div class="btn-group">
             <button type="button" class="btn " @click="toAddressListPage('ont')"
                     :class="token==='ont'?'btn-current':'btn-choose'" :disabled="token==='ont'">ONT
@@ -49,7 +53,7 @@
                 </thead>
                 <tbody>
                 <tr v-for="(item,index) in items" v-bind:key="index">
-                    <td>{{index  + (perPage * (currentPage - 1))+1}}</td>
+                    <td>{{index + (perPage * (currentPage - 1)) + 1}}</td>
                     <td>
                         <router-link class="text-color" :to="'/address-details/'+item.address">
                             {{item.address}}
@@ -70,6 +74,7 @@
 </template>
 <script>
     import {getAddressList} from '@/apis/server/index';
+    import pageHeader from '@/components/pageHeader/pageHeader.vue';
 
     export default {
         data () {
@@ -80,6 +85,9 @@
                 currentPage: 1,
                 perPage: 20
             };
+        },
+        components: {
+            pageHeader
         },
         computed: {
             fields () {
@@ -108,13 +116,13 @@
             }
         },
         mounted () {
-            this.token = this.$route.params.token
+            this.token = this.$route.params.token;
             this.getAddress();
         },
         watch: {
             '$route' () {
-                this.token = this.$route.params.token
-                this.getAddress()
+                this.token = this.$route.params.token;
+                this.getAddress();
             },
             currentPage: {
                 handler: function (value) {
@@ -145,7 +153,7 @@
                     //     })
 
                     // }
-                    console.log('result',result);
+                    console.log('result', result);
                     this.items = result.data;
                     this.total = result.total;
                 } catch (error) {

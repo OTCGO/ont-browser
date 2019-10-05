@@ -10,6 +10,10 @@
             font-size: 2rem;
             color: #fff;
         }
+        .logo {
+            width: 20rem;
+            margin-bottom: 2rem;
+        }
         .search-group {
             margin: 2rem 0;
         }
@@ -42,10 +46,10 @@
                 }
                 .ont-dynamic-title {
                     font-size: 1rem;
+                    margin-top: .5rem;
                 }
                 .ont-dynamic-value {
-                    font-size: 1.5rem;
-                    margin-top: 1rem;
+                    font-size: 1.6rem;
                 }
             }
         }
@@ -61,9 +65,9 @@
         opacity: 0.4;
     }
 
-    .ont-dynamic-link:hover .ont-dynamic-content {
-        color: #0056b3 !important;
-    }
+    /*  .ont-dynamic-link:hover .ont-dynamic-content {
+          color: #0056b3 !important;
+      }*/
 
     .ont-block-list {
         padding: 15px;
@@ -94,23 +98,22 @@
         font-size: 1.5rem;
     }
 
-    .search-form {
-        width: 100%;
-        justify-content: center;
+    @media (max-width: 576px) {
+        .logo {
+            display: none;
+        }
     }
+
 </style>
 <template>
     <div class="el-container">
         <div class="head">
-            <h2>{{$t('title')}}</h2>
-            <b-form class="search-form row" inline v-on:submit="searchBlock">
-                <b-input-group size="lg" class="search-group col-md-6 col-offset-md-3 col-sm-12">
-                    <b-form-input v-model="searchKey" :placeholder="$t('slider.dynamic.search')"></b-form-input>
-                    <b-input-group-append>
-                        <b-btn @click="searchBlock" class="btn search-btn">{{$t('search')}}</b-btn>
-                    </b-input-group-append>
-                </b-input-group>
-            </b-form>
+            <img :src="$t('logo')" class="logo" alt>
+            <b-row style="width: 100%">
+                <b-col md="6" sm="12" offset-md="3">
+                    <ont-search size="lg"></ont-search>
+                </b-col>
+            </b-row>
         </div>
         <div class="row container ont-dynamic-list">
             <!-- <div class="col-md-2 col-lg-2 ont-dynamic-item col-sm-4">
@@ -120,37 +123,36 @@
                 <p class="ont-dynamic-value">2016-08-15</p>
               </div>
             </div>-->
-            <router-link to="/block" class="col-md-2 offset-md-1 ont-dynamic-link ont-dynamic-item col-sm-4">
-                <div class="ont-bg"></div>
+            <router-link to="/translate" class="col-md-2 offset-md-1 ont-dynamic-link ont-dynamic-item col-sm-4">
+                <div class="ont-dynamic-content" style="padding: 19px 0 ;">
+                    <img src="@/assets/images/translate.png" alt="">
+                    <p class="ont-dynamic-title">{{$t('dynamic.transactionNum')}}</p>
+                    <p class="ont-dynamic-value">{{summary.tx_count}}</p></div>
+            </router-link>
+            <a href="https://node.ont.io/" target="_blank" class="col-md-2 ont-dynamic-link ont-dynamic-item col-sm-4">
                 <div class="ont-dynamic-content">
+                    <img src="@/assets/images/nodes.png" alt="">
+                    <p class="ont-dynamic-title">{{$t('dynamic.nodes')}}</p>
+                    <p class="ont-dynamic-value">{{summary.node_count}}</p>
+                </div>
+            </a>
+            <router-link to="/block" class="col-md-2  ont-dynamic-item ont-dynamic-link col-sm-4">
+                <div class="ont-dynamic-content">
+                    <img src="@/assets/images/height.png" alt="">
                     <p class="ont-dynamic-title">{{$t('dynamic.blockHeight')}}</p>
                     <p class="ont-dynamic-value">{{summary.block_height}}</p>
                 </div>
             </router-link>
-            <router-link to="/translate" class="col-md-2 ont-dynamic-link ont-dynamic-item col-sm-4">
-                <div class="ont-bg"></div>
-                <div class="ont-dynamic-content">
-                    <p class="ont-dynamic-title">{{$t('dynamic.transactionNum')}}</p>
-                    <p class="ont-dynamic-value">{{summary.tx_count}}</p>
-                </div>
-            </router-link>
-            <router-link to="/" class="col-md-2  ont-dynamic-item ont-dynamic-link col-sm-4">
-                <div class="ont-bg"></div>
-                <div class="ont-dynamic-content">
-                    <p class="ont-dynamic-title">{{$t('dynamic.nodes')}}</p>
-                    <p class="ont-dynamic-value">{{summary.node_count}}</p>
-                </div>
-            </router-link>
             <router-link to="/ontid" class="col-md-2 ont-dynamic-item ont-dynamic-link col-sm-4">
-                <div class="ont-bg"></div>
                 <div class="ont-dynamic-content">
+                    <img src="@/assets/images/ontId.png" alt="">
                     <p class="ont-dynamic-title">{{$t('dynamic.ontIdNum')}}</p>
                     <p class="ont-dynamic-value">{{summary.ontid_count}}</p>
                 </div>
             </router-link>
             <router-link to="/address/ont" class="col-md-2 ont-dynamic-item ont-dynamic-link col-sm-4">
-                <div class="ont-bg"></div>
                 <div class="ont-dynamic-content">
+                    <img src="@/assets/images/address.png" alt="">
                     <p class="ont-dynamic-title">{{$t('dynamic.addressNum')}}</p>
                     <p class="ont-dynamic-value">{{summary.address_count}}</p>
                 </div>
@@ -264,6 +266,7 @@
         getTransactionByHash,
         getContractInfo
     } from '@/apis/server/index';
+    import ontSearch from '@/components/ontSearch/ontSearch.vue';
 
     export default {
         data () {
@@ -281,6 +284,9 @@
                 searchKey: '',
                 interval: null
             };
+        },
+        components: {
+            ontSearch
         },
         mounted () {
             this.$once('hook:beforeDestroy', () => {
@@ -303,7 +309,7 @@
             },
             async getLastBlock () {
                 try {
-                    this.block = await getLatestBlock(8);
+                    this.block = await getLatestBlock(3);
 
                 } catch (error) {
                     //console.log('')
@@ -311,104 +317,15 @@
             },
             async getLastTransaction () {
                 try {
-                    this.transaction = await getLatestTransaction(8);
+                    this.transaction = await getLatestTransaction(3);
                 } catch (error) {
                 }
             },
             async getLastOntId () {
                 try {
-                    this.ontid = await getLatestOntId(8);
+                    this.ontid = await getLatestOntId(3);
                 } catch (error) {
                 }
-            },
-            async searchBlock () {
-                if (this.searchKey !== '') {
-                    switch (this.searchKey.length) {
-                        /* txhash */
-                        case 64:
-                            this.searchHash(this.searchKey);
-                            break;
-                        /* address */
-                        case 34:
-                            this.searchAddress(this.searchKey);
-                            break;
-                        /* contract hash */
-                        case 40:
-                            this.searchContract(this.searchKey);
-                            break;
-                        /* ontid */
-                        case 42:
-                            this.searchONTID(this.searchKey);
-                            break;
-                        /* block height */
-                        case 1:
-                        case 2:
-                        case 3:
-                        case 4:
-                        case 5:
-                        case 6:
-                        case 7:
-                        case 8:
-                        case 9:
-                        case 10:
-                            this.searchHeight(this.searchKey);
-                            break;
-                        default:
-                            this.notFound();
-                    }
-                }
-
-                return false;
-            },
-            async searchHeight (searchKey) {
-                const result = await getBlockByHeightOrHash(searchKey);
-                if (result) {
-                    this.$router.push('/block-details/' + searchKey);
-                } else {
-                    this.notFound();
-                }
-            },
-            async searchONTID (searchKey) {
-                const result = await getOntId(searchKey, 1, 1);
-                if (result) {
-                    this.$router.push('/ontid-details/' + searchKey);
-                } else {
-                    this.notFound();
-                }
-            },
-            async searchContract (searchKey) {
-                const result = await getContractInfo(searchKey, 1, 1);
-                if (result) {
-                    this.$router.push('/contract-details/' + searchKey);
-                } else {
-                    this.notFound();
-                }
-            },
-            async searchAddress (searchKey) {
-                this.$router.push('/address-details/' + searchKey);
-
-                // const result = await getAddressInfo(searchKey,15,1);
-                // if (result) {
-                //   this.$router.push("/address-details/" + searchKey);
-                // } else {
-                //   this.notFound();
-                // }
-            },
-            async searchHash (searchKey) {
-                const result = await getTransactionByHash(searchKey);
-                if (result) {
-                    this.$router.push('/translate-details/' + searchKey);
-                } else {
-                    this.notFound();
-                }
-            },
-            notFound () {
-                this.$bvToast.toast(this.$t('searchError'), {
-                    title: this.$t('tips'),
-                    variant: 'info',
-                    autoHideDelay: 5000,
-                    solid: true
-                });
             }
         },
         activated () {

@@ -11,7 +11,11 @@
 </style>
 <template>
   <div class="blockIndex container">
-    <h2 class="text-center neo-page-title">{{$t('ontId.title')}}</h2>
+    <page-header :title="$t('ontId.title')">
+      <span slot>
+        {{$t('ontId.total')}} | {{total|formatNum}}
+      </span>
+    </page-header>
     <div class="table-content">
     <b-table class="neo-block-list" :fields="fields" :items="items">
       <template slot="tx_hash" slot-scope="data">
@@ -33,6 +37,7 @@
 </template>
 <script>
 import { getOntIdList } from "@/apis/server/index";
+import pageHeader from '@/components/pageHeader/pageHeader'
 export default {
   data() {
     return {
@@ -42,6 +47,7 @@ export default {
       perPage: 15
     };
   },
+    components:{pageHeader},
   computed: {
     fields() {
       return [

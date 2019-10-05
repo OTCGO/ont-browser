@@ -17,6 +17,7 @@
         border-bottom: 1px solid #fff;
     }
     .contract-desc{
+        max-width: 45rem;
         display: -webkit-box;
         -webkit-box-orient: vertical;
         -webkit-line-clamp: 3;
@@ -30,7 +31,11 @@
 </style>
 <template>
     <div class="blockIndex container">
-        <h2 class="text-center ont-page-title">{{$t('contract.name')}}</h2>
+        <page-header :title="$t('contract.title')">
+            <span slot>
+                {{$t('contract.total')}} | {{total|formatNum}}
+            </span>
+        </page-header>
         <div class="table-content">
             <b-table class="ont-contract-list" hover @row-clicked="contractClick" :fields="fields" :items="items">
                 <template slot="logo" slot-scope="data">
@@ -55,6 +60,7 @@
 </template>
 <script>
     import { getContracts } from "@/apis/server/index";
+    import pageHeader from '@/components/pageHeader/pageHeader'
     export default {
         data() {
             return {
@@ -64,6 +70,9 @@
                 perPage: 15
             };
         },
+        components:{
+          pageHeader
+        },
         computed: {
             fields() {
                 return [
@@ -72,7 +81,7 @@
                         label: ""
                     },{
                         key: "name",
-                        label: this.$t('name'),
+                        label: this.$t('contract.name'),
                         formatter:(value,key,item)=>{
                             return {Name:value,desc:item.description}
                         }
@@ -83,11 +92,11 @@
                     },
                     {
                         key: "tx_count",
-                        label: this.$t('transactions')
+                        label: this.$t('contract.transactions')
                     },
                     {
                         key: "create_time",
-                        label: this.$t('createTime')
+                        label: this.$t('contract.createTime')
                     }
                 ];
             }
