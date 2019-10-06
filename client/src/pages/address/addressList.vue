@@ -30,7 +30,7 @@
     <div class="blockIndex container">
         <page-header :title="$t('slider.address.name')">
             <span slot>
-                {{token.toUpperCase()}}地址总数:{{total}}
+                {{token.toUpperCase()}} {{$t('address.total')}}:{{total|formatNum}}
             </span>
         </page-header>
         <div class="btn-group">

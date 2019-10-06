@@ -94,7 +94,8 @@ module.exports = {
         desc: '描述',
         assets: '资产',
         description: '操作',
-        amount: '总额'
+        amount: '总额',
+        total:'交易总量'
     },
     address: {
         title: '持仓排名',
@@ -110,7 +111,8 @@ module.exports = {
         update: '每周更新数据',
         detailTitle: '地址详情',
         unbound: '未解绑',
-        claimable: '待提取'
+        claimable: '待提取',
+        total:'地址总数'
     },
     asset: {
         total:'资产总数',

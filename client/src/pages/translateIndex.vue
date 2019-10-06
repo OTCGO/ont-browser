@@ -11,7 +11,11 @@
 </style>
 <template>
   <div class="blockIndex container">
-    <h2 class="text-center neo-page-title">{{$t('slider.transaction.name')}}</h2>
+    <page-header :title="$t('slider.transaction.name')">
+      <span slot>
+      {{$t('transaction.total')}} | {{total|formatNum}}
+      </span>
+    </page-header>
     <div class="table-content">
       <b-table class="neo-block-list" :fields="fields" :items="items">
         <template slot="tx_hash" slot-scope="data">
@@ -22,6 +26,7 @@
         </template>
         <template slot="tx_type" slot-scope="data">{{$t(data.value)}}</template>
         <template slot="confirm_flag" slot-scope="data">{{data.value}}</template>
+        <template slot="block_height" slot-scope="data">{{data.value|formatNum}}</template>
         <template slot="fee" slot-scope="data">{{parseFloat(data.value)}}</template>
         <template slot="tx_time" slot-scope="data">{{data.value | formatDate}}</template>
       </b-table>
@@ -35,6 +40,7 @@
 <script>
 import { getTransactionList } from "@/apis/server/index";
 import {confirmFlagType} from '@/confirmFlagType/index';
+import pageHeader from '@/components/pageHeader/pageHeader'
 export default {
   data() {
     return {
@@ -44,6 +50,9 @@ export default {
       perPage: 15
     };
   },
+    components:{
+      pageHeader
+    },
   computed: {
     fields() {
       return [

@@ -127,34 +127,34 @@
                 <div class="ont-dynamic-content" style="padding: 19px 0 ;">
                     <img src="@/assets/images/translate.png" alt="">
                     <p class="ont-dynamic-title">{{$t('dynamic.transactionNum')}}</p>
-                    <p class="ont-dynamic-value">{{summary.tx_count}}</p></div>
+                    <p class="ont-dynamic-value">{{summary.tx_count|formatNum}}</p></div>
             </router-link>
             <a href="https://node.ont.io/" target="_blank" class="col-md-2 ont-dynamic-link ont-dynamic-item col-sm-4">
                 <div class="ont-dynamic-content">
                     <img src="@/assets/images/nodes.png" alt="">
                     <p class="ont-dynamic-title">{{$t('dynamic.nodes')}}</p>
-                    <p class="ont-dynamic-value">{{summary.node_count}}</p>
+                    <p class="ont-dynamic-value">{{summary.node_count|formatNum}}</p>
                 </div>
             </a>
             <router-link to="/block" class="col-md-2  ont-dynamic-item ont-dynamic-link col-sm-4">
                 <div class="ont-dynamic-content">
                     <img src="@/assets/images/height.png" alt="">
                     <p class="ont-dynamic-title">{{$t('dynamic.blockHeight')}}</p>
-                    <p class="ont-dynamic-value">{{summary.block_height}}</p>
+                    <p class="ont-dynamic-value">{{summary.block_height|formatNum}}</p>
                 </div>
             </router-link>
             <router-link to="/ontid" class="col-md-2 ont-dynamic-item ont-dynamic-link col-sm-4">
                 <div class="ont-dynamic-content">
                     <img src="@/assets/images/ontId.png" alt="">
                     <p class="ont-dynamic-title">{{$t('dynamic.ontIdNum')}}</p>
-                    <p class="ont-dynamic-value">{{summary.ontid_count}}</p>
+                    <p class="ont-dynamic-value">{{summary.ontid_count|formatNum}}</p>
                 </div>
             </router-link>
             <router-link to="/address/ont" class="col-md-2 ont-dynamic-item ont-dynamic-link col-sm-4">
                 <div class="ont-dynamic-content">
                     <img src="@/assets/images/address.png" alt="">
                     <p class="ont-dynamic-title">{{$t('dynamic.addressNum')}}</p>
-                    <p class="ont-dynamic-value">{{summary.address_count}}</p>
+                    <p class="ont-dynamic-value">{{summary.address_count|formatNum}}</p>
                 </div>
             </router-link>
             <!-- <router-link to="/" class="col-md-2 ont-dynamic-item ont-dynamic-link col-sm-4">
@@ -191,12 +191,12 @@
                                     <router-link
                                             :to="'/block-details/'+item.block_height"
                                             class="col-6 text-left pointer text-color "
-                                    >{{item.block_height}}
+                                    >{{item.block_height|formatNum}}
                                     </router-link>
-                                    <div class="col-6 text-right">{{item.tx_count}} Transaction</div>
+                                    <div class="col-6 text-right">{{item.tx_count|formatNum}} Transaction</div>
                                 </div>
                                 <div class="row block-item-sub-wrapper">
-                                    <span class="block-item col-6 text-left">{{item.block_size}} byte</span>
+                                    <span class="block-item col-6 text-left">{{item.block_size|formatNum}} byte</span>
                                     <span class="block-item col-6 text-right">{{item.block_time | formatDate}}</span>
                                 </div>
                             </div>

@@ -92,7 +92,8 @@ module.exports = {
         desc: 'Description',
         assets: 'Assets',
         amount: 'Amount',
-        description: 'Description'
+        description: 'Description',
+        total:'Total'
     },
     address: {
         title: 'Address - Position Ranking',
@@ -108,7 +109,8 @@ module.exports = {
         percent: 'Percent',
         detailTitle:'Address Detail',
         unbound:'Unbound',
-        claimable:'Claimable'
+        claimable:'Claimable',
+        total:'Total'
     },
     asset: {
         total:'Total',

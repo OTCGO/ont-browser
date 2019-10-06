@@ -15,10 +15,17 @@
         <div class="table-content">
             <b-table class="ont-block-list" :fields="fields" :items="items">
                 <template slot="block_height" slot-scope="data">
-                    <router-link class="text-color" :to="'/block-details/'+data.value">{{data.value}}</router-link>
+                    <router-link class="text-color" :to="'/block-details/'+data.value">{{data.value|formatNum}}</router-link>
                 </template>
                 <template slot="block_hash" slot-scope="data">
                     <div>{{data.value | shortHash}}</div>
+                </template>
+                <template slot="tx_count" slot-scope="data">
+                    <div v-if="data.value">{{data.value | formatNum}}</div>
+                    <div v-else>0</div>
+                </template>
+                <template slot="block_size" slot-scope="data">
+                    <div>{{data.value | formatNum}}</div>
                 </template>
                 <template slot="block_time" slot-scope="data">{{data.value | formatDate}}</template>
             </b-table>
