@@ -1,14 +1,12 @@
 <template>
   <div class="container">
-    <b-container>
-      <h3>{{$t('transaction.name')}}</h3>
-      <b-row>
-        <b-col class="break-all">
-          Hash:{{hash}}
+    <page-header :title="$t('transaction.name')">
+      <span slot class="break-all">
+         Hash:{{hash}}
           <copy :val="hash"></copy>
-        </b-col>
-      </b-row>
-
+      </span>
+    </page-header>
+    <b-container>
       <b-row class="description">
         <b-col sm="6" cols="4" style="padding: 0">
           <div class="item first" style="padding-left: 15px">
@@ -79,10 +77,12 @@
 import { getTransactionByHash } from "@/apis/server/index";
 import { confirmFlagType } from "@/confirmFlagType/index";
 import Copy from "@/components/copy/copy";
+import pageHeader from '@/components/pageHeader/pageHeader.vue'
 export default {
   name: "translateDetails",
   components: {
-    copy: Copy
+    copy: Copy,
+      pageHeader
   },
   data() {
     return {

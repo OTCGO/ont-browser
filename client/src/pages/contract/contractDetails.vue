@@ -8,30 +8,29 @@
 </style>
 <template>
     <div class="container">
+        <page-header :title="info.name">
+            <span slot>
+                {{$t('contract.detailTitle')}} | {{info.description}}
+            </span>
+        </page-header>
         <b-container>
-            <b-row>
-                <b-col>
-                    <h3 class="title">{{$t('contract.detailTitle')}}</h3>
-                </b-col>
-            </b-row>
+            <!--<b-row class="description">-->
+            <!--<b-col class="item first contract-base-info">-->
+            <!--<img class="avatar" :src="info.avatar" alt="">-->
+            <!--<div class="info">-->
+            <!--<h4 class="title">{{info.name}}</h4>-->
+            <!--<p class="des">{{info.description}}</p>-->
+            <!--</div>-->
+            <!--</b-col>-->
+            <!--</b-row>-->
             <b-row class="description">
-                <b-col class="item first contract-base-info">
-                    <img class="avatar" :src="info.avatar" alt="">
-                    <div class="info">
-                        <h4 class="title">{{info.name}}</h4>
-                        <p class="des">{{info.description}}</p>
-                    </div>
-                </b-col>
-            </b-row>
-            <b-row class="description">
-                <b-col class="item first">
-                    <h2>{{$t('hash')}}</h2>
-                    <span class="text-color break-all">{{contracthash}}</span>
+                <b-col class="item">
+                    <h2>{{$t('contract.name')}}</h2>
+                    <span class="">{{info.name}}</span>
                 </b-col>
                 <b-col class="item">
-                    <h2>{{$t('contract.creator')}}</h2>
-                    <router-link class="text-color" :to="'/address-details/'+info.creator">{{info.creator}}
-                    </router-link>
+                    <h2>{{$t('contract.symbol')}}</h2>
+                    <img class="avatar" v-if="info.avatar" :src="info.avatar" alt="">
                 </b-col>
                 <b-col class="item">
                     <h2>{{$t('contract.createTime')}}</h2>
@@ -39,23 +38,9 @@
                 </b-col>
             </b-row>
             <b-row class="description">
-                <b-col class="item first">
-                    <h2>Official Website</h2>
-                    <a :href="info.webSite" target="_blank" class="text-color break-all">{{info.webSite}}</a>
-                </b-col>
                 <b-col class="item">
-                    <h2>Github</h2>
-                    <a :href="info.github" target="_blank" class="break-all text-color">{{info.github}}</a>
-                </b-col>
-            </b-row>
-            <b-row class="description">
-                <b-col class="item first">
                     <h2>{{$t('contract.address')}}</h2>
                     <span class="">{{info.address_count}}</span>
-                </b-col>
-                <b-col class="item">
-                    <h2>{{$t('contract.transactions')}}</h2>
-                    <span>{{info.tx_count}}</span>
                 </b-col>
                 <b-col class="item">
                     <h2>{{$t('contract.volume')}}</h2>
@@ -64,6 +49,39 @@
                     </div>
                     <div>
                         {{+info.ong}} ONG
+                    </div>
+                </b-col>
+                <b-col class="item">
+                    <h2>{{$t('contract.transactions')}}</h2>
+                    <span>{{info.tx_count}}</span>
+                </b-col>
+            </b-row>
+            <b-row class="description">
+                <b-col md="4" sm="12" lg="4" class="" style="padding: 0;">
+                    <div class="item first">
+                        <h2>Official Website</h2>
+                        <a :href="info.webSite" target="_blank" class="text-color break-all">{{info.webSite}}</a>
+                    </div>
+                </b-col>
+                <b-col md="8" sm="12" lg="8" style="padding: 0;">
+                    <div class="item">
+                        <h2>{{$t('hash')}}</h2>
+                        <span class="text-color break-all">{{contracthash}}</span>
+                    </div>
+                </b-col>
+            </b-row>
+            <b-row class="description">
+                <b-col lg="4" md="4" sm="12" class="" style="padding: 0;">
+                    <div class="item first">
+                        <h2>Github</h2>
+                        <a :href="info.github" target="_blank" class="break-all text-color">{{info.github}}</a>
+                    </div>
+                </b-col>
+                <b-col lg="8" md="8" sm="12" style="padding: 0;">
+                    <div class="item">
+                        <h2>{{$t('contract.creator')}}</h2>
+                        <router-link class="text-color" :to="'/address-details/'+info.creator">{{info.creator}}
+                        </router-link>
                     </div>
                 </b-col>
             </b-row>
@@ -100,8 +118,9 @@
 <script>
     import {
         getContractInfo,
-        getContractTransactions,
+        getContractTransactions
     } from '@/apis/server/index';
+    import pageHeader from '@/components/pageHeader/pageHeader.vue';
 
     export default {
         name: 'contractDetails',
@@ -126,6 +145,9 @@
                 translateList: [],
                 total: 0
             };
+        },
+        components: {
+            pageHeader
         },
         computed: {
             fields () {
@@ -171,7 +193,7 @@
         methods: {
             async getContract () {
                 let result = await getContractInfo(this.contracthash);
-                console.log('result',result)
+                console.log('result', result);
                 if (result) {
                     this.info = Object.assign({
                         avatar: result.logo,

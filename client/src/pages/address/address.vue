@@ -1,14 +1,12 @@
 <template>
   <div class="container">
-    <h3>{{$t('address.detailTitle')}}</h3>
-    <b-container>
-      <b-row>
-        <b-col class="break-all">
-          {{$t('address.value')}}:{{address}}
+    <page-header :title="$t('address.detailTitle')">
+      <span slot>
+        {{$t('address.value')}}:{{address}}
           <copy :val="address"></copy>
-        </b-col>
-      </b-row>
-
+      </span>
+    </page-header>
+    <b-container>
       <b-row class="description">
         <b-col
           style="padding-right: 0;"
@@ -17,16 +15,16 @@
           :key="item.index"
         >
           <div class="item" v-if="item.asset_name === 'waitboundong'">
-            <h2>ONG-{{$t('address.claimable')}}</h2>
-            <span class="text-color">{{item.balance}}</span>
+            <h2>ONG | {{$t('address.claimable')}}</h2>
+            <span class="text-color">{{item.balance|formatNum}}</span>
           </div>
           <div class="item" v-else-if="item.asset_name === 'unboundong'">
-            <h2>ONG-{{$t('address.unbound')}}</h2>
-            <span class="text-color">{{item.balance}}</span>
+            <h2>ONG | {{$t('address.unbound')}}</h2>
+            <span class="text-color">{{item.balance|formatNum}}</span>
           </div>
           <div class="item" v-else>
             <h2>{{item.asset_name.toUpperCase()}}</h2>
-            <span class="text-color">{{item.balance}}</span>
+            <span class="text-color">{{item.balance|formatNum}}</span>
           </div>
         </b-col>
       </b-row>
@@ -65,6 +63,7 @@ import { getTransactions, getAddressBalances } from "@/apis/server/index";
 import { utils } from "@/helpers";
 import { confirmFlagType } from "@/confirmFlagType/index";
 import Copy from "@/components/copy/copy";
+import pageHeader from '@/components/pageHeader/pageHeader.vue';
 import {
     formatNum
 } from '@/filters';
@@ -72,7 +71,8 @@ import {
 export default {
   name: "addressDetails",
   components: {
-    copy: Copy
+    copy: Copy,
+      pageHeader
   },
   data() {
     return {

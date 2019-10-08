@@ -1,29 +1,38 @@
 <template>
     <div class="container">
-        <h3>ONT ID {{$t('ontId.detail')}}</h3>
+        <page-header :title="'ONT ID'+ $t('ontId.detail')">
+            <span slot>
+                ONT ID | {{ontid}}
+                <copy :val="ontid"></copy>
+            </span>
+        </page-header>
         <b-container>
-            <b-row>
-                <b-col class="break-all">ONT ID:{{ontid}}</b-col>
+            <b-row class="description">
+                <b-col lg="4" md="4" sm="12" style="padding: 0">
+                    <div  class="item first">
+                        <h2>Type</h2>
+                        <span>{{ddo.Owners[0].Type}}</span>
+                    </div>
+                </b-col>
+                <b-col lg="8" md="8" sm="12" style="padding: 0;">
+                    <div class="item">
+                        <h2>Value</h2>
+                        <span class="break-all">{{ddo.Owners[0].Value}}</span>
+                    </div>
+            </b-col>
             </b-row>
             <b-row class="description">
-                <b-col class="item first">
-                    <h2>Type</h2>
-                    <span>{{ddo.Owners[0].Type}}</span>
+                <b-col lg="4" md="4" sm="12" style="padding: 0">
+                    <div class="item first">
+                        <h2>Curve</h2>
+                        <span>{{ddo.Owners[0].Curve}}</span>
+                    </div>
                 </b-col>
-                <b-col class="item">
-                    <h2>Curve</h2>
-                    <span>{{ddo.Owners[0].Curve}}</span>
-                </b-col>
-
-            </b-row>
-            <b-row class="description">
-                <b-col cols="12" class="item first">
-                    <h2>Value</h2>
-                    <span class="break-all">{{ddo.Owners[0].Value}}</span>
-                </b-col>
-                <b-col cols="12" class="item first">
-                    <h2>PublicKeyId</h2>
-                    <span class="break-all">{{ddo.Owners[0].PubKeyId}}</span>
+                <b-col ls="8" md="8" sm="12" style="padding: 0">
+                    <div class="item">
+                        <h2>PublicKeyId</h2>
+                        <span class="break-all">{{ddo.Owners[0].PubKeyId}}</span>
+                    </div>
                 </b-col>
             </b-row>
         </b-container>
@@ -51,9 +60,12 @@
 </template>
 <script>
     import {getOntId, getOntIdEvents} from '@/apis/server/index';
-
+    import pageHeader from '@/components/pageHeader/pageHeader.vue'
     export default {
         name: 'ontidDetails',
+        components:{
+            pageHeader
+        },
         data () {
             return {
                 items: [],

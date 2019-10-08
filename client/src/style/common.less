@@ -23,13 +23,36 @@ html {
 .text-color {
   color: #84c033
 }
-.table-content{
+
+.table-content {
   width: 100%;
   overflow-x: auto;
+  table {
+    border-collapse: separate;
+    border-spacing: 0 .5rem;
+  }
+  thead tr {
+    background: rgba(0, 0, 0, .1);
+    th {
+      border-bottom: none;
+      border-top: none;
+    }
+  }
+  tbody tr td {
+    margin-bottom: 4px;
+    background: rgba(0, 0, 0, .1);
+    border-top: none;
+    //border-left:3px solid #31CEF6;
+  }
+  tbody tr td:first-child {
+    border-left: 4px solid #31CEF6;
+  }
 }
-.break-all{
+
+.break-all {
   word-break: break-all;
 }
+
 @media only screen and (min-width: 400px) {
   html {
     font-size: 21.33px !important
