@@ -26,10 +26,10 @@
 </template>
 <script>
     import {
-        getSummaryInfo,
-        getLatestBlock,
-        getLatestTransaction,
-        getLatestOntId,
+        // getSummaryInfo,
+        // getLatestBlock,
+        // getLatestTransaction,
+        // getLatestOntId,
         getOntId,
         getBlockByHeightOrHash,
         getTransactionByHash,

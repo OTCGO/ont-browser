@@ -60,7 +60,6 @@
 </template>
 <script>
 import { getTransactions, getAddressBalances } from "@/apis/server/index";
-import { utils } from "@/helpers";
 import { confirmFlagType } from "@/confirmFlagType/index";
 import Copy from "@/components/copy/copy";
 import pageHeader from '@/components/pageHeader/pageHeader.vue';

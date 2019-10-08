@@ -38,7 +38,7 @@
     </div>
 </template>
 <script>
-    import {getBlockList, getSummaryInfo} from '@/apis/server/index';
+    import {getBlockList} from '@/apis/server/index';
     import pageHeader from '@/components/pageHeader/pageHeader.vue';
     export default {
         data () {

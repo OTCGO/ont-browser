@@ -261,10 +261,10 @@
         getLatestBlock,
         getLatestTransaction,
         getLatestOntId,
-        getOntId,
-        getBlockByHeightOrHash,
-        getTransactionByHash,
-        getContractInfo
+        // getOntId,
+        // getBlockByHeightOrHash,
+        // getTransactionByHash,
+        // getContractInfo
     } from '@/apis/server/index';
     import ontSearch from '@/components/ontSearch/ontSearch.vue';
 

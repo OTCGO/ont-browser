@@ -117,7 +117,7 @@
         <div class="footer-left">
             <div class="contacts">
                 <ul>
-                    <li class="contact-item" v-for="item in contacts">
+                    <li class="contact-item" v-for="item in contacts" v-bind:key="item.title">
                         <a :href="item.href" :class="{wx:item.title==='wx'}" target="_blank">
                             <img :src="item.src" :alt="item.title" width="25" height="25">
                             <template v-if="item.title==='wx'">

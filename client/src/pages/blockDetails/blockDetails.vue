@@ -80,7 +80,7 @@
                     {
                         key: 'confirm_flag',
                         label: this.$t('status'),
-                        formatter: (value, key, item) => {
+                        formatter: (value) => {
                             return this.$t(confirmFlagType[value]);
                         }
                     },
@@ -101,9 +101,9 @@
             }
         },
         watch: {
-            $route (to, from) {
+            // $route (to, from) {
 //      this.getBlockByHeight();
-            }
+           // }
         }
     };
 </script>
